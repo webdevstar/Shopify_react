@@ -1,0 +1,365 @@
+import React, {Component} from 'react';
+import $ from 'jquery';
+
+import './Header.css';
+
+import logo_01 from '../../images/icon/logo_01.png';
+import header_search from '../../images/icon/header-search.png';
+import header_cart from '../../images/icon/header-cart.png';
+import product_01 from '../../images/product_01.png';
+import product_02 from '../../images/product_02.png';
+import product_03 from '../../images/product_03.png';
+import header_bar from '../../images/icon/header-bar.png';
+
+import logo_02 from '../../images/icon/logo_02.png';
+import close_gray from '../../images/icon/close_gray.png';
+import resume_01 from '../../images/resume_01.jpg';
+import resume_02 from '../../images/resume_02.jpg';
+import resume_03 from '../../images/resume_03.jpg';
+
+
+
+
+class Header extends Component {
+
+    render () {
+        return (
+            <div>
+                <header>
+                    <div className="header-wrapper">
+                        <div className="header-wrapper-desktop d-none d-lg-block">
+                            <div className="header header-style-1">
+                                <div className="header-main">
+                                    <div className="header__logo">
+                                        <a href="index.html">
+                                            <img src={logo_01} alt="Lyrae"/>
+                                        </a>
+                                    </div>
+                                    <nav className="header__navbar">
+                                        <ul className="navbar-menu">
+                                            <li className="active">
+                                                <a href="#">Home</a>
+                                                <ul className="sub-menu">
+                                                    <li>
+                                                        <a href="index.html">HomePage_v1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="index2.html">HomePage_v2</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="index3.html">HomePage_v3</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="index4.html">HomePage_v4</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="index5.html">HomePage_v5</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="index6.html">HomePage_v6</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="about.html">About</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">page</a>
+                                                <ul className="sub-menu">
+                                                    <li>
+                                                        <a href="my-account.html">My Account</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="forget-password.html">Forget Password</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="coming-soon.html">Cooming Soon</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="404.html">404 Error</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Shop</a>
+                                                <ul className="sub-menu">
+                                                    <li>
+                                                        <a href="shop-list.html">Shop 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="shop-list-nosidebar.html">Shop 2</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="product-detail.html">Product Detail 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="product-detail-nosidebar.html">Product Detail 2</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="shop-cart.html">Shop Cart</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="wishlist.html">Wish List</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="checkout.html">Check Out</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Blog</a>
+                                                <ul className="sub-menu">
+                                                    <li>
+                                                        <a href="blog-grid-1.html">Blog Grid 1</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-grid-2.html">Blog Grid 2</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-list.html">Blog List</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="blog-detail.html">Blog Single</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="contact.html">Contact</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                    <div className="header__button">
+                                        <ul>
+                                            <li className="header-search">
+                                                <div className="search-button">
+                                                    <img src={header_search} alt="Search"/>
+                                                </div>
+                                                <div className="search-input">
+                                                    <input type="text" placeholder="Start typing here..."/>
+                                                    <a href="#"></a>
+                                                </div>
+                                            </li>
+                                            <li className="header-shop-cart">
+                                                <div className="shop-cart-button">
+                                                    <img src={header_cart} alt="Cart"/>
+                                                    <span className="amount">3</span>
+                                                </div>
+                                                <div className="shop-cart">
+                                                    <div className="shop-cart-padding">
+                                                        <ul className="shop-cart__list">
+                                                            <li className="item">
+                                                                <div className="item-image">
+                                                                    <img src={product_01} alt="Item 1"/>
+                                                                </div>
+                                                                <div className="item-detail">
+                                                                    <p className="name">Crackle Plates</p>
+                                                                    <p className="price">$22.00</p>
+                                                                    <p className="amount">x2</p>
+                                                                </div>
+                                                                <span className="remove"></span>
+                                                            </li>
+                                                            <li className="item">
+                                                                <div className="item-image">
+                                                                    <img src={product_02} alt="Item 1"/>
+                                                                </div>
+                                                                <div className="item-detail">
+                                                                    <p className="name">Teako Teapot</p>
+                                                                    <p className="price">$21.00</p>
+                                                                    <p className="amount">x7</p>
+                                                                </div>
+                                                                <span className="remove"></span>
+                                                            </li>
+                                                            <li className="item">
+                                                                <div className="item-image">
+                                                                    <img src={product_03} alt="Item 1"/>
+                                                                </div>
+                                                                <div className="item-detail">
+                                                                    <p className="name">Floor Lamp</p>
+                                                                    <p className="price">$36.00</p>
+                                                                    <p className="amount">x5</p>
+                                                                </div>
+                                                                <span className="remove"></span>
+                                                            </li>
+                                                        </ul>
+                                                        <div className="checkout m-t-26">
+                                                            <p>Subtotal
+                                                                <span className="sub-total">$481.000</span>
+                                                            </p>
+                                                            <p>Total
+                                                                <span className="total">$481.000</span>
+                                                            </p>
+                                                            <a href="#">Checkout</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li className="header-bar">
+                                                <div className="bar-button" data-toggle="modal" data-target="page-sidebar">
+                                                    <img src={header_bar} alt="Bar"/>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="header-wrapper-mobile d-block d-lg-none">
+                            <div className="header-mobile__bar">
+                                <div className="header-mobile__logo">
+                                    <img src={logo_01} alt="Lyrae"/>
+                                </div>
+                                <div className="header-mobile__button">
+                                    <span className="humburger-box">
+                                        <span className="hamburger__inner"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <nav className="header-mobile__navbar">
+                                <ul>
+                                    <li>
+                                        <a href="#">Home</a>
+                                        <ul className="sub-menu">
+                                            <li>
+                                                <a href="index.html">Homepage_v1</a>
+                                            </li>
+                                            <li>
+                                                <a href="index2.html">Homepage_v2</a>
+                                            </li>
+                                            <li>
+                                                <a href="index3.html">Homepage_v3</a>
+                                            </li>
+                                            <li>
+                                                <a href="index4.html">Homepage_v4</a>
+                                            </li>
+                                            <li>
+                                                <a href="index5.html">Homepage_v5</a>
+                                            </li>
+                                            <li>
+                                                <a href="index6.html">Homepage_v6</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">About Us</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Page</a>
+                                        <ul className="sub-menu">
+                                            <li>
+                                                <a href="my-account.html">My Account</a>
+                                            </li>
+                                            <li>
+                                                <a href="forget-password.html">Forget Password</a>
+                                            </li>
+                                            <li>
+                                                <a href="coming-soon.html">Cooming Soon</a>
+                                            </li>
+                                            <li>
+                                                <a href="404.html">404 Error</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Shop</a>
+                                        <ul className="sub-menu">
+                                            <li>
+                                                <a href="shop-list.html">Shop 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="shop-list-nosidebar.html">Shop 2</a>
+                                            </li>
+                                            <li>
+                                                <a href="product-detail.html">Product Detail 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="product-detail-nosidebar.html">Product Detail 2</a>
+                                            </li>
+                                            <li>
+                                                <a href="shop-cart.html">Shop Cart</a>
+                                            </li>
+                                            <li>
+                                                <a href="wishlist.html">Wish List</a>
+                                            </li>
+                                            <li>
+                                                <a href="checkout.html">Check Out</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">blog</a>
+                                        <ul className="sub-menu">
+                                            <li>
+                                                <a href="blog-grid-1.html">Blog Grid 1</a>
+                                            </li>
+                                            <li>
+                                                <a href="blog-grid-2.html">Blog Grid 2</a>
+                                            </li>
+                                            <li>
+                                                <a href="blog-list.html">Blog List</a>
+                                            </li>
+                                            <li>
+                                                <a href="blog-detail.html">Blog Single</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </header>
+                
+                <div className="sidebar">
+                    <div className="sidebar__body ">
+                        <div className="sidebar__heading">
+                            <div className="logo">
+                                <img src={logo_02} alt="Lyrae"/>
+                            </div>
+                            <span className="sidebar__close">
+                                <img src={close_gray} alt="Close"/>
+                            </span>
+                        </div>
+                        <div className="sidebar__content">
+                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking
+                                at its layout.</p>
+                            
+                            <div className="sidebar__image my-51">
+                                <div className="slick-item">
+                                    <img src={resume_01} alt="Image 1"/>
+                                </div>
+                                <div className="slick-item">
+                                    <img src={resume_02} alt="Image 2"/>
+                                </div>
+                                <div className="slick-item">
+                                    <img src={resume_03} alt="Image 3"/>
+                                </div>
+                            </div>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority.</p>
+                            <div className="title-border mx-auto m-t-27 m-b-33"></div>
+                            <nav className="social-media style-2">
+                                <ul>
+                                    <li>
+                                        <a href="#" className="facebook"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="twitter"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="linkedin"></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="google-plus"></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default Header;
