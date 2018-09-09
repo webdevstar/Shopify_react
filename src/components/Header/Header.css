@@ -1,0 +1,16 @@
+.logo_02 {
+	height: 54px;
+}
+header .header-wrapper-desktop .header .header-main .header__button ul li.header-search .search-input a {
+	right: 200px;
+}
+.user {
+	right: 20px;
+	width: 200px;
+	padding: 20px 20px;
+}
+.user .shop-cart__list .item:first-child {
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #999999;
+}

@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import $ from 'jquery';
+import {translate} from 'react-i18next';
+import {Input} from 'reactstrap';
+
+import LanuageSelector from '../LanguageSelector'
 
 import './Header.css';
 
@@ -17,12 +20,27 @@ import resume_01 from '../../images/resume_01.jpg';
 import resume_02 from '../../images/resume_02.jpg';
 import resume_03 from '../../images/resume_03.jpg';
 
-
-
-
 class Header extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            merchant: false,
+            category: false,
+        };
+    }
+
+    componentDidMount() {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/marketplace/DEFAULT')
+            .then(result=>result.json())
+            .then(merchant=>this.setState({merchant}))
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
+            .then(result=>result.json())
+            .then(category=>this.setState({category}))
+    }
+
     render () {
+        const { t, i18n } = this.props;
         return (
             <div>
                 <header>
@@ -31,100 +49,25 @@ class Header extends Component {
                             <div className="header header-style-1">
                                 <div className="header-main">
                                     <div className="header__logo">
-                                        <a href="index.html">
-                                            <img src={logo_01} alt="Lyrae"/>
+                                        <a href="#">
+                                            <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae"/>
                                         </a>
                                     </div>
                                     <nav className="header__navbar">
                                         <ul className="navbar-menu">
                                             <li className="active">
-                                                <a href="#">Home</a>
+                                                <a href="#">{this.state.category ? this.state.category[0].description.name : ''}</a>
                                                 <ul className="sub-menu">
                                                     <li>
-                                                        <a href="index.html">HomePage_v1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index2.html">HomePage_v2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index3.html">HomePage_v3</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index4.html">HomePage_v4</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index5.html">HomePage_v5</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="index6.html">HomePage_v6</a>
+                                                        <a href="#">{t('living room')}</a>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="about.html">About</a>
+                                                <a href="#">{this.state.category ? this.state.category[1].description.name : ''}</a>
                                             </li>
                                             <li>
-                                                <a href="#">page</a>
-                                                <ul className="sub-menu">
-                                                    <li>
-                                                        <a href="my-account.html">My Account</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="forget-password.html">Forget Password</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="coming-soon.html">Cooming Soon</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="404.html">404 Error</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Shop</a>
-                                                <ul className="sub-menu">
-                                                    <li>
-                                                        <a href="shop-list.html">Shop 1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="shop-list-nosidebar.html">Shop 2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-detail.html">Product Detail 1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="product-detail-nosidebar.html">Product Detail 2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="shop-cart.html">Shop Cart</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="wishlist.html">Wish List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="checkout.html">Check Out</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Blog</a>
-                                                <ul className="sub-menu">
-                                                    <li>
-                                                        <a href="blog-grid-1.html">Blog Grid 1</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog-grid-2.html">Blog Grid 2</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog-list.html">Blog List</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog-detail.html">Blog Single</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="contact.html">Contact</a>
+                                                <LanuageSelector/>
                                             </li>
                                         </ul>
                                     </nav>
@@ -139,63 +82,72 @@ class Header extends Component {
                                                     <a href="#"></a>
                                                 </div>
                                             </li>
+
                                             <li className="header-shop-cart">
                                                 <div className="shop-cart-button">
                                                     <img src={header_cart} alt="Cart"/>
                                                     <span className="amount">3</span>
                                                 </div>
                                                 <div className="shop-cart">
-                                                    <div className="shop-cart-padding">
-                                                        <ul className="shop-cart__list">
-                                                            <li className="item">
-                                                                <div className="item-image">
-                                                                    <img src={product_01} alt="Item 1"/>
-                                                                </div>
-                                                                <div className="item-detail">
-                                                                    <p className="name">Crackle Plates</p>
-                                                                    <p className="price">$22.00</p>
-                                                                    <p className="amount">x2</p>
-                                                                </div>
-                                                                <span className="remove"></span>
-                                                            </li>
-                                                            <li className="item">
-                                                                <div className="item-image">
-                                                                    <img src={product_02} alt="Item 1"/>
-                                                                </div>
-                                                                <div className="item-detail">
-                                                                    <p className="name">Teako Teapot</p>
-                                                                    <p className="price">$21.00</p>
-                                                                    <p className="amount">x7</p>
-                                                                </div>
-                                                                <span className="remove"></span>
-                                                            </li>
-                                                            <li className="item">
-                                                                <div className="item-image">
-                                                                    <img src={product_03} alt="Item 1"/>
-                                                                </div>
-                                                                <div className="item-detail">
-                                                                    <p className="name">Floor Lamp</p>
-                                                                    <p className="price">$36.00</p>
-                                                                    <p className="amount">x5</p>
-                                                                </div>
-                                                                <span className="remove"></span>
-                                                            </li>
-                                                        </ul>
-                                                        <div className="checkout m-t-26">
-                                                            <p>Subtotal
-                                                                <span className="sub-total">$481.000</span>
-                                                            </p>
-                                                            <p>Total
-                                                                <span className="total">$481.000</span>
-                                                            </p>
-                                                            <a href="#">Checkout</a>
-                                                        </div>
+                                                    <ul className="shop-cart__list">
+                                                        <li className="item">
+                                                            <div className="item-image">
+                                                                <img src={product_01} alt="Item 1"/>
+                                                            </div>
+                                                            <div className="item-detail">
+                                                                <p className="name">Crackle Plates</p>
+                                                                <p className="price">$22.00</p>
+                                                                <p className="amount">x2</p>
+                                                            </div>
+                                                            <span className="remove"></span>
+                                                        </li>
+                                                        <li className="item">
+                                                            <div className="item-image">
+                                                                <img src={product_02} alt="Item 1"/>
+                                                            </div>
+                                                            <div className="item-detail">
+                                                                <p className="name">Teako Teapot</p>
+                                                                <p className="price">$21.00</p>
+                                                                <p className="amount">x7</p>
+                                                            </div>
+                                                            <span className="remove"></span>
+                                                        </li>
+                                                        <li className="item">
+                                                            <div className="item-image">
+                                                                <img src={product_03} alt="Item 1"/>
+                                                            </div>
+                                                            <div className="item-detail">
+                                                                <p className="name">Floor Lamp</p>
+                                                                <p className="price">$36.00</p>
+                                                                <p className="amount">x5</p>
+                                                            </div>
+                                                            <span className="remove"></span>
+                                                        </li>
+                                                    </ul>
+                                                    <div className="checkout m-t-26">
+                                                        <p>Subtotal
+                                                            <span className="sub-total">$481.000</span>
+                                                        </p>
+                                                        <p>Total
+                                                            <span className="total">$481.000</span>
+                                                        </p>
+                                                        <a href="#">Checkout</a>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li className="header-bar">
-                                                <div className="bar-button" data-toggle="modal" data-target="page-sidebar">
-                                                    <img src={header_bar} alt="Bar"/>
+                                                <div className="bar-button" data-toggle="modal">
+                                                    MyAccount
+                                                </div>
+                                                <div className="shop-cart user">
+                                                    <ul className="shop-cart__list">
+                                                        <li className="item">
+                                                            Register
+                                                        </li>
+                                                        <li className="item">
+                                                            Signin
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </li>
                                         </ul>
@@ -362,4 +314,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default translate("translations")(Header);

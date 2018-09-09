@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import Slider from "react-slick";
 
 
 import slide_01 from '../../images/slide_01.jpg';
