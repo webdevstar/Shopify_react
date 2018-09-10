@@ -27,7 +27,7 @@ class Header extends Component {
         this.state = {
             merchant: false,
             category: false,
-        };
+            chart:false,        };
     }
 
     componentDidMount() {
@@ -37,10 +37,22 @@ class Header extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
             .then(result=>result.json())
             .then(category=>this.setState({category}))
+        // fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart',
+        //     {
+        //         method: 'POST',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({"product":1,"quantity":1})
+        //     })
+        //     .then(result=>result.json())
+        //     .then(chart=>this.setState({chart}))
     }
 
     render () {
         const { t, i18n } = this.props;
+        
         return (
             <div>
                 <header>
@@ -98,28 +110,6 @@ class Header extends Component {
                                                                 <p className="name">Crackle Plates</p>
                                                                 <p className="price">$22.00</p>
                                                                 <p className="amount">x2</p>
-                                                            </div>
-                                                            <span className="remove"></span>
-                                                        </li>
-                                                        <li className="item">
-                                                            <div className="item-image">
-                                                                <img src={product_02} alt="Item 1"/>
-                                                            </div>
-                                                            <div className="item-detail">
-                                                                <p className="name">Teako Teapot</p>
-                                                                <p className="price">$21.00</p>
-                                                                <p className="amount">x7</p>
-                                                            </div>
-                                                            <span className="remove"></span>
-                                                        </li>
-                                                        <li className="item">
-                                                            <div className="item-image">
-                                                                <img src={product_03} alt="Item 1"/>
-                                                            </div>
-                                                            <div className="item-detail">
-                                                                <p className="name">Floor Lamp</p>
-                                                                <p className="price">$36.00</p>
-                                                                <p className="amount">x5</p>
                                                             </div>
                                                             <span className="remove"></span>
                                                         </li>

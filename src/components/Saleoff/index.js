@@ -6,12 +6,29 @@ import image_08 from '../../images/banner-image-08.jpg';
 
 export class Saleoff extends Component {
 
+	constructor() {
+        super();
+        this.state = {
+            banner:false,
+        };
+    }
+
+	componentDidMount() {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/pages')
+            .then(result=>result.json())
+            .then(banner=>this.setState({banner}))
+    }
+
     render() {
+    	console.log(this.state.banner[0]);
+    	if(this.state.banner){
+    		document.getElementById("banner").innerHTML = this.state.banner[0].pageContent;
+    	}
         return (
             <section className="p-t-100 p-b-62 ">
 		        <div className="container">
 		            <div className="row au-row">
-		                <div className="col-md-6">
+		                {/*<div className="col-md-6">
 		                    <div className="au-banner style-9 js-au-banner" data-height="533" data-image={image_10}>
 		                        <a href="#" className="banner-image"></a>
 		                        <div className="banner-content">
@@ -38,6 +55,8 @@ export class Saleoff extends Component {
 		                            <a href="#" className="banner-btn">shop now</a>
 		                        </div>
 		                    </div>
+		                </div>*/}
+		                <div id="banner">
 		                </div>
 		            </div>
 		        </div>

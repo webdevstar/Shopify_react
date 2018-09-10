@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Product from '../Product';
+
 import product_04 from '../../images/product_04.png';
 import product_05 from "../../images/product_05.png";
 import product_06 from "../../images/product_06.png";
@@ -11,7 +13,24 @@ import product_11 from "../../images/product_11.png";
 
 export class Grid_product extends Component {
 
+	constructor() {
+        super();
+        this.state = {
+            products:false,
+        };
+    }
+
+	componentDidMount() {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
+            .then(result=>result.json())
+            .then(products=>this.setState({products}))
+    }
+
     render() {
+    	var products = new Array();
+    	if(this.state.products){
+    		products = this.state.products.products;
+    	}
         return (
         	<section className="py-50">
 		        <div className="port-title">
@@ -49,118 +68,12 @@ export class Grid_product extends Component {
 		                        </ul>
 		                    </div>
 		                    <div className="grid-body row" data-layout="fitRows">
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item chair">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_04} alt="Chair"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Ignacio Chairs</a>
-		                                <div className="price">$39.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item lamp">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_05} alt="Chair"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Diamond Lamp</a>
-		                                <div className="price">$23.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item sofa">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_06} alt="Table" className="m-b-10"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">High Table</a>
-		                                <div className="price">$15.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item lamp">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_07} alt="Lamp"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Pendant Shade</a>
-		                                <div className="price">$20.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item decor">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_08} alt="Lamp"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Aslesha Basket</a>
-		                                <div className="price">$27.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item lamp">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_09} alt="Lamp"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Driva Table Lamp</a>
-		                                <div className="price">$56.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item lamp">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_10} alt="Lamp"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Hanging Sphere</a>
-		                                <div className="price">$18.00</div>
-		                            </div>
-		                        </div>
-		                        <div className="col-lg-3 col-md-4 col-sm-6 grid-item lamp">
-		                            <div className="grid-product">
-		                                <div className="image bg-lightblue">
-		                                    <a href="#">
-		                                        <img src={product_11} alt="Lamp"/>
-		                                    </a>
-		                                    <div className="addcart">
-		                                        <a href="#">Add to cart</a>
-		                                    </div>
-		                                </div>
-		                                <a href="#" className="name">Portable Speaker</a>
-		                                <div className="price">$42.00</div>
-		                            </div>
-		                        </div>
+		                        
+		                        	{
+		                        		products.map((product) =>
+		                        			<Product key={product.toString()} product={product}/>
+		                        		)
+		                        	}
 		                    </div>
 		                </div>
 		            </div>
