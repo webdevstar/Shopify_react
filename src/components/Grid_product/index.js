@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 
 import Product from '../Product';
-
-import product_04 from '../../images/product_04.png';
-import product_05 from "../../images/product_05.png";
-import product_06 from "../../images/product_06.png";
-import product_07 from "../../images/product_07.png";
-import product_08 from "../../images/product_08.png";
-import product_09 from "../../images/product_09.png";
-import product_10 from "../../images/product_10.png";
-import product_11 from "../../images/product_11.png";
+import { addTodo } from '../../actions/cart_item'
 
 export class Grid_product extends Component {
 
@@ -68,12 +60,11 @@ export class Grid_product extends Component {
 		                        </ul>
 		                    </div>
 		                    <div className="grid-body row" data-layout="fitRows">
-		                        
-		                        	{
-		                        		products.map((product) =>
-		                        			<Product key={product.toString()} product={product}/>
-		                        		)
-		                        	}
+	                        	{
+	                        		products.map((product) =>
+	                        			<Product key={product.toString()} product={product}/>
+	                        		)
+	                        	}
 		                    </div>
 		                </div>
 		            </div>

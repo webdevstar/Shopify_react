@@ -17,14 +17,16 @@ export class Product extends Component {
 	                    <a href="#">
 	                        <img src={this.props.product.image.imageUrl} alt="Chair"/>
 	                    </a>
-	                    <div className="addcart">
-	                        <a href="#">Add to cart</a>
-	                    </div>
 	                </div>
 	                <a href="#" className="name">{this.props.product.description.name}</a>
 	                <div className="price">
 	                	<p className="originalPrice">{this.props.product.originalPrice}</p>
 	                	<p className="finalPrice">{this.props.product.finalPrice}</p>
+	                </div>
+	                <div className="addcart">
+		                <div>
+	                        <p>Add to cart</p>
+	                    </div>
 	                </div>
 	            </div>
 	        </div>
