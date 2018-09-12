@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Product from '../Product';
-import { addTodo } from '../../actions/cart_item'
+import { chartTo } from '../../actions/cart_item'
 
 export class Grid_product extends Component {
 
@@ -74,4 +75,4 @@ export class Grid_product extends Component {
     }
 }
 
-export default Grid_product;
+export default connect()(Grid_product);

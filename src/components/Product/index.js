@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import product_04 from '../../images/product_04.png';
+import { chartTo } from '../../actions/cart_item'
 import './product.css';
 
 export class Product extends Component {
@@ -8,6 +9,10 @@ export class Product extends Component {
 	constructor(props) {
         super(props);
     }
+
+    add_to_cart = () => {
+	    this.props.dispatch(chartTo(this.props.product));
+	}
 
     render() {
         return (
@@ -24,9 +29,9 @@ export class Product extends Component {
 	                	<p className="finalPrice">{this.props.product.finalPrice}</p>
 	                </div>
 	                <div className="addcart">
-		                <div>
-	                        <p>Add to cart</p>
-	                    </div>
+	                	<div onClick={this.add_to_cart}>
+				            <p>Add to cart</p>
+				        </div>
 	                </div>
 	            </div>
 	        </div>
@@ -34,4 +39,4 @@ export class Product extends Component {
     }
 }
 
-export default Product;
+export default connect() (Product);

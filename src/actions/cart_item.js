@@ -1,5 +1,9 @@
 
-export const addTodo = cart_item => ({
-  type: 'ADD_TODO',
-  cart_item
+export const chartTo = payload => ({
+  type: 'ADD_Chart',
+  payload
 })
+
+export const show_cart = {
+  type: 'Show_Chart'
+}

@@ -20,7 +20,6 @@ export class Saleoff extends Component {
     }
 
     render() {
-    	console.log(this.state.banner[0]);
     	if(this.state.banner){
     		document.getElementById("banner").innerHTML = this.state.banner[0].pageContent;
     	}

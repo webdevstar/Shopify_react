@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import {translate} from 'react-i18next';
-import {Input} from 'reactstrap';
+import { connect } from 'react-redux';
 
 import LanuageSelector from '../LanguageSelector'
+import Cartbox from '../Cartbox/index.jsx';
+import configureStore from '../../store/configureStore';
 
 import './Header.css';
 
@@ -22,12 +24,12 @@ import resume_03 from '../../images/resume_03.jpg';
 
 class Header extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             merchant: false,
             category: false,
-            chart:false,        };
+        };
     }
 
     componentDidMount() {
@@ -37,22 +39,12 @@ class Header extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
             .then(result=>result.json())
             .then(category=>this.setState({category}))
-        // fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart',
-        //     {
-        //         method: 'POST',
-        //         headers: {
-        //             'Accept': 'application/json',
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({"product":1,"quantity":1})
-        //     })
-        //     .then(result=>result.json())
-        //     .then(chart=>this.setState({chart}))
     }
 
     render () {
+        var carts = this.props.cart.cart_items;
+        console.log(carts);
         const { t, i18n } = this.props;
-        
         return (
             <div>
                 <header>
@@ -101,18 +93,12 @@ class Header extends Component {
                                                     <span className="amount">3</span>
                                                 </div>
                                                 <div className="shop-cart">
-                                                    <ul className="shop-cart__list">
-                                                        <li className="item">
-                                                            <div className="item-image">
-                                                                <img src={product_01} alt="Item 1"/>
-                                                            </div>
-                                                            <div className="item-detail">
-                                                                <p className="name">Crackle Plates</p>
-                                                                <p className="price">$22.00</p>
-                                                                <p className="amount">x2</p>
-                                                            </div>
-                                                            <span className="remove"></span>
-                                                        </li>
+                                                    <ul>
+                                                        {
+                                                            carts.map((cart) =>
+                                                                <Cartbox key={cart.id} cart={cart}/>
+                                                            )
+                                                        }
                                                     </ul>
                                                     <div className="checkout m-t-26">
                                                         <p>Subtotal
@@ -125,7 +111,7 @@ class Header extends Component {
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li className="header-bar">
+                                             <li className="header-bar">
                                                 <div className="bar-button" data-toggle="modal">
                                                     MyAccount
                                                 </div>
@@ -304,4 +290,11 @@ class Header extends Component {
     }
 }
 
-export default translate("translations")(Header);
+const mapStateToProps = (state) => {
+    let { cart } = state;
+    return {
+        cart : cart
+    };
+}
+
+export default connect(mapStateToProps) (translate("translations")(Header));
