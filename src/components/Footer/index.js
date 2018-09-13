@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './footer.css';
+
 import logo_03 from '../../images/icon/logo_03.png';
 import facebook_white from '../../images/icon/facebook_white.png';
 import twitter_white from '../../images/icon/twitter_white.png';
@@ -28,7 +30,26 @@ import cash_05 from '../../images/icon/cash_05.png';
 
 export class Footer extends Component {
 
+	constructor(props) {
+        super(props);
+        this.state = {
+            merchant: false,
+            media: false
+        };
+    }
+
+    componentDidMount() {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/marketplace/DEFAULT')
+            .then(result=>result.json())
+            .then(merchant=>this.setState({merchant}))
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/config')
+            .then(result=>result.json())
+            .then(media=>this.setState({media}))
+    }
+
     render() {
+    	var media = ['facebook:null', 'pinterest:null', 'ga:null', 'instagram:null']
+    	if(this.state.media) media = this.state.media
         return (
         	<footer>
 		        <div className="footer footer-1">
@@ -39,7 +60,7 @@ export class Footer extends Component {
 		                            <div className="footer-item-heading">
 		                                <div className="logo">
 		                                    <a href="#">
-		                                        <img src={logo_03} alt="Lyrae" title="Lyrae"/>
+		                                        <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae" title="Lyrae"/>
 		                                    </a>
 		                                </div>
 		                            </div>
@@ -56,29 +77,35 @@ export class Footer extends Component {
 		                            </div>
 		                            <div className="footer-item-content">
 		                                <div className="footer-infopage">
-		                                    <p>No 40 Baria Sreet 133/2, NewYork</p>
-		                                    <p> Tel: (+300) 125-1365</p>
-		                                    <p> E-mail: markrussell@example.com</p>
+		                                    <p>
+		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.stateProvince: ''}</lavel>&nbsp;&nbsp;
+		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.country: ''}</lavel>&nbsp;&nbsp;
+		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.address: ''}</lavel>&nbsp;&nbsp;
+		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.postalCode: ''}</lavel>&nbsp;&nbsp;
+		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.city: ''}</lavel>
+		                                    </p>
+		                                    <p> Tel:&nbsp; {this.state.merchant ? this.state.merchant.store.phone : ''}</p>
+		                                    <p> E-mail:&nbsp; {this.state.merchant ? this.state.merchant.store.email : ''}</p>
 		                                </div>
 		                                <div className="footer-social m-t-6">
 		                                    <div className="social-item facebook">
 		                                        <a href="#">
-		                                            <img src={facebook_white} alt="Facebook" title="Facebook"/>
+		                                            <img src={facebook_white} style={media.facebook ? {display:'block'} : {display:'none'}} alt="Facebook" title="Facebook"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item twitter">
 		                                        <a href="#">
-		                                            <img src={twitter_white} alt="Twitter" title="Twitter"/>
+		                                            <img src={twitter_white} style={media.pinterest ? {display:'block'} : {display:'none'}} alt="Twitter" title="Twitter"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item linkedin">
 		                                        <a href="#">
-		                                            <img src={linkedin_white} alt="Linkedin" title="Linkedin"/>
+		                                            <img src={linkedin_white} style={media.ga ? {display:'block'} : {display:'none'}} alt="Linkedin" title="Linkedin"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item google-plus">
 		                                        <a href="#">
-		                                            <img src={google_plus_white} alt="Google Plus" title="Google Plus"/>
+		                                            <img src={google_plus_white} style={media.instagram ? {display:'block'} : {display:'none'}} alt="Google Plus" title="Google Plus"/>
 		                                        </a>
 		                                    </div>
 		                                </div>
