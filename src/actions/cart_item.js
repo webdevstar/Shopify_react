@@ -1,9 +1,5 @@
 
-export const chartTo = payload => ({
+export const cartTo = payload => ({
   type: 'ADD_Chart',
   payload
 })
-
-export const show_cart = {
-  type: 'Show_Chart'
-}

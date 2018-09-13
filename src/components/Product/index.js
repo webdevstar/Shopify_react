@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { chartTo } from '../../actions/cart_item'
+import { cartTo } from '../../actions/cart_item'
 import './product.css';
 
 export class Product extends Component {
@@ -11,7 +11,7 @@ export class Product extends Component {
     }
 
     add_to_cart = () => {
-	    this.props.dispatch(chartTo(this.props.product));
+	    this.props.dispatch(cartTo(this.props.product));
 	}
 
     render() {

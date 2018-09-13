@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Product from '../Product';
-import { chartTo } from '../../actions/cart_item'
+import { cartTo } from '../../actions/cart_item'
 
 export class Grid_product extends Component {
 

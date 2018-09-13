@@ -43,7 +43,6 @@ class Header extends Component {
 
     render () {
         var carts = this.props.cart.cart_items;
-        console.log(carts);
         const { t, i18n } = this.props;
         return (
             <div>

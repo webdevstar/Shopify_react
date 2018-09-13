@@ -11,8 +11,27 @@ import brand_05 from '../../images/brand_05.png';
 
 export class Latest_news extends Component {
 
+	constructor(props) {
+        super(props);
+        this.state = {
+            contents: false
+        }
+    }
+
+    componentDidMount() {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/summary')
+            .then(result=>result.json())
+            .then(contents=>this.setState({contents}))
+        
+    }
+
     render() {
-        return (
+    	if(this.state.contents){
+    		// console.log(this.state.contents[0].boxContent);
+        	document.getElementById("contentbox0").innerHTML = this.state.contents[0].boxContent
+        	document.getElementById("contentbox1").innerHTML = this.state.contents[1].boxContent
+        }
+    	return (
 	        <div>
 	        	<section className="p-t-100 p-b-80">
 			        <div className="container">
@@ -28,38 +47,36 @@ export class Latest_news extends Component {
 			            </div>
 			            <div className="row m-t-40 py-20">
 			                <div className="owl-carousel" data-loop="true" data-responsive='{"0":{"items":"1"},"768":{"items":"1"}, "992":{"items":"2"} }'>
-			                    <div className="project ">
-			                        <div className="project-image">
-			                            <a href="#">
-			                                <img src={project_01} alt="Project 1"/>
-			                            </a>
-			                        </div>
-			                        <div className="project-body">
-			                            <p className="date">
-			                                <span className="day">25</span>
-			                                <span className="month">June</span>
-			                            </p>
-			                            <a href="#" className="name">Start Bright</a>
-			                            <p className="resume">But in certain circumstances and owing to the claims of duty.</p>
-			                            <a href="#">Read more</a>
-			                        </div>
-			                    </div>
 			                    <div className="project">
-			                        <div className="project-image">
-			                            <a href="#">
-			                                <img src={project_02} alt="Project 1"/>
-			                            </a>
-			                        </div>
-			                        <div className="project-body">
-			                            <p className="date">
-			                                <span className="day">12</span>
-			                                <span className="month">June</span>
-			                            </p>
-			                            <a href="#" className="name">Classically Stylish</a>
-			                            <p className="resume">At vero eos et accusamus et iusto odio dignissimos ducimusn.</p>
-			                            <a href="#">Read more</a>
-			                        </div>
-			                    </div>
+					                <div className="project-image">
+					                    <a href="#">
+					                        <img src={this.state.contents? this.state.contents[0].image:''} alt="Project 1"/>
+					                    </a>
+					                </div>
+					                <div className="project-body">
+					                    {/*<p className="date">
+					                        <span className="day">12</span>
+					                        <span className="month">June</span>
+					                    </p>*/}
+					                    <a href="#" className="name">{this.state.contents? this.state.contents[0].name:''}</a>
+					                    <div id="contentbox0"></div>
+					                </div>
+					            </div>
+					            <div className="project">
+					                <div className="project-image">
+					                    <a href="#">
+					                        <img src={this.state.contents? this.state.contents[1].image:''} alt="Project 1"/>
+					                    </a>
+					                </div>
+					                <div className="project-body">
+					                    {/*<p className="date">
+					                        <span className="day">12</span>
+					                        <span className="month">June</span>
+					                    </p>*/}
+					                    <a href="#" className="name">{this.state.contents? this.state.contents[1].name:''}</a>
+					                    <div id="contentbox1"></div>
+					                </div>
+					            </div>
 			                </div>
 			            </div>
 			        </div>
