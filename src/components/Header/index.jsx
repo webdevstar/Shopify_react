@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
 import configureStore from '../../store/configureStore';
+import { search } from '../../actions/search'
 
 import './Header.css';
 
@@ -27,9 +28,36 @@ class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            merchant: false,
-            category: false,
+            searchresult: false,
         };
+    }
+
+    handleKeyPress (event) {
+        if(event.key == 'Enter'){
+            const value = event.target.value;
+            if(value == ""){
+                fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
+                    .then(result=>result.json())
+                    .then(products=>this.props.search(products))
+            }
+            else {
+                fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/search', {
+                    method: 'post',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        count: 100,
+                        query: value,
+                        start: 0
+                    })
+                })
+                    .then(result=>result.json())
+                    .then(searchresult=>this.props.search(searchresult))
+            }
+        }
+        
     }
 
     componentDidMount() {
@@ -81,7 +109,7 @@ class Header extends Component {
                                                     <img src={header_search} alt="Search"/>
                                                 </div>
                                                 <div className="search-input">
-                                                    <input type="text" placeholder="Start typing here..."/>
+                                                    <input type="text" name="search" onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
                                                     <a href="#"></a>
                                                 </div>
                                             </li>
@@ -296,4 +324,10 @@ const mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps) (translate("translations")(Header));
+const mapDispatchToProps = (dispatch) => {
+    return {
+        search : (e) => dispatch(search(e))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (translate("translations")(Header));

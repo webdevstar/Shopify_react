@@ -22,12 +22,10 @@ export class Latest_news extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/summary')
             .then(result=>result.json())
             .then(contents=>this.setState({contents}))
-        
     }
 
     render() {
     	if(this.state.contents){
-    		// console.log(this.state.contents[0].boxContent);
         	document.getElementById("contentbox0").innerHTML = this.state.contents[0].boxContent
         	document.getElementById("contentbox1").innerHTML = this.state.contents[1].boxContent
         }

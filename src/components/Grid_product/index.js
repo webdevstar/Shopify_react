@@ -2,27 +2,25 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import Product from '../Product';
-import { cartTo } from '../../actions/cart_item'
+import { search } from '../../actions/search'
 
 export class Grid_product extends Component {
 
 	constructor() {
         super();
-        this.state = {
-            products:false,
-        };
     }
 
 	componentDidMount() {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
             .then(result=>result.json())
-            .then(products=>this.setState({products}))
+        	.then(products=>this.props.search(products))
     }
 
     render() {
+    	console.log(this.props.products)
     	var products = new Array();
-    	if(this.state.products){
-    		products = this.state.products.products;
+    	if(this.props.products){
+    		products = this.props.products.products;
     	}
         return (
         	<section className="py-50">
@@ -63,7 +61,7 @@ export class Grid_product extends Component {
 		                    <div className="grid-body row" data-layout="fitRows">
 	                        	{
 	                        		products.map((product) =>
-	                        			<Product key={product.toString()} product={product}/>
+	                        			<Product key={product.id} product={product}/>
 	                        		)
 	                        	}
 		                    </div>
@@ -75,4 +73,16 @@ export class Grid_product extends Component {
     }
 }
 
-export default connect()(Grid_product);
+const mapStateToProps = (state) => {
+    return {
+        products : state.search.searchresult
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        search : (e) => dispatch(search(e))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Grid_product);

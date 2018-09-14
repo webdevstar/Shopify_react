@@ -50,6 +50,8 @@ export class Footer extends Component {
     render() {
     	var media = ['facebook:null', 'pinterest:null', 'ga:null', 'instagram:null']
     	if(this.state.media) media = this.state.media
+		var d = new Date();
+		var year = d.getFullYear();
         return (
         	<footer>
 		        <div className="footer footer-1">
@@ -188,7 +190,12 @@ export class Footer extends Component {
 		                <div className="container">
 		                    <div className="sub-footer-container">
 		                        <div className="copy-right">
-		                            <p>Copyright © 2018 Lyrae. All rights reserved.</p>
+		                            <p>
+		                            	<lavel>Copyright © </lavel>
+		                            	<lavel>{this.state.merchant ? this.state.merchant.store.name: ''}</lavel>&nbsp;
+		                            	<lavel>{this.state.merchant ? this.state.merchant.store.inBusinessSince: ''}</lavel>&nbsp;
+		                            	<lavel>{year}</lavel>
+		                            </p>
 		                        </div>
 		                        <div className="footer-cash">
 		                            <div className="cash-item">
