@@ -57,7 +57,6 @@ class Header extends Component {
                     .then(searchresult=>this.props.search(searchresult))
             }
         }
-        
     }
 
     componentDidMount() {
@@ -70,7 +69,7 @@ class Header extends Component {
     }
 
     render () {
-        var carts = this.props.cart.cart_items;
+        const carts = this.props.cart_items.products;
         const { t, i18n } = this.props;
         return (
             <div>
@@ -318,9 +317,8 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => {
-    let { cart } = state;
     return {
-        cart : cart
+        cart_items : state.cart.cart_items
     };
 }
 
