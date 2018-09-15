@@ -21,14 +21,14 @@ export class Latest_news extends Component {
     componentDidMount() {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/summary')
             .then(result=>result.json())
-            .then(contents=>this.setState({contents}))
+            .then(contents=>{
+            	this.setState({contents})
+            	document.getElementById("contentbox0").innerHTML = contents[0].boxContent
+        		document.getElementById("contentbox1").innerHTML = contents[1].boxContent
+            })
     }
 
     render() {
-    	if(this.state.contents){
-        	document.getElementById("contentbox0").innerHTML = this.state.contents[0].boxContent
-        	document.getElementById("contentbox1").innerHTML = this.state.contents[1].boxContent
-        }
     	return (
 	        <div>
 	        	<section className="p-t-100 p-b-80">

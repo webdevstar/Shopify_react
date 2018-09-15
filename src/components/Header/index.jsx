@@ -69,7 +69,7 @@ class Header extends Component {
     }
 
     render () {
-        const carts = this.props.cart_items.products;
+        const carts = this.props.cart_items;
         const { t, i18n } = this.props;
         return (
             <div>
@@ -121,23 +121,23 @@ class Header extends Component {
                                                 <div className="shop-cart">
                                                     <ul>
                                                         {
-                                                            carts.map((cart) =>
+                                                            carts.products.map((cart) =>
                                                                 <Cartbox key={cart.id} cart={cart}/>
                                                             )
                                                         }
                                                     </ul>
                                                     <div className="checkout m-t-26">
                                                         <p>Subtotal
-                                                            <span className="sub-total">$481.000</span>
+                                                            <span className="sub-total">{carts.products.length >0 ? carts.displaySubTotal : "US$0.00"}</span>
                                                         </p>
                                                         <p>Total
-                                                            <span className="total">$481.000</span>
+                                                            <span className="total">{carts.products.length >0 ? carts.displayTotal : "US$0.00"}</span>
                                                         </p>
                                                         <a href="#">Checkout</a>
                                                     </div>
                                                 </div>
                                             </li>
-                                             <li className="header-bar">
+                                             <li className="header-shop-cart">
                                                 <div className="bar-button" data-toggle="modal">
                                                     MyAccount
                                                 </div>

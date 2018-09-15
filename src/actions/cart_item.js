@@ -4,7 +4,7 @@ export const cartTo = payload => ({
   payload
 })
 
-export const showto = payload => ({
-  type: 'Show_Chart',
-  payload
-})
+// export const showto = payload => ({
+//   type: 'Show_Chart',
+//   payload
+// })

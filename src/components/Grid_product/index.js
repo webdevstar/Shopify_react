@@ -17,7 +17,6 @@ export class Grid_product extends Component {
     }
 
     render() {
-    	console.log(this.props.products)
     	var products = new Array();
     	if(this.props.products){
     		products = this.props.products.products;

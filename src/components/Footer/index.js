@@ -34,7 +34,7 @@ export class Footer extends Component {
         super(props);
         this.state = {
             merchant: false,
-            media: false
+            media: false,
         };
     }
 
@@ -45,6 +45,11 @@ export class Footer extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/config')
             .then(result=>result.json())
             .then(media=>this.setState({media}))
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/boxes/pitch')
+            .then(result=>result.json())
+            .then(footer=>{
+            	document.getElementById("footer_content").innerHTML = footer.boxContent;
+            })
     }
 
     render() {
@@ -66,11 +71,7 @@ export class Footer extends Component {
 		                                    </a>
 		                                </div>
 		                            </div>
-		                            <div className="footer-item-content">
-		                                <p className="m-t-10">It is a long established fact that a reader will be distracted by the readable content of
-		                                    a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less
-		                                    normal.
-		                                </p>
+		                            <div id="footer_content" className="footer-item-content">
 		                            </div>
 		                        </div>
 		                        <div className="footer-item">
