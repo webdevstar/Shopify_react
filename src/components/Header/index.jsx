@@ -121,8 +121,8 @@ class Header extends Component {
                                                 <div className="shop-cart">
                                                     <ul>
                                                         {
-                                                            carts.products.map((cart) =>
-                                                                <Cartbox key={cart.id} cart={cart}/>
+                                                            carts.products.map((cart, ind) =>
+                                                                <Cartbox key={ind} cart={cart}/>
                                                             )
                                                         }
                                                     </ul>

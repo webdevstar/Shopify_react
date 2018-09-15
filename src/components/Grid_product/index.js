@@ -47,13 +47,7 @@ export class Grid_product extends Component {
 		                                <span data-filter=".sofa">Sofa</span>
 		                            </li>
 		                            <li>
-		                                <span data-filter=".chair">Chair</span>
-		                            </li>
-		                            <li>
-		                                <span data-filter=".decor">Decor</span>
-		                            </li>
-		                            <li>
-		                                <span data-filter=".lamp">lamp</span>
+		                                <span data-filter=".livingroom">Living Room</span>
 		                            </li>
 		                        </ul>
 		                    </div>

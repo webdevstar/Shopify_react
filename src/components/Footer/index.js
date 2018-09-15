@@ -81,11 +81,11 @@ export class Footer extends Component {
 		                            <div className="footer-item-content">
 		                                <div className="footer-infopage">
 		                                    <p>
-		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.stateProvince: ''}</lavel>&nbsp;&nbsp;
-		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.country: ''}</lavel>&nbsp;&nbsp;
-		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.address: ''}</lavel>&nbsp;&nbsp;
-		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.postalCode: ''}</lavel>&nbsp;&nbsp;
-		                                    	<lavel>{this.state.merchant ? this.state.merchant.store.address.city: ''}</lavel>
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.stateProvince: ''}</label>&nbsp;&nbsp;
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.country: ''}</label>&nbsp;&nbsp;
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.address: ''}</label>&nbsp;&nbsp;
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.postalCode: ''}</label>&nbsp;&nbsp;
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.city: ''}</label>
 		                                    </p>
 		                                    <p> Tel:&nbsp; {this.state.merchant ? this.state.merchant.store.phone : ''}</p>
 		                                    <p> E-mail:&nbsp; {this.state.merchant ? this.state.merchant.store.email : ''}</p>
@@ -192,10 +192,10 @@ export class Footer extends Component {
 		                    <div className="sub-footer-container">
 		                        <div className="copy-right">
 		                            <p>
-		                            	<lavel>Copyright © </lavel>
-		                            	<lavel>{this.state.merchant ? this.state.merchant.store.name: ''}</lavel>&nbsp;
-		                            	<lavel>{this.state.merchant ? this.state.merchant.store.inBusinessSince: ''}</lavel>&nbsp;
-		                            	<lavel>{year}</lavel>
+		                            	<label>Copyright © </label>
+		                            	<label>{this.state.merchant ? this.state.merchant.store.name: ''}</label>&nbsp;
+		                            	<label>{this.state.merchant ? this.state.merchant.store.inBusinessSince: ''}</label>&nbsp;
+		                            	<label>{year}</label>
 		                            </p>
 		                        </div>
 		                        <div className="footer-cash">

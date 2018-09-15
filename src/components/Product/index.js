@@ -53,8 +53,12 @@ export class Product extends Component {
     }
 
     render() {
+    	var cartegory = "";
+    	if(this.props.product.categories)
+    		cartegory = this.props.product.categories[0].code
+    	console.log(cartegory);
         return (
-        	<div className="col-lg-3 col-md-4 col-sm-6 grid-item chair">
+        	<div className={"col-lg-3 col-md-4 col-sm-6 grid-item "+cartegory}>
 	            <div className="grid-product">
 	                <div className="image bg-lightblue">
 	                    <a href="#">
