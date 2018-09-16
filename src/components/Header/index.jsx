@@ -104,7 +104,7 @@ class Header extends Component {
                                                 </div>
                                                 <div className="search-input">
                                                     <input type="text" name="search" onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
-                                                    <a className="a">" "</a>
+                                                    <a className="a"></a>
                                                 </div>
                                             </li>
 
@@ -290,16 +290,16 @@ class Header extends Component {
                             <nav className="social-media style-2">
                                 <ul>
                                     <li>
-                                        <a className="a facebook">" "</a>
+                                        <a className="a facebook"></a>
                                     </li>
                                     <li>
-                                        <a className="a twitter">" "</a>
+                                        <a className="a twitter"></a>
                                     </li>
                                     <li>
-                                        <a className="a linkedin">" "</a>
+                                        <a className="a linkedin"></a>
                                     </li>
                                     <li>
-                                        <a className="a google-plus">" "</a>
+                                        <a className="a google-plus"></a>
                                     </li>
                                 </ul>
                             </nav>

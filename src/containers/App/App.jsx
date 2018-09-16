@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import Loader from '../../components/Loader/index.jsx';
 import LandingPage from '../LandingPage/Loadable';
+import ListingPage from '../ListingPage/Loadable';
 
 class App extends Component {
 
@@ -12,6 +13,7 @@ class App extends Component {
                 <Loader/>
                 <Switch>
                     <Route path="/landing" component={LandingPage} />
+                    <Route path="/listing" component={ListingPage} />
                 </Switch>
             </div>
         );
