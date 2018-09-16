@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import './footer.css';
 
-import logo_03 from '../../images/icon/logo_03.png';
 import facebook_white from '../../images/icon/facebook_white.png';
 import twitter_white from '../../images/icon/twitter_white.png';
 import linkedin_white from '../../images/icon/linkedin_white.png';
@@ -66,7 +65,7 @@ export class Footer extends Component {
 		                        <div className="footer-item">
 		                            <div className="footer-item-heading">
 		                                <div className="logo">
-		                                    <a href="#">
+		                                    <a className="a">
 		                                        <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae" title="Lyrae"/>
 		                                    </a>
 		                                </div>
@@ -92,22 +91,22 @@ export class Footer extends Component {
 		                                </div>
 		                                <div className="footer-social m-t-6">
 		                                    <div className="social-item facebook">
-		                                        <a href="#">
+		                                        <a className="a">
 		                                            <img src={facebook_white} style={media.facebook ? {display:'block'} : {display:'none'}} alt="Facebook" title="Facebook"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item twitter">
-		                                        <a href="#">
+		                                        <a className="a">
 		                                            <img src={twitter_white} style={media.pinterest ? {display:'block'} : {display:'none'}} alt="Twitter" title="Twitter"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item linkedin">
-		                                        <a href="#">
+		                                        <a className="a">
 		                                            <img src={linkedin_white} style={media.ga ? {display:'block'} : {display:'none'}} alt="Linkedin" title="Linkedin"/>
 		                                        </a>
 		                                    </div>
 		                                    <div className="social-item google-plus">
-		                                        <a href="#">
+		                                        <a className="a">
 		                                            <img src={google_plus_white} style={media.instagram ? {display:'block'} : {display:'none'}} alt="Google Plus" title="Google Plus"/>
 		                                        </a>
 		                                    </div>
@@ -123,19 +122,19 @@ export class Footer extends Component {
 		                                <ul className="footer-latest-post">
 		                                    <li>
 		                                        <div className="post-item">
-		                                            <a href="#">Neque porro quisquam</a>
+		                                            <a className="a">Neque porro quisquam</a>
 		                                            <span className="post-time">25 / June</span>
 		                                        </div>
 		                                    </li>
 		                                    <li>
 		                                        <div className="post-item">
-		                                            <a href="#">Duis aute irure dolor</a>
+		                                            <a className="a">Duis aute irure dolor</a>
 		                                            <span className="post-time">18 / June</span>
 		                                        </div>
 		                                    </li>
 		                                    <li>
 		                                        <div className="post-item">
-		                                            <a href="#">Neque porro quisquam est</a>
+		                                            <a className="a">Neque porro quisquam est</a>
 		                                            <span className="post-time">22 / June</span>
 		                                        </div>
 		                                    </li>
@@ -152,32 +151,32 @@ export class Footer extends Component {
 		                                    <div className="gallery">
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_01} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_01} alt="Image"/>
+		                                                <img src={gallery_01} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_02} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_02} alt="Image"/>
+		                                                <img src={gallery_02} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_03} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_03} alt="Image"/>
+		                                                <img src={gallery_03} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_04} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_04} alt="Image"/>
+		                                                <img src={gallery_04} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_05} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_05} alt="Image"/>
+		                                                <img src={gallery_05} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                        <div className="gallery-item">
 		                                            <a href={lightbox_06} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_06} alt="Image"/>
+		                                                <img src={gallery_06} alt="gallery"/>
 		                                            </a>
 		                                        </div>
 		                                    </div>
@@ -200,27 +199,27 @@ export class Footer extends Component {
 		                        </div>
 		                        <div className="footer-cash">
 		                            <div className="cash-item">
-		                                <a href="#">
+		                                <a className="a">
 		                                    <img src={cash_01} alt="Master Card" title="Master Card"/>
 		                                </a>
 		                            </div>
 		                            <div className="cash-item">
-		                                <a href="#">
+		                                <a className="a">
 		                                    <img src={cash_02} alt="Paypal" title="Paypal"/>
 		                                </a>
 		                            </div>
 		                            <div className="cash-item">
-		                                <a href="#">
+		                                <a className="a">
 		                                    <img src={cash_03} alt="Visa" title="Visa"/>
 		                                </a>
 		                            </div>
 		                            <div className="cash-item">
-		                                <a href="#">
+		                                <a className="a">
 		                                    <img src={cash_04} alt="America" title="America"/>
 		                                </a>
 		                            </div>
 		                            <div className="cash-item">
-		                                <a href="#">
+		                                <a className="a">
 		                                    <img src={cash_05} alt="Discover" title="Discover"/>
 		                                </a>
 		                            </div>

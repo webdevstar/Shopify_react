@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 
-import { cartkey } from '../../actions/cartkey'
 import './cartbox.css'
 
 export class Cartbox extends Component {
-
-	constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
         	<li className="item">
                 <div className="item-image">
-                    <img src={this.props.cart.image.imageUrl} alt="Item 1"/>
+                    <img src={this.props.cart.image.imageUrl} alt="Item1"/>
                 </div>
                 <div className="item-detail">
                     <p className="name">{this.props.cart.description.name}</p>

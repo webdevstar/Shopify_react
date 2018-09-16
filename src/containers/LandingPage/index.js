@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 
 import Header from '../../components/Header/index.jsx';
 import Footer from '../../components/Footer';
-import Slider_section from '../../components/Slider/index.jsx';
+import SliderSection from '../../components/Slider/index.jsx';
 import Saleoff from '../../components/Saleoff';
-import Grid_product from '../../components/Grid_product';
-import Latest_news from '../../components/Latest_news';
+import GridProduct from '../../components/GridProduct';
+import LatestNews from '../../components/LatestNews';
+
+import totop from '../../images/icon/to_top.png';
 
 export class LandingPage extends Component {
 
@@ -13,11 +15,16 @@ export class LandingPage extends Component {
         return (
             <div>
                 <Header/>
-                <Slider_section/>
+                <SliderSection/>
                 <Saleoff/>
-                <Grid_product/>
-                <Latest_news/>
+                <GridProduct/>
+                <LatestNews/>
                 <Footer/>
+                <div className="to-top">
+                    <span className="bounce">
+                        <img src={totop} alt="To top"/>
+                    </span>
+                </div>
             </div>
         )
     }

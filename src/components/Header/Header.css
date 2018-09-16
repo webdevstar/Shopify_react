@@ -14,3 +14,6 @@ header .header-wrapper-desktop .header .header-main .header__button ul li.header
 	margin-bottom: 10px;
 	border-bottom: 1px solid #999999;
 }
+.a {
+	cursor: pointer;
+}

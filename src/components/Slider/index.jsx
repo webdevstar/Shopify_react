@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import $ from 'jquery';
-
+import './slider.css';
 
 import slide_01 from '../../images/slide_01.jpg';
 import slide_02 from '../../images/slide_02.jpg';
 import slide_03 from '../../images/slide_03.jpg';
 
-class Slider_section extends Component {
+class SliderSection extends Component {
 
     componentDidMount() {
     }
@@ -32,7 +31,7 @@ class Slider_section extends Component {
 		                        </div>
 		                        <div className="tp-caption" data-x="left" data-y="center" data-transform_in="y:80px;opacity:0;s:800;e:easeInOutCubic;" data-transform_out="y:80px;opacity:0;s:300;"
 		                            data-voffset="[160,160,105,105,65,70]" data-hoffset="['60','100','50','20']" data-start="1100">
-		                            <a href="#" className="btn btn-color text-uppercase">Shop now</a>
+		                            <a className="a btn btn-color text-uppercase">Shop now</a>
 		                        </div>
 		                    </li>
 		                    <li data-transition="fade">
@@ -49,7 +48,7 @@ class Slider_section extends Component {
 		                        </div>
 		                        <div className="tp-caption text-center" data-x="center" data-y="center" data-transform_in="y:80px;opacity:0;s:800;e:easeInOutCubic;"
 		                            data-transform_out="y:80px;opacity:0;s:300;" data-voffset="75" data-start="1100">
-		                            <a href="#" className="btn btn-color text-uppercase">Shop now</a>
+		                            <a className="a btn btn-color text-uppercase">Shop now</a>
 		                        </div>
 		                    </li>
 		                    <li data-transition="fade">
@@ -67,7 +66,7 @@ class Slider_section extends Component {
 		                        </div>
 		                        <div className="tp-caption" data-x="left" data-y="center" data-transform_in="y:80px;opacity:0;s:800;e:easeInOutCubic;" data-transform_out="y:80px;opacity:0;s:300;"
 		                            data-hoffset="['60','100','50','20']" data-voffset="[160,160,105,105,65,70]" data-start="1100">
-		                            <a href="#" className="btn btn-color text-uppercase">Shop now</a>
+		                            <a className="a btn btn-color text-uppercase">Shop now</a>
 		                        </div>
 		                    </li>
 		                </ul>
@@ -78,4 +77,4 @@ class Slider_section extends Component {
     }
 }
 
-export default Slider_section;
+export default SliderSection;

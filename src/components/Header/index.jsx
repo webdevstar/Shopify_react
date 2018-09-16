@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
-import configureStore from '../../store/configureStore';
 import { search } from '../../actions/search'
 
 import './Header.css';
@@ -12,10 +11,6 @@ import './Header.css';
 import logo_01 from '../../images/icon/logo_01.png';
 import header_search from '../../images/icon/header-search.png';
 import header_cart from '../../images/icon/header-cart.png';
-import product_01 from '../../images/product_01.png';
-import product_02 from '../../images/product_02.png';
-import product_03 from '../../images/product_03.png';
-import header_bar from '../../images/icon/header-bar.png';
 
 import logo_02 from '../../images/icon/logo_02.png';
 import close_gray from '../../images/icon/close_gray.png';
@@ -33,9 +28,9 @@ class Header extends Component {
     }
 
     handleKeyPress (event) {
-        if(event.key == 'Enter'){
+        if(event.key === 'Enter'){
             const value = event.target.value;
-            if(value == ""){
+            if(value === ""){
                 fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
                     .then(result=>result.json())
                     .then(products=>this.props.search(products))
@@ -70,7 +65,7 @@ class Header extends Component {
 
     render () {
         const carts = this.props.cart_items;
-        const { t, i18n } = this.props;
+        const { t } = this.props;
         return (
             <div>
                 <header>
@@ -79,22 +74,22 @@ class Header extends Component {
                             <div className="header header-style-1">
                                 <div className="header-main">
                                     <div className="header__logo">
-                                        <a href="#">
+                                        <a className="a">
                                             <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae"/>
                                         </a>
                                     </div>
                                     <nav className="header__navbar">
                                         <ul className="navbar-menu">
                                             <li className="active">
-                                                <a href="#">{this.state.category ? this.state.category[0].description.name : ''}</a>
+                                                <a className="a">{this.state.category ? this.state.category[0].description.name : ''}</a>
                                                 <ul className="sub-menu">
                                                     <li>
-                                                        <a href="#">{t('living room')}</a>
+                                                        <a className="a">{t('living room')}</a>
                                                     </li>
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="#">{this.state.category ? this.state.category[1].description.name : ''}</a>
+                                                <a className="a">{this.state.category ? this.state.category[1].description.name : ''}</a>
                                             </li>
                                             <li>
                                                 <LanuageSelector/>
@@ -109,7 +104,7 @@ class Header extends Component {
                                                 </div>
                                                 <div className="search-input">
                                                     <input type="text" name="search" onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
-                                                    <a href="#"></a>
+                                                    <a className="a">" "</a>
                                                 </div>
                                             </li>
 
@@ -133,7 +128,7 @@ class Header extends Component {
                                                         <p>Total
                                                             <span className="total">{carts.products.length >0 ? carts.displayTotal : "US$0.00"}</span>
                                                         </p>
-                                                        <a href="#">Checkout</a>
+                                                        <a className="a">Checkout</a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -171,7 +166,7 @@ class Header extends Component {
                             <nav className="header-mobile__navbar">
                                 <ul>
                                     <li>
-                                        <a href="#">Home</a>
+                                        <a className="a">Home</a>
                                         <ul className="sub-menu">
                                             <li>
                                                 <a href="index.html">Homepage_v1</a>
@@ -197,7 +192,7 @@ class Header extends Component {
                                         <a href="about.html">About Us</a>
                                     </li>
                                     <li>
-                                        <a href="#">Page</a>
+                                        <a className="a">Page</a>
                                         <ul className="sub-menu">
                                             <li>
                                                 <a href="my-account.html">My Account</a>
@@ -214,7 +209,7 @@ class Header extends Component {
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#">Shop</a>
+                                        <a className="a">Shop</a>
                                         <ul className="sub-menu">
                                             <li>
                                                 <a href="shop-list.html">Shop 1</a>
@@ -240,7 +235,7 @@ class Header extends Component {
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#">blog</a>
+                                        <a className="a">blog</a>
                                         <ul className="sub-menu">
                                             <li>
                                                 <a href="blog-grid-1.html">Blog Grid 1</a>
@@ -281,13 +276,13 @@ class Header extends Component {
                             
                             <div className="sidebar__image my-51">
                                 <div className="slick-item">
-                                    <img src={resume_01} alt="Image 1"/>
+                                    <img src={resume_01} alt="Image1"/>
                                 </div>
                                 <div className="slick-item">
-                                    <img src={resume_02} alt="Image 2"/>
+                                    <img src={resume_02} alt="Image2"/>
                                 </div>
                                 <div className="slick-item">
-                                    <img src={resume_03} alt="Image 3"/>
+                                    <img src={resume_03} alt="Image3"/>
                                 </div>
                             </div>
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority.</p>
@@ -295,16 +290,16 @@ class Header extends Component {
                             <nav className="social-media style-2">
                                 <ul>
                                     <li>
-                                        <a href="#" className="facebook"></a>
+                                        <a className="a facebook">" "</a>
                                     </li>
                                     <li>
-                                        <a href="#" className="twitter"></a>
+                                        <a className="a twitter">" "</a>
                                     </li>
                                     <li>
-                                        <a href="#" className="linkedin"></a>
+                                        <a className="a linkedin">" "</a>
                                     </li>
                                     <li>
-                                        <a href="#" className="google-plus"></a>
+                                        <a className="a google-plus">" "</a>
                                     </li>
                                 </ul>
                             </nav>

@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 
-import image_10 from '../../images/banner-image-10.jpg';
-import image_09 from '../../images/banner-image-09.jpg';
-import image_08 from '../../images/banner-image-08.jpg';
-
 export class Saleoff extends Component {
 
 	constructor() {

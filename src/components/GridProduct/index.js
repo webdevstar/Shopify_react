@@ -4,11 +4,7 @@ import { connect } from 'react-redux';
 import Product from '../Product';
 import { search } from '../../actions/search'
 
-export class Grid_product extends Component {
-
-	constructor() {
-        super();
-    }
+export class GridProduct extends Component {
 
 	componentDidMount() {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
@@ -17,7 +13,7 @@ export class Grid_product extends Component {
     }
 
     render() {
-    	var products = new Array();
+    	var products = []
     	if(this.props.products){
     		products = this.props.products.products;
     	}
@@ -78,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Grid_product);
+export default connect(mapStateToProps, mapDispatchToProps)(GridProduct);

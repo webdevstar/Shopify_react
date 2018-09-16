@@ -7,14 +7,6 @@ import './product.css';
 
 export class Product extends Component {
 
-	constructor(props) {
-        super(props);
-    }
-
- //    add_to_cart = () => {
-	//     this.props.dispatch(cartTo(this.props.product));
-	// }
-
 	handleOnclick (event) {
         if(!this.props.cartkey){
 	        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart', {
@@ -29,12 +21,12 @@ export class Product extends Component {
 			    })
 			})
 				.then(result=>result.json())
-	            .then(cart=>{ this.props.addcartkey(cart.code), this.props.cartTo(cart)})
+	            .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
 	    }
 	    else {
 	    	var quantity = 1;
 	    	this.props.cart_items.products.forEach((product) => {
-	    		if(product.id == this.props.product.id) quantity = product.quantity+1
+	    		if(product.id === this.props.product.id) quantity = product.quantity+1
 	    	})
 	    	fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
 			    method: 'post',
@@ -54,18 +46,16 @@ export class Product extends Component {
 
     render() {
     	var cartegory = "";
-    	if(this.props.product.categories)
-    		cartegory = this.props.product.categories[0].code
-    	console.log(cartegory);
+    	if(this.props.product.categories) cartegory = this.props.product.categories[0].code
         return (
         	<div className={"col-lg-3 col-md-4 col-sm-6 grid-item "+cartegory}>
 	            <div className="grid-product">
 	                <div className="image bg-lightblue">
-	                    <a href="#">
+	                    <a className="a">
 	                        <img src={this.props.product.image.imageUrl} alt="Chair"/>
 	                    </a>
 	                </div>
-	                <a href="#" className="name">{this.props.product.description.name}</a>
+	                <a className="a name">{this.props.product.description.name}</a>
 	                <div className="price">
 	                	<p className="originalPrice">{this.props.product.originalPrice}</p>
 	                	<p className="finalPrice">{this.props.product.finalPrice}</p>
