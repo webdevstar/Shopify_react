@@ -1,5 +1,10 @@
 .logo_02 {
 	height: 54px;
+	width: 118.23px !important;
+}
+.header-mobile__logo img {
+	height: 54px;
+	width: 118.23px !important;
 }
 header .header-wrapper-desktop .header .header-main .header__button ul li.header-search .search-input a {
 	right: 200px;

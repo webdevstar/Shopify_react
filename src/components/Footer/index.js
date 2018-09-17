@@ -80,11 +80,11 @@ export class Footer extends Component {
 		                            <div className="footer-item-content">
 		                                <div className="footer-infopage">
 		                                    <p>
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.address: ''}</label>&nbsp;&nbsp;
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.city: ''}</label>&nbsp;&nbsp;
 		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.stateProvince: ''}</label>&nbsp;&nbsp;
 		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.country: ''}</label>&nbsp;&nbsp;
-		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.address: ''}</label>&nbsp;&nbsp;
-		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.postalCode: ''}</label>&nbsp;&nbsp;
-		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.city: ''}</label>
+		                                    	<label>{this.state.merchant ? this.state.merchant.store.address.postalCode: ''}</label>
 		                                    </p>
 		                                    <p> Tel:&nbsp; {this.state.merchant ? this.state.merchant.store.phone : ''}</p>
 		                                    <p> E-mail:&nbsp; {this.state.merchant ? this.state.merchant.store.email : ''}</p>

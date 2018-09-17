@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Menu from '../Menu';
+import './grid.css';
 
 import Product from '../Product';
 import { search } from '../../actions/search'
 
 export class GridProduct extends Component {
 
+	constructor(props) {
+        super(props);
+        this.state = {
+            category: [],
+        };
+    }
+
 	componentDidMount() {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
             .then(result=>result.json())
         	.then(products=>this.props.search(products))
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
+            .then(result=>result.json())
+            .then(category=>this.setState({category}))
     }
 
     render() {
@@ -36,15 +48,30 @@ export class GridProduct extends Component {
 		                <div className="grid">
 		                    <div className="grid-filter">
 		                        <ul className="text-center">
-		                            <li className="active">
+		                            <li className="active category">
 		                                <span data-filter="*">All</span>
 		                            </li>
-		                            <li>
-		                                <span data-filter=".sofa">Sofa</span>
-		                            </li>
-		                            <li>
-		                                <span data-filter=".livingroom">Living Room</span>
-		                            </li>
+		                            {
+		                            	this.state.category.map((category, ind) =>
+                                            <li key={ind} className="category">
+				                                <span data-filter={"."+category.code}>{category.description.name}</span>
+				                                {
+				                                	(category.children.length > 0 ?
+								                        <ul className="category-list">
+								                            {
+								                                category.children.map((children, ind) =>
+								                                    <li key={ind}>
+								                                    	<span data-filter={"."+children.code}>{children.description.name}</span>
+								                                    </li>
+								                                )
+								                            }
+								                        </ul>
+								                        : ''
+								                    )
+				                                }
+				                            </li>
+                                        )
+			                        }
 		                        </ul>
 		                    </div>
 		                    <div className="grid-body row" data-layout="fitRows">

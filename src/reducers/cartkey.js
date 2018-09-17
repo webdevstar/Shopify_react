@@ -9,6 +9,11 @@ const cartkey = (state = initialState, action) => {
         ...state,
         cartkey: action.payload
       };
+    case 'RemoveCartkey':
+      return {
+        ...state,
+        cartkey: false
+      };
     default:
       return state
   }

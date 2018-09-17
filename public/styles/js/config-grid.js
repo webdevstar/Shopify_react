@@ -18,6 +18,16 @@
                         filter: filterValue
                     });
                 });
+                $('.category-list').on('click', 'span', function () {
+                    
+                    var filterValue = $(this).attr('data-filter');
+                    $(this).parent().parent().parent().parent().find('li').removeClass('active');
+                    $(this).parent().parent().find('li').removeClass('active');
+                    $(this).parent().addClass('active');
+                    $grid.isotope({
+                        filter: filterValue
+                    });
+                });
             });
         }, 1000);
     });

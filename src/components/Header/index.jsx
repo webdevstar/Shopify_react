@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
+import Menu from '../Menu';
+import MobileMenu from '../MobileMenu';
 import { search } from '../../actions/search'
+import { cartTo } from '../../actions/cart_item'
+import { cartkey } from '../../actions/cartkey'
 
 import './Header.css';
 
@@ -24,6 +28,7 @@ class Header extends Component {
         super(props);
         this.state = {
             searchresult: false,
+            category: [],
         };
     }
 
@@ -61,10 +66,14 @@ class Header extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
             .then(result=>result.json())
             .then(category=>this.setState({category}))
+        if(this.props.cart_items.quantity == 0){
+            this.props.addcartkey(''); this.props.cartTo(false)
+        }
     }
 
     render () {
         const carts = this.props.cart_items;
+        // const cnt = this.props.cart_items.products.length;
         const { t } = this.props;
         return (
             <div>
@@ -80,17 +89,11 @@ class Header extends Component {
                                     </div>
                                     <nav className="header__navbar">
                                         <ul className="navbar-menu">
-                                            <li className="active">
-                                                <a className="a">{this.state.category ? this.state.category[0].description.name : ''}</a>
-                                                <ul className="sub-menu">
-                                                    <li>
-                                                        <a className="a">{t('living room')}</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a className="a">{this.state.category ? this.state.category[1].description.name : ''}</a>
-                                            </li>
+                                            {
+                                                this.state.category.map((category, ind) =>
+                                                    <Menu key={ind} category={category}/>
+                                                )
+                                            }
                                             <li>
                                                 <LanuageSelector/>
                                             </li>
@@ -111,7 +114,7 @@ class Header extends Component {
                                             <li className="header-shop-cart">
                                                 <div className="shop-cart-button">
                                                     <img src={header_cart} alt="Cart"/>
-                                                    <span className="amount">3</span>
+                                                    <span className="amount">{carts.products.length >0 ? carts.quantity : "0"}</span>
                                                 </div>
                                                 <div className="shop-cart">
                                                     <ul>
@@ -155,7 +158,7 @@ class Header extends Component {
                         <div className="header-wrapper-mobile d-block d-lg-none">
                             <div className="header-mobile__bar">
                                 <div className="header-mobile__logo">
-                                    <img src={logo_01} alt="Lyrae"/>
+                                    <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} alt="Lyrae"/>
                                 </div>
                                 <div className="header-mobile__button">
                                     <span className="humburger-box">
@@ -165,95 +168,19 @@ class Header extends Component {
                             </div>
                             <nav className="header-mobile__navbar">
                                 <ul>
-                                    <li>
+                                    {
+                                        this.state.category.map((category, ind) =>
+                                            <MobileMenu key={ind} category={category}/>
+                                        )
+                                    }
+                                    {<li>
                                         <a className="a">Home</a>
                                         <ul className="sub-menu">
                                             <li>
                                                 <a href="index.html">Homepage_v1</a>
                                             </li>
-                                            <li>
-                                                <a href="index2.html">Homepage_v2</a>
-                                            </li>
-                                            <li>
-                                                <a href="index3.html">Homepage_v3</a>
-                                            </li>
-                                            <li>
-                                                <a href="index4.html">Homepage_v4</a>
-                                            </li>
-                                            <li>
-                                                <a href="index5.html">Homepage_v5</a>
-                                            </li>
-                                            <li>
-                                                <a href="index6.html">Homepage_v6</a>
-                                            </li>
                                         </ul>
-                                    </li>
-                                    <li>
-                                        <a href="about.html">About Us</a>
-                                    </li>
-                                    <li>
-                                        <a className="a">Page</a>
-                                        <ul className="sub-menu">
-                                            <li>
-                                                <a href="my-account.html">My Account</a>
-                                            </li>
-                                            <li>
-                                                <a href="forget-password.html">Forget Password</a>
-                                            </li>
-                                            <li>
-                                                <a href="coming-soon.html">Cooming Soon</a>
-                                            </li>
-                                            <li>
-                                                <a href="404.html">404 Error</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a className="a">Shop</a>
-                                        <ul className="sub-menu">
-                                            <li>
-                                                <a href="shop-list.html">Shop 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-list-nosidebar.html">Shop 2</a>
-                                            </li>
-                                            <li>
-                                                <a href="product-detail.html">Product Detail 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="product-detail-nosidebar.html">Product Detail 2</a>
-                                            </li>
-                                            <li>
-                                                <a href="shop-cart.html">Shop Cart</a>
-                                            </li>
-                                            <li>
-                                                <a href="wishlist.html">Wish List</a>
-                                            </li>
-                                            <li>
-                                                <a href="checkout.html">Check Out</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a className="a">blog</a>
-                                        <ul className="sub-menu">
-                                            <li>
-                                                <a href="blog-grid-1.html">Blog Grid 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-grid-2.html">Blog Grid 2</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-list.html">Blog List</a>
-                                            </li>
-                                            <li>
-                                                <a href="blog-detail.html">Blog Single</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Contact</a>
-                                    </li>
+                                    </li>}
                                 </ul>
                             </nav>
                         </div>
@@ -319,7 +246,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        search : (e) => dispatch(search(e))
+        search : (e) => dispatch(search(e)),
+        addcartkey : (e) => dispatch(cartkey(e)),
+        cartTo : (e) => dispatch(cartTo(e))
     }
 }
 

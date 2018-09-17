@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/Header/index.jsx';
 import Footer from '../../components/Footer';
+import { changeshowlist } from '../../actions/changeshowlist'
 import ShopList from '../../components/ShopList';
 import totop from '../../images/icon/to_top.png';
 import './listingpage.css'
@@ -21,9 +22,9 @@ export class ListingPage extends Component {
         };
     }
 
-    changeshowtype() {
-        // this.props.showtype(this.props.data.id);
-        console.log(this.props.data.id);
+    clickshowtype() {
+        this.props.showtype("cart")
+        // console.log(this.refs.grid.id);
     }
 
     componentDidMount() {
@@ -70,7 +71,7 @@ export class ListingPage extends Component {
                                         </div>
                                         <div className="shop-view-layout">
                                             <span>Show</span>
-                                            <span id="layout_grid" onClick={()=> changeshowtype()}>
+                                            <span id="layout_grid" ref="grid" onClick={()=>this.clickshowtype()}>
                                                 <img src={Grid} alt="Grid"/>
                                             </span>
                                             <span id="layout_list">
@@ -317,7 +318,7 @@ export class ListingPage extends Component {
 
 const showDispatchToProps = (dispatch) => {
     return {
-        showtype : (e) => dispatch(showtype(e))
+        showtype : (e) => dispatch(changeshowlist(e))
     }
 }
 

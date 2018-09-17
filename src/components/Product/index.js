@@ -44,6 +44,45 @@ export class Product extends Component {
 	    }
     }
 
+    componentDidMount() {
+        if(this.props.product.canBePurchased){
+        	if(!this.props.cartkey){
+		        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart', {
+				    method: 'post',
+				    headers: {
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json',
+				    },
+				    body: JSON.stringify({
+				        product: this.props.product.id,
+				        quantity: 1
+				    })
+				})
+					.then(result=>result.json())
+		            .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
+		    }
+		    else {
+		    	var quantity = 1;
+		    	this.props.cart_items.products.forEach((product) => {
+		    		if(product.id === this.props.product.id) quantity = product.quantity+1
+		    	})
+		    	fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
+				    method: 'post',
+				    headers: {
+				        'Accept': 'application/json',
+				        'Content-Type': 'application/json',
+				    },
+				    body: JSON.stringify({
+				        product: this.props.product.id,
+				        quantity: quantity
+				    })
+				})
+					.then(result=>result.json())
+		            .then(cart=>this.props.cartTo(cart))
+		    }
+        }
+    }
+
     render() {
     	var cartegory = "";
     	if(this.props.product.categories) cartegory = this.props.product.categories[0].code

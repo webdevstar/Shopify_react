@@ -4,13 +4,15 @@ import counter from './counter';
 import cart from './cart_item';
 import cartkey from './cartkey';
 import search from './search';
+import show from './showtype';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   counter,
   cart,
   cartkey,
-  search
+  search,
+  show
 });
 
 export default rootReducer;
