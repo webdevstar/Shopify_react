@@ -31,8 +31,15 @@ header .header-wrapper-desktop .header .header-main .header__button ul li.header
 }
 .auto {
 	background: #ffffff;
-	border: solid 1px #999999;
+	border-left: solid 1px #999999;
+	border-right: solid 1px #999999;
 	width: 100%;
+}
+.auto:first-child {
+	border-top: solid 1px #999999;
+}
+.auto:last-child {
+	border-bottom: solid 1px #999999;
 }
 .autolist {
 	cursor: pointer;

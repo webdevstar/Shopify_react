@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {translate} from 'react-i18next';
 import { connect } from 'react-redux';
+import Autocomplete from  'react-autocomplete';
 
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
@@ -22,6 +23,12 @@ import resume_01 from '../../images/resume_01.jpg';
 import resume_02 from '../../images/resume_02.jpg';
 import resume_03 from '../../images/resume_03.jpg';
 
+export function matchStocks(state, value) {
+  return (
+    state.toLowerCase().indexOf(value.toLowerCase()) !== -1
+  );
+}
+
 class Header extends Component {
 
     constructor(props) {
@@ -36,6 +43,7 @@ class Header extends Component {
     }
 
     handleKeyPress (event) {
+        console.log("asf");
         if(event.key === 'Enter'){
             const value = event.target.value;
             this.setState({searchval:event.target.value})
@@ -92,11 +100,35 @@ class Header extends Component {
         if(this.props.cart_items.quantity == 0){
             this.props.addcartkey(''); this.props.cartTo(false)
         }
-    }
 
-    onclickauto(event) {
-        this.setState({searchval:event.currentTarget.textContent})
-        this.setState({autocomplete:{values:[]}})
+        // console.log(this.input.refs.input.);
+        this.input.refs.input.addEventListener('keydown', (event) => {
+            if(event.key === 'Enter'){
+                const value = event.target.value;
+                this.setState({searchval:event.target.value})
+                if(value === ""){
+                    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
+                        .then(result=>result.json())
+                        .then(products=>this.props.search(products))
+                }
+                else {
+                    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/search', {
+                        method: 'post',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            count: 100,
+                            query: value,
+                            start: 0
+                        })
+                    })
+                        .then(result=>result.json())
+                        .then(searchresult=>this.props.search(searchresult))
+                }
+            }
+        })
     }
     removeauto() {
         this.setState({autocomplete:{values:[]}})
@@ -139,23 +171,34 @@ class Header extends Component {
                                                     <img src={header_search} alt="Search"/>
                                                 </div>
                                                 <div className="search-input">
-                                                    <input type="text" name="search" value={this.state.searchval} onChange={(e)=>this.autocomplete(e)} onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
+                                                    <Autocomplete
+                                                        value={ this.state.searchval }
+                                                        ref={el => this.input = el}
+                                                        inputProps={{ id: 'states-autocomplete' }, { placeholder: 'Start typing here...' }}
+                                                        wrapperStyle={{ width: '100%', display: 'inline-block' }}
+                                                        items={ this.state.autocomplete.values }
+                                                        getItemValue={ item => item }
+                                                        shouldItemRender={ matchStocks }
+                                                        onChange={(event, searchval) => this.setState({ searchval }), (e)=>this.autocomplete(e) }
+                                                        onSelect={ searchval => this.setState({ searchval }) }
+                                                        renderMenu={ children => (
+                                                        <div className = "menu">
+                                                            <div className="autocomplete">
+                                                                { children }
+                                                            </div>
+                                                        </div>
+                                                        )}
+                                                        renderItem={ (item, isHighlighted, ind) => (
+                                                            <div className="auto">
+                                                                <div
+                                                                  className={`autolist ${isHighlighted ? 'item-highlighted' : ''}`}
+                                                                  key={ ind } >
+                                                                  { item }
+                                                                </div>
+                                                            </div>
+                                                        )}
+                                                    />
                                                     <a className="a" onClick={()=>this.removeauto()}></a>
-                                                    <div className="autocomplete">
-                                                        {
-                                                            (this.state.autocomplete.values.length>0?
-                                                                <div className="auto">
-                                                                    {
-                                                                        this.state.autocomplete.values.map((auto, ind) =>
-                                                                            <div key={ind} className="autolist" onClick={(e)=>this.onclickauto(e)}>{auto}</div>
-                                                                        )
-                                                                    }
-                                                                </div>:
-                                                                ""
-                                                            )
-                                                        }
-                                                    </div>
-
                                                 </div>
                                             </li>
 
