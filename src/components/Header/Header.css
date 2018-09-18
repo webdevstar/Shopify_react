@@ -22,3 +22,23 @@ header .header-wrapper-desktop .header .header-main .header__button ul li.header
 .a {
 	cursor: pointer;
 }
+.autocomplete {
+	position: absolute;
+	width: 100%;
+	padding: 0 200px 0 150px;
+	/*left: 150px;*/
+    top: 80px;
+}
+.auto {
+	background: #ffffff;
+	border: solid 1px #999999;
+	width: 100%;
+}
+.autolist {
+	cursor: pointer;
+	padding: 3px 10px;
+}
+.autolist:hover {
+	background: #eeeeee;
+	cursor: pointer;
+}

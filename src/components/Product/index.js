@@ -86,6 +86,8 @@ export class Product extends Component {
     render() {
     	var cartegory = "";
     	if(this.props.product.categories) cartegory = this.props.product.categories[0].code
+    	if(this.props.product.originalPrice == this.props.product.finalPrice) var pricestate = true
+    	else var pricestate = false
         return (
         	<div className={"col-lg-3 col-md-4 col-sm-6 grid-item "+cartegory}>
 	            <div className="grid-product">
@@ -96,8 +98,13 @@ export class Product extends Component {
 	                </div>
 	                <a className="a name">{this.props.product.description.name}</a>
 	                <div className="price">
-	                	<p className="originalPrice">{this.props.product.originalPrice}</p>
-	                	<p className="finalPrice">{this.props.product.finalPrice}</p>
+	                	{
+	                		(pricestate == true?<p className="price">{this.props.product.originalPrice}</p>:
+		                	<div>
+		                		<p className="originalPrice">{this.props.product.originalPrice}</p>
+		                		<p className="finalPrice">{this.props.product.finalPrice}</p>
+		                	</div>)
+		                }
 	                </div>
 	                <div className="addcart">
 	                	<div onClick={()=>this.handleOnclick()}>

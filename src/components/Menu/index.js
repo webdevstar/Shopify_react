@@ -7,7 +7,7 @@ export class Menu extends Component {
     render() {
         const { t } = this.props;
         return (
-        	<li className="active">
+        	<li className="">
                 <a className="a">{t(this.props.category.code)}</a>
                 {
                     (this.props.category.children.length > 0 ?

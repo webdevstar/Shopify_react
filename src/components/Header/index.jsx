@@ -29,12 +29,16 @@ class Header extends Component {
         this.state = {
             searchresult: false,
             category: [],
+            testpage: false,
+            autocomplete: {values:[]},
+            searchval: '',
         };
     }
 
     handleKeyPress (event) {
         if(event.key === 'Enter'){
             const value = event.target.value;
+            this.setState({searchval:event.target.value})
             if(value === ""){
                 fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
                     .then(result=>result.json())
@@ -59,6 +63,22 @@ class Header extends Component {
         }
     }
 
+    autocomplete(event) {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/search/autocomplete?lang=en', {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: event.target.value
+            })
+        })
+            .then(result=>result.json())
+            .then(autocomplete=>this.setState({autocomplete}))
+        this.setState({searchval:event.target.value})
+    }
+
     componentDidMount() {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/marketplace/DEFAULT')
             .then(result=>result.json())
@@ -66,14 +86,24 @@ class Header extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
             .then(result=>result.json())
             .then(category=>this.setState({category}))
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/pages')
+            .then(result=>result.json())
+            .then(testpage=>this.setState({testpage}))
         if(this.props.cart_items.quantity == 0){
             this.props.addcartkey(''); this.props.cartTo(false)
         }
     }
 
+    onclickauto(event) {
+        this.setState({searchval:event.currentTarget.textContent})
+        this.setState({autocomplete:{values:[]}})
+    }
+    removeauto() {
+        this.setState({autocomplete:{values:[]}})
+    }
+
     render () {
         const carts = this.props.cart_items;
-        // const cnt = this.props.cart_items.products.length;
         const { t } = this.props;
         return (
             <div>
@@ -95,6 +125,9 @@ class Header extends Component {
                                                 )
                                             }
                                             <li>
+                                                <a className="a">{this.state.testpage ? this.state.testpage[0].name : ''}</a>
+                                            </li>
+                                            <li>
                                                 <LanuageSelector/>
                                             </li>
                                         </ul>
@@ -106,8 +139,23 @@ class Header extends Component {
                                                     <img src={header_search} alt="Search"/>
                                                 </div>
                                                 <div className="search-input">
-                                                    <input type="text" name="search" onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
-                                                    <a className="a"></a>
+                                                    <input type="text" name="search" value={this.state.searchval} onChange={(e)=>this.autocomplete(e)} onKeyPress={(e)=>this.handleKeyPress(e)} placeholder="Start typing here..."/>
+                                                    <a className="a" onClick={()=>this.removeauto()}></a>
+                                                    <div className="autocomplete">
+                                                        {
+                                                            (this.state.autocomplete.values.length>0?
+                                                                <div className="auto">
+                                                                    {
+                                                                        this.state.autocomplete.values.map((auto, ind) =>
+                                                                            <div key={ind} className="autolist" onClick={(e)=>this.onclickauto(e)}>{auto}</div>
+                                                                        )
+                                                                    }
+                                                                </div>:
+                                                                ""
+                                                            )
+                                                        }
+                                                    </div>
+
                                                 </div>
                                             </li>
 
