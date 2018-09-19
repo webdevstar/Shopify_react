@@ -1,4 +1,4 @@
 export const changeshowlist = payload => ({
-  type: 'changeshowlist',
+  type: 'Changeshow',
   payload
 })

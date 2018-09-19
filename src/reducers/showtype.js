@@ -4,7 +4,7 @@ let initialState = {
 
 const show = (state = initialState, action) => {
   switch (action.type) {
-    case 'changeshowlist':
+    case 'Changeshow':
       return {
         ...state,
         showtype: action.payload

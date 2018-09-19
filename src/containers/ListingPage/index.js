@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Header from '../../components/Header/index.jsx';
-import Footer from '../../components/Footer';
 import { changeshowlist } from '../../actions/changeshowlist'
 import ShopList from '../../components/ShopList';
-import totop from '../../images/icon/to_top.png';
 import './listingpage.css'
 
 import page03 from '../../images/bg-page_03.jpg';
@@ -23,7 +20,7 @@ export class ListingPage extends Component {
     }
 
     clickshowtype() {
-        this.props.showtype("cart")
+        this.props.showtype("layout_list")
         // console.log(this.refs.grid.id);
     }
 

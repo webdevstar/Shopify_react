@@ -49,7 +49,7 @@ export class ShopList extends Component {
             <div className="shop-product">
                 <div className="product-image">
                     <a className="a">
-                        <img src={this.props.list.image.imageUrl} alt="Product"/>
+                        <img className="shop-list-img" src={this.props.list.image.imageUrl} alt="Product"/>
                     </a>
                 </div>
                 <div className="product-body">
