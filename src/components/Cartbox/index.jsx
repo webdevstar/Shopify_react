@@ -24,7 +24,7 @@ export class Cartbox extends Component {
         })
             .then(result=>{
                 const status = result.status
-                if(status == 201){
+                if(status === 201){
                     if(this.props.cart_items.products.length <= 1){
                         this.props.removeKey()
                     }

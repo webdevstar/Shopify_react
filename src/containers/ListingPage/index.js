@@ -36,7 +36,6 @@ export class ListingPage extends Component {
     render() {
         return (
             <div>
-                <Header/>
                 <section>
                     <div className="pageintro">
                         <div className="pageintro-bg">
@@ -305,12 +304,6 @@ export class ListingPage extends Component {
                         </div>
                     </div>
                 </section>
-                <Footer/>
-                <div className="to-top">
-                    <span className="bounce">
-                        <img src={totop} alt="To top"/>
-                    </span>
-                </div>
             </div>
         )
     }

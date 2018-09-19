@@ -5,6 +5,7 @@ import cart from './cart_item';
 import cartkey from './cartkey';
 import search from './search';
 import show from './showtype';
+import api from './api';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   cart,
   cartkey,
   search,
-  show
+  show,
+  api
 });
 
 export default rootReducer;

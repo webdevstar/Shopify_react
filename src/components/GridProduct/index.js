@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Menu from '../Menu';
 import './grid.css';
 
 import Product from '../Product';
 import { search } from '../../actions/search'
+import { cartTo } from '../../actions/cart_item'
+import { cartkey } from '../../actions/cartkey'
+import { api } from '../../actions/api'
 
 export class GridProduct extends Component {
 
@@ -12,19 +14,65 @@ export class GridProduct extends Component {
         super(props);
         this.state = {
             category: [],
+            cartid: false
         };
     }
 
 	componentDidMount() {
-        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
-            .then(result=>result.json())
-        	.then(products=>this.props.search(products))
+		if(!this.props.cartkey){
+	        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/group/FEATURED_ITEM')
+	            .then(result=>result.json())
+	        	.then(products=>{
+	        		this.props.search(products)
+	        		products.products.forEach((product) => {
+	        			if(product.canBePurchased){
+	        				this.setState({cartid: product.id})
+	        			}
+	        		})
+	        		if(this.state.cartid){
+	        			fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart', {
+							    method: 'post',
+							    headers: {
+							        'Accept': 'application/json',
+							        'Content-Type': 'application/json',
+							    },
+							    body: JSON.stringify({
+							        product: this.state.cartid,
+							        quantity: 1
+							    })
+							})
+								.then(result=>result.json())
+					            .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
+	        		}
+	        	})
+		}
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
             .then(result=>result.json())
             .then(category=>this.setState({category}))
     }
 
     render() {
+    	if(this.props.products && this.props.cartkey && !this.props.apiroad){
+    		console.log("adf");
+	    	this.props.products.products.forEach((product) => {
+				if(product.canBePurchased && product.id !== this.state.cartid){
+					this.props.api();
+					fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
+					    method: 'post',
+					    headers: {
+					        'Accept': 'application/json',
+					        'Content-Type': 'application/json',
+					    },
+					    body: JSON.stringify({
+					        product: product.id,
+					        quantity: 1
+					    })
+					})
+						.then(result=>result.json())
+			            .then(cart=>this.props.cartTo(cart))
+				}
+			})
+		}
     	var products = []
     	if(this.props.products){
     		products = this.props.products.products;
@@ -77,7 +125,7 @@ export class GridProduct extends Component {
 		                    <div className="grid-body row" data-layout="fitRows">
 	                        	{
 	                        		products.map((product) =>
-	                        			<Product key={product.id} product={product}/>
+	                        			<Product key={product.id} product={product} cartid={this.state.cartid}/>
 	                        		)
 	                        	}
 		                    </div>
@@ -91,13 +139,18 @@ export class GridProduct extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        products : state.search.searchresult
+        products : state.search.searchresult,
+        cartkey : state.cartkey.cartkey,
+        apiroad : state.api.apiroad,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        search : (e) => dispatch(search(e))
+        search : (e) => dispatch(search(e)),
+        addcartkey : (e) => dispatch(cartkey(e)),
+        cartTo : (e) => dispatch(cartTo(e)),
+        api : () => dispatch(api)
     }
 }
 

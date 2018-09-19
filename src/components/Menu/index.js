@@ -14,7 +14,7 @@ export class Menu extends Component {
                         <ul className="sub-menu">
                             {
                                 this.props.category.children.map((children, ind) =>
-                                    <li key={ind}>
+                                    <li key={ind} style={{overflow:"hidden"}}>
                                         <a className="a">{t(children.code : '')}</a>
                                     </li>
                                 )

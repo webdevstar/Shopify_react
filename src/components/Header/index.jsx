@@ -13,7 +13,6 @@ import { cartkey } from '../../actions/cartkey'
 
 import './Header.css';
 
-import logo_01 from '../../images/icon/logo_01.png';
 import header_search from '../../images/icon/header-search.png';
 import header_cart from '../../images/icon/header-cart.png';
 
@@ -71,7 +70,8 @@ class Header extends Component {
         }
     }
 
-    autocomplete(event) {
+    autocomplete(event, searchval) {
+        this.setState({ searchval })
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/search/autocomplete?lang=en', {
             method: 'post',
             headers: {
@@ -97,7 +97,7 @@ class Header extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/content/pages')
             .then(result=>result.json())
             .then(testpage=>this.setState({testpage}))
-        if(this.props.cart_items.quantity == 0){
+        if(this.props.cart_items.quantity === 0){
             this.props.addcartkey(''); this.props.cartTo(false)
         }
 
@@ -136,7 +136,7 @@ class Header extends Component {
 
     render () {
         const carts = this.props.cart_items;
-        const { t } = this.props;
+        // const { t } = this.props;
         return (
             <div>
                 <header>
@@ -174,12 +174,12 @@ class Header extends Component {
                                                     <Autocomplete
                                                         value={ this.state.searchval }
                                                         ref={el => this.input = el}
-                                                        inputProps={{ id: 'states-autocomplete' }, { placeholder: 'Start typing here...' }}
+                                                        inputProps={{ id: 'states-autocomplete', placeholder: 'Start typing here...' }}
                                                         wrapperStyle={{ width: '100%', display: 'inline-block' }}
                                                         items={ this.state.autocomplete.values }
                                                         getItemValue={ item => item }
                                                         shouldItemRender={ matchStocks }
-                                                        onChange={(event, searchval) => this.setState({ searchval }), (e)=>this.autocomplete(e) }
+                                                        onChange={(e, searchval) =>this.autocomplete(e, searchval) }
                                                         onSelect={ searchval => this.setState({ searchval }) }
                                                         renderMenu={ children => (
                                                         <div className = "menu">
@@ -188,17 +188,16 @@ class Header extends Component {
                                                             </div>
                                                         </div>
                                                         )}
-                                                        renderItem={ (item, isHighlighted, ind) => (
-                                                            <div className="auto">
+                                                        renderItem={ (item, isHighlighted) => (
+                                                            <div className="auto" key={ item } >
                                                                 <div
-                                                                  className={`autolist ${isHighlighted ? 'item-highlighted' : ''}`}
-                                                                  key={ ind } >
+                                                                  className={`autolist ${isHighlighted ? 'item-highlighted' : ''}`}>
                                                                   { item }
                                                                 </div>
                                                             </div>
                                                         )}
                                                     />
-                                                    <a className="a" onClick={()=>this.removeauto()}></a>
+                                                    <a className="a" onClick={()=>this.removeauto()}> </a>
                                                 </div>
                                             </li>
 
@@ -308,16 +307,16 @@ class Header extends Component {
                             <nav className="social-media style-2">
                                 <ul>
                                     <li>
-                                        <a className="a facebook"></a>
+                                        <a className="a facebook"> </a>
                                     </li>
                                     <li>
-                                        <a className="a twitter"></a>
+                                        <a className="a twitter"> </a>
                                     </li>
                                     <li>
-                                        <a className="a linkedin"></a>
+                                        <a className="a linkedin"> </a>
                                     </li>
                                     <li>
-                                        <a className="a google-plus"></a>
+                                        <a className="a google-plus"> </a>
                                     </li>
                                 </ul>
                             </nav>
