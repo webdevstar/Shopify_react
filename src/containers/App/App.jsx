@@ -6,6 +6,7 @@ import Header from '../../components/Header/index.jsx';
 import Footer from '../../components/Footer';
 import LandingPage from '../LandingPage/Loadable';
 import ListingPage from '../ListingPage/Loadable';
+import ProductdetailsPage from '../ProductdetailsPage/Loadable';
 
 import totop from '../../images/icon/to_top.png';
 
@@ -19,6 +20,7 @@ class App extends Component {
                 <Switch>
                     <Route path="/landing" component={LandingPage} />
                     <Route path="/listing" component={ListingPage} />
+                    <Route path="/productdetails" component={ProductdetailsPage} />
                 </Switch>
                 <Footer/>
                 <div className="to-top">

@@ -1,12 +1,4 @@
 $(document).ready(function(){
-    // (function ($) {
-    //     "use strict";
-    //     // use strict
-    //     $(window).on('load', function () {
-    //         $('.loading').fadeOut();
-    //     });
-    // })(jQuery);
-
     $(window).on('load', function () {
         (function ($) {
             "use strict";

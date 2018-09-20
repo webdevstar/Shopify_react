@@ -4,8 +4,6 @@ import {connect} from "react-redux";
 import { cartTo, removeInCart } from '../../actions/cart_item'
 import { cartkey, removeCartkey } from '../../actions/cartkey'
 
-
-
 import './cartbox.css'
 
 export class Cartbox extends Component {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 import { changeshowlist } from '../../actions/changeshowlist'
 import ShopList from '../../components/ShopList';
@@ -19,9 +20,11 @@ export class ListingPage extends Component {
         };
     }
 
-    clickshowtype() {
-        this.props.showtype("layout_list")
-        // console.log(this.refs.grid.id);
+    gridshowtype() {
+        this.props.showtype(this.refs.grid.id)
+    }
+    listshowtype() {
+        this.props.showtype(this.refs.list.id)
     }
 
     componentDidMount() {
@@ -67,10 +70,10 @@ export class ListingPage extends Component {
                                         </div>
                                         <div className="shop-view-layout">
                                             <span>Show</span>
-                                            <span id="layout_grid" ref="grid" onClick={()=>this.clickshowtype()}>
+                                            <span id="layout_grid" ref="grid" onClick={()=>this.gridshowtype()}>
                                                 <img src={Grid} alt="Grid"/>
                                             </span>
-                                            <span id="layout_list">
+                                            <span id="layout_list" ref="list" onClick={()=>this.listshowtype()}>
                                                 <img src={List} alt="List"/>
                                             </span>
                                         </div>
@@ -182,7 +185,7 @@ export class ListingPage extends Component {
                                             </ul>
                                         </div>
                                     </div>
-                                    <div className="page-sidebar-item">
+                                    {/*<div className="page-sidebar-item">
                                         <div className="sidebar-item__heading">
                                             <h3 className="title">shop by color</h3>
                                             <div className="title-border m-b-24"></div>
@@ -295,7 +298,7 @@ export class ListingPage extends Component {
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div>*/}
                                 </div>
                             </div>
                         </div>
@@ -306,10 +309,17 @@ export class ListingPage extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    
+  }
+}
 const showDispatchToProps = (dispatch) => {
     return {
-        showtype : (e) => dispatch(changeshowlist(e))
+        // showtype: bindActionCreators(changeshowlist, dispatch)
+        showtype : (e) => dispatch(changeshowlist(e)),
+        // sdf: ()=> {console.log(dispatch)}
     }
 }
 
-export default connect(showDispatchToProps) (ListingPage);
+export default connect(mapStateToProps, showDispatchToProps) (ListingPage);

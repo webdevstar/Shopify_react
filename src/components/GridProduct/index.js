@@ -53,7 +53,6 @@ export class GridProduct extends Component {
 
     render() {
     	if(this.props.products && this.props.cartkey && !this.props.apiroad){
-    		console.log("adf");
 	    	this.props.products.products.forEach((product) => {
 				if(product.canBePurchased && product.id !== this.state.cartid){
 					this.props.api();

@@ -45,6 +45,8 @@ export class ShopList extends Component {
     }
 
     render() {
+        var pricestate = false
+        if(this.props.list.originalPrice === this.props.list.finalPrice) pricestate = true
         return (
             <div className="shop-product">
                 <div className="product-image">
@@ -55,14 +57,23 @@ export class ShopList extends Component {
                 <div className="product-body">
                     <a className="a name">{this.props.list.description.name}</a>
                     <div className="price">
-                        <p className="originalPrice">{this.props.list.originalPrice}</p>
-                        <p className="finalPrice">{this.props.list.finalPrice}</p>
+                        {
+                            (pricestate === true?<p className="price">{this.props.list.originalPrice}</p>:
+                            <div>
+                                <p className="originalPrice">{this.props.list.originalPrice}</p>
+                                <p className="finalPrice">{this.props.list.finalPrice}</p>
+                            </div>)
+                        }
                     </div>
-                    <div className="addcart">
-                        <div onClick={()=>this.handleOnclick()}>
-                            <p>Add to cart</p>
-                        </div>
-                    </div>
+                    {
+                        (this.props.showtype === "layout_grid"?
+                        <div className="addcart">
+                            <div onClick={()=>this.handleOnclick()}>
+                                <p>Add to cart</p>
+                            </div>
+                        </div>:
+                        "")
+                    }
                     <p className="product-color">
                         <span className="color beige"></span>
                         <span className="color gray"></span>
@@ -84,7 +95,8 @@ export class ShopList extends Component {
 const keyStateToProps = (state) => {
     return {
         cartkey : state.cartkey.cartkey,
-        cart_items : state.cart.cart_items
+        cart_items : state.cart.cart_items,
+        showtype : state.show.showtype
     }
 }
 

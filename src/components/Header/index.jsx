@@ -42,7 +42,6 @@ class Header extends Component {
     }
 
     handleKeyPress (event) {
-        console.log("asf");
         if(event.key === 'Enter'){
             const value = event.target.value;
             this.setState({searchval:event.target.value})
