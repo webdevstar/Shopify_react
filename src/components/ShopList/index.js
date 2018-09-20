@@ -82,7 +82,7 @@ export class ShopList extends Component {
                         it is pain, but because occasionally circumstances occur in which toil and pain can
                         procure him some great pleasure.</p>
                     <div className="product-button">
-                        <a className="a add-to-cart">Add to cart</a>
+                        <a className="a add-to-cart" onClick={()=>this.handleOnclick()}>Add to cart</a>
                         <a className="a add-to-wishlist"> </a>
                     </div>
                     <div className="product-rating" data-star="4"></div>

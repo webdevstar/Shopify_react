@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 
 import { changeshowlist } from '../../actions/changeshowlist'
+import { cartTo } from '../../actions/cart_item'
+import { cartkey } from '../../actions/cartkey'
 import ShopList from '../../components/ShopList';
 import './productdetails.css'
 
@@ -24,6 +26,43 @@ export class ListingPage extends Component {
         this.state = {
             productdetails: false
         };
+    }
+
+    handleOnclick (event) {
+        if(!this.props.cartkey){
+            fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart', {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product: this.state.productdetails.id,
+                    quantity: 1
+                })
+            })
+                .then(result=>result.json())
+                .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
+        }
+        else {
+            var quantity = 1;
+            this.props.cart_items.products.forEach((product) => {
+                if(product.id === this.state.productdetails.id) quantity = product.quantity+1
+            })
+            fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    product: this.state.productdetails.id,
+                    quantity: quantity
+                })
+            })
+                .then(result=>result.json())
+                .then(cart=>this.props.cartTo(cart))
+        }
     }
 
     componentDidMount() {
@@ -71,7 +110,7 @@ export class ListingPage extends Component {
                                                 <div className="main-frame">
                                                     <div className="wrap-main-pic">
                                                         <div className="main-pic">
-                                                            <img src={prodetail01} alt="prodetail01"/>
+                                                            <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -89,7 +128,7 @@ export class ListingPage extends Component {
                                                     <div className="sub-frame sub-1">
                                                         <div className="wrap-main-pic">
                                                             <div className="main-pic">
-                                                                <img src={prodetail01} alt="prodetail01"/>
+                                                                <img src={(this.state.productdetails? this.state.productdetails.images.imageUrl:'')} alt="prodetail01"/>
                                                             </div>
                                                         </div>
                                                         <div className="btn-sub-frame"></div>
@@ -123,8 +162,7 @@ export class ListingPage extends Component {
                                                         <i className="fa fa-angle-up"></i>
                                                     </span>
                                                 </div>
-                                                <a className="a add-to-cart">Add to cart</a>
-                                                <a className="a add-to-wishlist"> </a>
+                                                <a className="a add-to-cart" onClick={()=>this.handleOnclick()}>Add to cart</a>
                                             </div>
                                             <div className="product-available">
                                                 <span>Available :</span>
@@ -132,12 +170,18 @@ export class ListingPage extends Component {
                                             </div>
                                             <div className="product-sku">
                                                 <span className="text-black">SKU: </span>
-                                                2305
+                                                {(this.state.productdetails? this.state.productdetails.sku:'')}
                                             </div>
                                             <div className="product-categories">
                                                 <span className="text-black">Categories:</span>
-                                                <a className="a">Furniture</a>
-                                                <a className="a">Decor</a>
+                                                {
+                                                    (this.state.productdetails?
+                                                        this.state.productdetails.categories.map((categorie, ind) =>
+                                                            <a className="a" key={ind}>{categorie.description.name}</a>
+                                                        )
+                                                    :'')
+                                                    
+                                                }
                                             </div>
                                             <div className="product-share">
                                                 <span className="text-black">Share: </span>
@@ -164,7 +208,7 @@ export class ListingPage extends Component {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div className="product-rating" data-star="5"></div>
+                                            <div className="product-rating" data-star={(this.state.productdetails? this.state.productdetails.rating:0)}></div>
                                         </div>
                                     </div>
                                     <div className="au-tabs">
@@ -274,17 +318,19 @@ export class ListingPage extends Component {
     }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    
-  }
-}
-const showDispatchToProps = (dispatch) => {
+const keyStateToProps = (state) => {
     return {
-        // showtype: bindActionCreators(changeshowlist, dispatch)
-        showtype : (e) => dispatch(changeshowlist(e)),
-        // sdf: ()=> {console.log(dispatch)}
+        cartkey : state.cartkey.cartkey,
+        cart_items : state.cart.cart_items,
+        showtype : state.show.showtype
     }
 }
 
-export default connect(mapStateToProps, showDispatchToProps) (ListingPage);
+const keyDispatchToProps = (dispatch) => {
+    return {
+        addcartkey : (e) => dispatch(cartkey(e)),
+        cartTo : (e) => dispatch(cartTo(e))
+    }
+}
+
+export default connect(keyStateToProps, keyDispatchToProps) (ListingPage);
