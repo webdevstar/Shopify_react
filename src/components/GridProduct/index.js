@@ -42,7 +42,7 @@ export class GridProduct extends Component {
 							    })
 							})
 								.then(result=>result.json())
-					            .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
+					            .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartToitem(cart)})
 	        		}
 	        	})
 		}
@@ -68,7 +68,7 @@ export class GridProduct extends Component {
 					    })
 					})
 						.then(result=>result.json())
-			            .then(cart=>this.props.cartTo(cart))
+			            .then(cart=>this.props.cartToitem(cart))
 				}
 			})
 		}
@@ -148,7 +148,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         search : (e) => dispatch(search(e)),
         addcartkey : (e) => dispatch(cartkey(e)),
-        cartTo : (e) => dispatch(cartTo(e)),
+        cartToitem : (e) => dispatch(cartTo(e)),
         api : () => dispatch(api)
     }
 }

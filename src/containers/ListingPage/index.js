@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
 
 import { changeshowlist } from '../../actions/changeshowlist'
 import ShopList from '../../components/ShopList';

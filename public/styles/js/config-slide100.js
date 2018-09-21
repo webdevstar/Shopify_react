@@ -1,27 +1,29 @@
 $(document).ready(function(){
     $(window).on('load', function () {
-        (function ($) {
-            $('#slide100-01').slide100({
-                autoPlay: "false",
-                timeAuto: 3000,
-                deLay: 400,
+        setTimeout(function(){
+            (function ($) {
+                $('#slide100-01').slide100({
+                    autoPlay: "false",
+                    timeAuto: 3000,
+                    deLay: 400,
 
-                linkIMG: [
-                    'images/pro-detail-01.jpg',
-                    'images/pro-detail-02.jpg',
-                    'images/pro-detail-03.jpg',
-                    'images/pro-detail-04.jpg',
-                    'images/pro-detail-04.jpg',
-                ],
+                    linkIMG: [
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                    ],
 
-                linkThumb: [
-                    'images/pro-detail-thumb-01.jpg',
-                    'images/pro-detail-thumb-02.jpg',
-                    'images/pro-detail-thumb-03.jpg',
-                    'images/pro-detail-thumb-04.jpg',
-                    'images/pro-detail-thumb-04.jpg',
-                ]
-            });
-        })(jQuery);
+                    linkThumb: [
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                        'https://s3.ca-central-1.amazonaws.com/shopizer-demo/products/DEFAULT/test/SMALL/IMG_9386_200x152.jpg',
+                    ]
+                });
+            })(jQuery);
+        },500);
     });
 });

@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
 
-import { changeshowlist } from '../../actions/changeshowlist'
 import { cartTo } from '../../actions/cart_item'
 import { cartkey } from '../../actions/cartkey'
-import ShopList from '../../components/ShopList';
 import './productdetails.css'
 
 import page03 from '../../images/bg-page_03.jpg';
-import prodetail01 from '../../images/pro-detail-01.jpg';
-import prodetail02 from '../../images/pro-detail-thumb-02.jpg';
-
 import prorightblack from '../../images/icon/pro-right-black.png';
 import proleftblack from '../../images/icon/pro-left-black.png';
-
 import wishlistproduct_01 from '../../images/wishlist_product_01.png';
-
 import Search from '../../images/icon/search.png';
 
 export class ListingPage extends Component {
@@ -75,6 +67,17 @@ export class ListingPage extends Component {
     }
 
     render() {
+        // var imageurl = this.state.productdetails? this.state.productdetails.image.imageUrl:''
+        // $(document).ready(function(){
+        //     $(window).on('load', function () {
+        //         setTimeout(function(){
+        //             $('.main-pic').toArray().forEach((object)=>{
+        //                 // $(object).find('img').attr('src', "imageurl");
+        //                 console.log(object);
+        //             })
+        //         },1500);
+        //     });
+        // });
         var pricestate = false
         if(this.state.productdetails.originalPrice === this.state.productdetails.finalPrice) pricestate = true
         return (
@@ -128,7 +131,37 @@ export class ListingPage extends Component {
                                                     <div className="sub-frame sub-1">
                                                         <div className="wrap-main-pic">
                                                             <div className="main-pic">
-                                                                <img src={(this.state.productdetails? this.state.productdetails.images.imageUrl:'')} alt="prodetail01"/>
+                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="btn-sub-frame"></div>
+                                                    </div>
+                                                </div>
+                                                <div className="thum-100">
+                                                    <div className="sub-frame sub-1">
+                                                        <div className="wrap-main-pic">
+                                                            <div className="main-pic">
+                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="btn-sub-frame"></div>
+                                                    </div>
+                                                </div>
+                                                <div className="thum-100">
+                                                    <div className="sub-frame sub-1">
+                                                        <div className="wrap-main-pic">
+                                                            <div className="main-pic">
+                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
+                                                            </div>
+                                                        </div>
+                                                        <div className="btn-sub-frame"></div>
+                                                    </div>
+                                                </div>
+                                                <div className="thum-100">
+                                                    <div className="sub-frame sub-1">
+                                                        <div className="wrap-main-pic">
+                                                            <div className="main-pic">
+                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
                                                             </div>
                                                         </div>
                                                         <div className="btn-sub-frame"></div>
@@ -284,26 +317,6 @@ export class ListingPage extends Component {
                                                             </div>
                                                         </div>
                                                     </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="port-title justify-content-center text-center">
-                                        <h2 className="title">related products</h2>
-                                        <div className="title-border mx-auto m-b-70"></div>
-                                    </div>
-                                    <div className="related-products">
-                                        <div className="owl-carousel row" data-responsive='{"0":{"items":"1"},"576":{"items":"1"},"768":{"items":"2"}, "992":{"items":"3"} }'>
-                                            <div className="col-md-12">
-                                                <div className="grid-product">
-                                                    <div className="image bg-lightblue">
-                                                        <img src="images/product_07.png" alt="Chair"/>
-                                                        <div className="addcart">
-                                                            <a className="a">Add to cart</a>
-                                                        </div>
-                                                    </div>
-                                                    <div className="name">Pendant Shade</div>
-                                                    <div className="price">$20.00</div>
                                                 </div>
                                             </div>
                                         </div>
