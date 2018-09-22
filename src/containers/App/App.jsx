@@ -9,6 +9,8 @@ import ListingPage from '../ListingPage/Loadable';
 import ProductdetailsPage from '../ProductdetailsPage/Loadable';
 import ContactusPage from '../ContactusPage/Loadable';
 import LoginPage from '../LoginPage/Loadable';
+import Forgotpass from '../Forgotpass/Loadable';
+import Checkout from '../CheckoutPage/Loadable';
 
 import totop from '../../images/icon/to_top.png';
 
@@ -25,6 +27,8 @@ class App extends Component {
                     <Route path="/productdetails" component={ProductdetailsPage} />
                     <Route path="/contactus" component={ContactusPage} />
                     <Route path="/login" component={LoginPage} />
+                    <Route path="/forgotpass" component={Forgotpass} />
+                    <Route path="/checkout" component={Checkout} />
                 </Switch>
                 <Footer/>
                 <div className="to-top">

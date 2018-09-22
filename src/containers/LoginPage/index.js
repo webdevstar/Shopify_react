@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
+import './login.css'
+import bgpage01 from '../../images/bg-page_01.jpg';
 
 class LoginPage extends Component {
 
     render() {
         return (
             <div>
+            <section>
+                <div className="pageintro">
+                    <div className="pageintro-bg">
+                        <img src={bgpage01} alt="About Us"/>
+                    </div>
+                    <div className="pageintro-body">
+                        <h1 className="pageintro-title">My account</h1>
+                        <nav className="pageintro-breadcumb">
+                            <ul>
+                                <li>
+                                    <a className="a">Home</a>
+                                </li>
+                                <li>
+                                    <a className="a">My Account</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </section>
                 <section>
                     <div className="container py-70 py-tn-40">
                         <div className="row">
@@ -28,7 +50,7 @@ class LoginPage extends Component {
                                                     <label>Remember me</label>
                                                 </div>
                                                 <div className="form-forgot w-100 m-t-10">
-                                                    <a href="#">Lost your password?</a>
+                                                    <a className="a">Lost your password?</a>
                                                 </div>
                                             </div>
                                         </form>
