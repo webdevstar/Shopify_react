@@ -8,8 +8,6 @@ import './productdetails.css'
 import page03 from '../../images/bg-page_03.jpg';
 import prorightblack from '../../images/icon/pro-right-black.png';
 import proleftblack from '../../images/icon/pro-left-black.png';
-import wishlistproduct_01 from '../../images/wishlist_product_01.png';
-import Search from '../../images/icon/search.png';
 
 export class ListingPage extends Component {
 
@@ -81,7 +79,7 @@ export class ListingPage extends Component {
         var pricestate = false
         if(this.state.productdetails.originalPrice === this.state.productdetails.finalPrice) pricestate = true
         return (
-            <div>
+            <div id="productdetails">
                 <section>
                     <div className="pageintro">
                         <div className="pageintro-bg">

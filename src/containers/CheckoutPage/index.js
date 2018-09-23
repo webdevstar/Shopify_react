@@ -33,10 +33,10 @@ class Checkout extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="checkout-heading">
-                                <a href="#">Returning customer? Click here to login</a>
+                                <a className="a">Returning customer? Click here to login</a>
                             </div>
                             <div className="checkout-heading">
-                                <a href="#">Have a coupon? Click here to enter your code</a>
+                                <a className="a">Have a coupon? Click here to enter your code</a>
                             </div>
                         </div>
                         <div className="col-md-6">
@@ -411,7 +411,7 @@ class Checkout extends Component {
                                     <div className="checkout-paypal m-t-43">
                                         <label>Paypal</label>
                                         <img src={paypal} alt="paypal"/>
-                                        <a href="#">What is paypal?</a>
+                                        <a className="a">What is paypal?</a>
                                     </div>
                                     <button className="process-button m-t-50 float-right">poceed to paypal</button>
                                 </form>
