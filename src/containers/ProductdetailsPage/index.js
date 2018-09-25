@@ -14,7 +14,8 @@ export class ListingPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            productdetails: false
+            productdetails: false,
+            reviews: false
         };
     }
 
@@ -61,6 +62,12 @@ export class ListingPage extends Component {
             .then(productdetails=>{
                 this.setState({ productdetails: productdetails })
                 document.getElementById("description").innerHTML = productdetails.description.description;
+            })
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/100/reviews')
+            .then(result=>result.json())
+            .then(reviews=>{
+                this.setState({ reviews: reviews })
+                document.getElementById("review_discription").innerHTML = reviews[0].description+"<br/>"+reviews[0].date;
             })
     }
 
@@ -179,8 +186,21 @@ export class ListingPage extends Component {
                                                 }
                                             </div>
                                             <p className="product-color">
-                                                <span className="color beige"></span>
-                                                <span className="color black"></span>
+                                                {
+                                                    ()=>{
+                                                        if(this.state.productdetails.options){
+                                                            {
+                                                                this.state.productdetails.options.optionValues.map((color)=> {
+                                                                    <div className="color">
+                                                                        <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
+                                                                        <span>{color.name}</span>
+                                                                        <span>{color.price? color.price:''}</span>
+                                                                    </div>
+                                                                })
+                                                            }
+                                                        }
+                                                    }
+                                                }
                                             </p>
                                             <p id="description" className="description"></p>
                                             <div className="product-button">
@@ -256,11 +276,7 @@ export class ListingPage extends Component {
                                         </ul>
                                         <div className="tab-content">
                                             <div id="description-tab" className="tab-pane active">
-                                                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                                                    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-                                                    architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-                                                    sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                                                    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia.</p>
+                                                <p id="description_new"></p>
                                             </div>
                                             <div id="additional-tab" className="tab-pane">
                                                 <table className="product-additionnal">
@@ -278,7 +294,7 @@ export class ListingPage extends Component {
                                             </div>
                                             <div id="review-tab" className="tab-pane">
                                                 <h5 className="title">REVIEWS</h5>
-                                                <p>There are no reviews yet.</p>
+                                                <p id="review_discription"></p>
                                                 <p className="text-bigger">Be the first to review “Cloud Wall Clock”</p>
                                                 <div className="comment-rating">
                                                     <strong>Your Rating </strong>

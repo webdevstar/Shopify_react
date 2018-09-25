@@ -4,6 +4,27 @@ import bgpage01 from '../../images/bg-page_01.jpg';
 
 class LoginPage extends Component {
 
+    login () {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/customer/login', {
+            method: 'post',
+            body: JSON.stringify({
+                password: this.refs.password, 
+                username: this.refs.username
+            })
+        })
+            .then(result=>result.json())
+    }
+    register () {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/customer/register', {
+            method: 'post',
+            body: JSON.stringify({
+                password: this.refs.r_password, 
+                username: this.refs.r_email
+            })
+        })
+            .then(result=>result.json())
+    }
+
     render() {
         return (
             <div>
@@ -37,14 +58,14 @@ class LoginPage extends Component {
                                         <form>
                                             <div className="form-group au-form require">
                                                 <label>Username or email address</label>
-                                                <input type="text"/>
+                                                <input ref="username" type="text"/>
                                             </div>
                                             <div className="form-group au-form require">
                                                 <label>Password</label>
-                                                <input type="password"/>
+                                                <input ref="password" type="password"/>
                                             </div>
                                             <div className="form-group au-form">
-                                                <button type="submit">Login</button>
+                                                <button type="submit" onClick={()=>this.login()}>Login</button>
                                                 <div className="form-checkbox m-l-18 m-t-tn-10 m-l-tn-0">
                                                     <input type="checkbox"/>
                                                     <label>Remember me</label>
@@ -64,14 +85,14 @@ class LoginPage extends Component {
                                         <form>
                                             <div className="form-group au-form require">
                                                 <label>Email address</label>
-                                                <input type="text"/>
+                                                <input ref="r_email" type="text"/>
                                             </div>
                                             <div className="form-group au-form require">
                                                 <label>Password</label>
-                                                <input type="password"/>
+                                                <input ref="r_password" type="password"/>
                                             </div>
                                             <div className="form-group au-form">
-                                                <button type="submit">REGISTER</button>
+                                                <button type="submit" onClick={()=>this.register()}>REGISTER</button>
                                                 <div className="w-100 m-t-10 hidden">.</div>
                                             </div>
                                         </form>

@@ -18,7 +18,16 @@ class ContactusPage extends Component {
     };
 
     sendusnow() {
-        console.log("asdf");
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/contact', {
+            method: 'post',
+            body: JSON.stringify({
+                name: this.refs.name.value, 
+                email: this.refs.email.value, 
+                subject: this.refs.address.value, 
+                message: this.refs.msg.value
+            })
+        })
+            .then(result=>result.json())
     }
 
     render() {
@@ -101,31 +110,31 @@ class ContactusPage extends Component {
                                         <div className="col-md-6">
                                             <div className="form-group au-form">
                                                 <div className="help-block with-errors"></div>
-                                                <input type="text" id="name" name="name" placeholder="Your Full Name *" required data-error="Name is required."/>
+                                                <input type="text" ref="name" id="name" name="name" placeholder="Your Full Name *" required data-error="Name is required."/>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group au-form">
                                                 <div className="help-block with-errors"></div>
-                                                <input type="email" id="email" name="email" placeholder="Your Mail *" required data-error="Please, enter a valid email."/>
+                                                <input type="email" ref="email" id="email" name="email" placeholder="Your Mail *" required data-error="Please, enter a valid email."/>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group au-form">
                                                 <div className="help-block with-errors"></div>
-                                                <input type="text" id="address" name="address" placeholder="Your Address" required data-error="Address is required"/>
+                                                <input type="text" ref="address" id="address" name="address" placeholder="Your Address" required data-error="Address is required"/>
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <div className="form-group au-form">
                                                 <div className="help-block with-errors"></div>
-                                                <input type="text" id="phone" name="phone" placeholder="Your Phone *" required data-error="Phone is required"/>
+                                                <input type="text" ref="phone" id="phone" name="phone" placeholder="Your Phone *" required data-error="Phone is required"/>
                                             </div>
                                         </div>
                                         <div className="col-md-12">
                                             <div className="form-group au-form">
                                                 <div className="help-block with-errors"></div>
-                                                <textarea rows="9" placeholder="Your Message" id="msg" name="msg" required data-error="Please, leave us a message"></textarea>
+                                                <textarea rows="9" ref="msg" placeholder="Your Message" id="msg" name="msg" required data-error="Please, leave us a message"></textarea>
                                             </div>
                                         </div>
                                         <div className="col-md-12">

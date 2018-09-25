@@ -52,26 +52,26 @@ export class GridProduct extends Component {
     }
 
     render() {
-    	if(this.props.products && this.props.cartkey && !this.props.apiroad){
-	    	this.props.products.products.forEach((product) => {
-				if(product.canBePurchased && product.id !== this.state.cartid){
-					this.props.api();
-					fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
-					    method: 'post',
-					    headers: {
-					        'Accept': 'application/json',
-					        'Content-Type': 'application/json',
-					    },
-					    body: JSON.stringify({
-					        product: product.id,
-					        quantity: 1
-					    })
-					})
-						.then(result=>result.json())
-			            .then(cart=>this.props.cartToitem(cart))
-				}
-			})
-		}
+  //   	if(this.props.products && this.props.cartkey && !this.props.apiroad){
+	 //    	this.props.products.products.forEach((product) => {
+		// 		if(product.canBePurchased && product.id !== this.state.cartid){
+		// 			this.props.api();
+		// 			fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
+		// 			    method: 'post',
+		// 			    headers: {
+		// 			        'Accept': 'application/json',
+		// 			        'Content-Type': 'application/json',
+		// 			    },
+		// 			    body: JSON.stringify({
+		// 			        product: product.id,
+		// 			        quantity: 1
+		// 			    })
+		// 			})
+		// 				.then(result=>result.json())
+		// 	            .then(cart=>this.props.cartToitem(cart))
+		// 		}
+		// 	})
+		// }
     	var products = []
     	if(this.props.products){
     		products = this.props.products.products;
