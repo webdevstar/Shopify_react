@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {Loader1} from '../../components/Loader/index.jsx';
 import { cartTo } from '../../actions/cart_item'
 import { cartkey } from '../../actions/cartkey'
 import './productdetails.css'
@@ -71,6 +72,20 @@ export class ListingPage extends Component {
             })
     }
 
+    productcolor(){
+        if(this.state.productdetails.options){
+            this.state.productdetails.options.optionValues.map((color)=> {
+                return (
+                    <div className="color">
+                        <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
+                        <span>{color.name}</span>
+                        <span>{color.price? color.price:''}</span>
+                    </div>
+                )
+            })
+        }
+    }
+
     render() {
         // var imageurl = this.state.productdetails? this.state.productdetails.image.imageUrl:''
         // $(document).ready(function(){
@@ -87,6 +102,7 @@ export class ListingPage extends Component {
         if(this.state.productdetails.originalPrice === this.state.productdetails.finalPrice) pricestate = true
         return (
             <div id="productdetails">
+            <Loader1/>
                 <section>
                     <div className="pageintro">
                         <div className="pageintro-bg">
@@ -187,19 +203,7 @@ export class ListingPage extends Component {
                                             </div>
                                             <p className="product-color">
                                                 {
-                                                    ()=>{
-                                                        if(this.state.productdetails.options){
-                                                            {
-                                                                this.state.productdetails.options.optionValues.map((color)=> {
-                                                                    <div className="color">
-                                                                        <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
-                                                                        <span>{color.name}</span>
-                                                                        <span>{color.price? color.price:''}</span>
-                                                                    </div>
-                                                                })
-                                                            }
-                                                        }
-                                                    }
+                                                    this.productcolor()
                                                 }
                                             </p>
                                             <p id="description" className="description"></p>
@@ -318,7 +322,7 @@ export class ListingPage extends Component {
                                                     <form>
                                                         <div className="row">
                                                             <div className="col-md-12">
-                                                                <textarea cols="30" rows="7">Your Message</textarea>
+                                                                <textarea cols="30" rows="7" placeholder="Your Message"></textarea>
                                                             </div>
                                                             <div className="col-md-6">
                                                                 <input type="text" placeholder="Your Name"/>

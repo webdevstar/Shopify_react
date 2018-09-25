@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
 
+import {Loader1} from '../../components/Loader/index.jsx';
 import { changeshowlist } from '../../actions/changeshowlist'
 import ShopList from '../../components/ShopList';
 import './listingpage.css'
@@ -39,7 +40,7 @@ export class ListingPage extends Component {
     this.setState({selected  : filter})
     var category = "";
     (filter === ""? category = "" : category = filter)
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en'+'&category='+category+'&start=0&count=12')
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+category+'&start=0&count=12')
       .then(result=>result.json())
       .then(shoplist=>this.setState({ shoplist: shoplist }))
   }
@@ -85,7 +86,8 @@ export class ListingPage extends Component {
 
   render() {
     return (
-      <div>
+      <div id="listingpage">
+        <Loader1/>
         <section>
           <div className="pageintro">
             <div className="pageintro-bg">

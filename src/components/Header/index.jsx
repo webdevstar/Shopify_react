@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {translate} from 'react-i18next';
 import { connect } from 'react-redux';
 import Autocomplete from  'react-autocomplete';
+import { Link } from 'react-router-dom'
 
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
@@ -135,7 +136,6 @@ class Header extends Component {
 
     render () {
         const carts = this.props.cart_items;
-        // const { t } = this.props;
         return (
             <div>
                 <header>
@@ -220,7 +220,7 @@ class Header extends Component {
                                                         <p>Total
                                                             <span className="total">{carts.products.length >0 ? carts.displayTotal : "US$0.00"}</span>
                                                         </p>
-                                                        <a className="a">Checkout</a>
+                                                        <Link id="checkout" to={"/shoppingcart"} className="a">Checkout</Link>
                                                     </div>
                                                 </div>
                                             </li>
@@ -231,10 +231,10 @@ class Header extends Component {
                                                 <div className="shop-cart user">
                                                     <ul className="shop-cart__list">
                                                         <li className="item">
-                                                            Register
+                                                            <Link className="login" to={"/login"}>Register</Link>
                                                         </li>
                                                         <li className="item">
-                                                            Signin
+                                                            <Link className="login" to={"/login"}>Signin</Link>
                                                         </li>
                                                     </ul>
                                                 </div>

@@ -49,3 +49,9 @@ header .header-wrapper-desktop .header .header-main .header__button ul li.header
 	background: #eeeeee;
 	cursor: pointer;
 }
+.login {
+	color: #666;
+}
+.login:hover {
+	color: #e4c7a2;
+}

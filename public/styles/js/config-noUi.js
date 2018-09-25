@@ -1,6 +1,14 @@
 $(document).ready(function(){
-    $(window).on('load', function () {
-        (function ($) {
+    var delayTimer;
+    var loaded = 0;
+    $("body").on('DOMSubtreeModified', '#listingpage', function() {
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function(){
+            if(loaded === 0) load();
+        },500);
+    });
+    function load(){
+        loaded = 1;
             var nonLinearSlider = document.getElementById('filter-price');
             if(nonLinearSlider){
                 noUiSlider.create(nonLinearSlider, {
@@ -20,6 +28,5 @@ $(document).ready(function(){
                     snapValues[handle].innerHTML = '$' + values[handle];
                 });
             }
-        })(jQuery);
-    });
+    }
 });

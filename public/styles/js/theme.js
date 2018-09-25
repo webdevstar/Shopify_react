@@ -1,12 +1,43 @@
 $(document).ready(function(){
+    var delayTimer;
+    var loaded = 0;
+    $("body").on('DOMSubtreeModified', "#shoppingcart", function() {
+        console.log("asdfasdfsd");
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function(){
+            // if(loaded === 0) quantity();
+            console.log("asfssdf");
+        },500);
+    });
+    function quantity(){
+        loaded = 1;
+        console.log("asdf");
+        (function ($) {
+            $('.quantity').each(function () {
+                var index = $(this).children('input').val() != '' ? $(this).children('input').val() : 0;
+
+                $(this).children('input').val(index);
+
+                $(this).children('.add').on('click', function () {
+                    index++;
+                    $(this).siblings('input').val(index);
+                });
+
+                $(this).children('.sub').on('click', function () {
+                    index--;
+                    $(this).siblings('input').val(index);
+                });
+            });
+        })(jQuery);
+    }
     $(window).on('load', function () {
         (function ($) {
             "use strict";
             // use strict
 
             /* Toggle List Checkout */
-            $('.shop-cart-button').on('click', function () {
-                $(this).siblings().slideToggle();
+            $('.shop-cart-button, #checkout').on('click', function () {
+                $(".shop-cart-button").siblings().slideToggle();
             });
 
             /* Mobile Menu */
@@ -63,26 +94,6 @@ $(document).ready(function(){
         })(jQuery);
 
         // Add - Sub product in shop cart
-        (function ($) {
-            "use strict";
-            // use strict
-
-            $('.quantity').each(function () {
-                var index = $(this).children('input').val() != '' ? $(this).children('input').val() : 0;
-
-                $(this).children('input').val(index);
-
-                $(this).children('.add').on('click', function () {
-                    index++;
-                    $(this).siblings('input').val(index);
-                });
-
-                $(this).children('.sub').on('click', function () {
-                    index--;
-                    $(this).siblings('input').val(index);
-                });
-            });
-        })(jQuery);
 
         // Page Side bar
         (function ($) {
@@ -91,13 +102,21 @@ $(document).ready(function(){
             var bar_button = 0;
             var user = 0;
             var status = 0;
+            var login = false;
             $('.bar-button').on('click', function () {
                 $(this).siblings().slideToggle();
                 bar_button = 1;
                 status == 0? status = 1:status=0;
             });
+            $('li a.login').on('click', function(){
+                user = 0;
+                login = true;
+            })
             $('.user').on('click', function () {
-                user = 1;
+                if(!login) {
+                    user = 1;
+                }
+                login = false;
             });
             $('html').click(function () {
                 if(bar_button != 1 && user != 1 && status == 1){

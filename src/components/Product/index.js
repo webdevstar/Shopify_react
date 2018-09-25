@@ -79,7 +79,7 @@ export class Product extends Component {
 	            <div className="grid-product">
 	                <div className="image bg-lightblue">
 	                    <a className="a">
-	                        <img src={this.props.product.image.imageUrl} alt="Chair"/>
+	                        <img className="productimg" src={this.props.product.image.imageUrl} alt="Chair"/>
 	                    </a>
 	                </div>
 	                <a className="a name">{this.props.product.description.name}</a>

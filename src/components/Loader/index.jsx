@@ -35,4 +35,30 @@ class Loader extends React.Component {
 	}
 }
 
+export class Loader1 extends React.Component {
+
+	constructor() {
+		super();
+		this.state = {
+			showingAlert: true
+		};
+	}
+
+	render() {
+		setTimeout(() => {
+			this.setState({
+				showingAlert: false
+			});
+	    }, 3000);
+		return (
+			<div className={`loading ${this.state.showingAlert ? '' : 'alert-hidden'}`}>
+		        <div className="spinner">
+		            <div className="double-bounce1"></div>
+		            <div className="double-bounce2"></div>
+		        </div>
+		    </div>
+		)
+	}
+}
+
 export default Loader

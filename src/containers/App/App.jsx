@@ -11,6 +11,7 @@ import ContactusPage from '../ContactusPage/Loadable';
 import LoginPage from '../LoginPage/Loadable';
 import Forgotpass from '../Forgotpass/Loadable';
 import Checkout from '../CheckoutPage/Loadable';
+import Shoppingcart from '../ShoppingcartPage/Loadable';
 
 import totop from '../../images/icon/to_top.png';
 
@@ -29,6 +30,7 @@ class App extends Component {
                     <Route path="/login" component={LoginPage} />
                     <Route path="/forgotpass" component={Forgotpass} />
                     <Route path="/checkout" component={Checkout} />
+                    <Route path="/shoppingcart" component={Shoppingcart} />
                 </Switch>
                 <Footer/>
                 <div className="to-top">

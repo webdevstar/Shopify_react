@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './login.css'
 import bgpage01 from '../../images/bg-page_01.jpg';
+import {Loader1} from '../../components/Loader/index.jsx';
 
 class LoginPage extends Component {
 
@@ -28,26 +29,27 @@ class LoginPage extends Component {
     render() {
         return (
             <div>
-            <section>
-                <div className="pageintro">
-                    <div className="pageintro-bg">
-                        <img src={bgpage01} alt="About Us"/>
+                <Loader1/>
+                <section>
+                    <div className="pageintro">
+                        <div className="pageintro-bg">
+                            <img src={bgpage01} alt="About Us"/>
+                        </div>
+                        <div className="pageintro-body">
+                            <h1 className="pageintro-title">My account</h1>
+                            <nav className="pageintro-breadcumb">
+                                <ul>
+                                    <li>
+                                        <a className="a">Home</a>
+                                    </li>
+                                    <li>
+                                        <a className="a">My Account</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    <div className="pageintro-body">
-                        <h1 className="pageintro-title">My account</h1>
-                        <nav className="pageintro-breadcumb">
-                            <ul>
-                                <li>
-                                    <a className="a">Home</a>
-                                </li>
-                                <li>
-                                    <a className="a">My Account</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </section>
+                </section>
                 <section>
                     <div className="container py-70 py-tn-40">
                         <div className="row">

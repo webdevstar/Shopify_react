@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 
+import {Loader1} from '../../components/Loader/index.jsx';
 import contactlocation from '../../images/icon/contact_location.png';
 import contactphone from '../../images/icon/contact_phone.png';
 import contactemail from '../../images/icon/contact_email.png';
@@ -33,6 +34,7 @@ class ContactusPage extends Component {
     render() {
         return (
             <div>
+                <Loader1/>
                 <div id="map-canvas">
                     <GoogleMapReact
                         bootstrapURLKeys={{ key: 'AIzaSyCQgM4VKy8j_2-iMIQ3F1vg3ICyyxuDzUM' }}

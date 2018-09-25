@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 
 import './footer.css';
 
@@ -8,18 +9,18 @@ import linkedin_white from '../../images/icon/linkedin_white.png';
 import google_plus_white from '../../images/icon/google-plus_white.png';
 
 import gallery_01 from '../../images/gallery_01.jpg';
-import gallery_02 from '../../images/gallery_02.jpg';
-import gallery_03 from '../../images/gallery_03.jpg';
-import gallery_04 from '../../images/gallery_04.jpg';
-import gallery_05 from '../../images/gallery_05.jpg';
-import gallery_06 from '../../images/gallery_06.jpg';
+// import gallery_02 from '../../images/gallery_02.jpg';
+// import gallery_03 from '../../images/gallery_03.jpg';
+// import gallery_04 from '../../images/gallery_04.jpg';
+// import gallery_05 from '../../images/gallery_05.jpg';
+// import gallery_06 from '../../images/gallery_06.jpg';
 
 import lightbox_01 from '../../images/lightbox_01.jpg';
-import lightbox_02 from '../../images/lightbox_02.jpg';
-import lightbox_03 from '../../images/lightbox_03.jpg';
-import lightbox_04 from '../../images/lightbox_04.jpg';
-import lightbox_05 from '../../images/lightbox_05.jpg';
-import lightbox_06 from '../../images/lightbox_05.jpg';
+// import lightbox_02 from '../../images/lightbox_02.jpg';
+// import lightbox_03 from '../../images/lightbox_03.jpg';
+// import lightbox_04 from '../../images/lightbox_04.jpg';
+// import lightbox_05 from '../../images/lightbox_05.jpg';
+// import lightbox_06 from '../../images/lightbox_05.jpg';
 
 import cash_01 from '../../images/icon/cash_01.png';
 import cash_02 from '../../images/icon/cash_02.png';
@@ -150,34 +151,9 @@ export class Footer extends Component {
 		                                <div className="footer-gallery m-b-36">
 		                                    <div className="gallery">
 		                                        <div className="gallery-item">
-		                                            <a href={lightbox_01} data-rel="footerGallery:slideshow">
+		                                            <Link to={"/contactus"} href={lightbox_01} data-rel="footerGallery:slideshow">
 		                                                <img src={gallery_01} alt="gallery"/>
-		                                            </a>
-		                                        </div>
-		                                        <div className="gallery-item">
-		                                            <a href={lightbox_02} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_02} alt="gallery"/>
-		                                            </a>
-		                                        </div>
-		                                        <div className="gallery-item">
-		                                            <a href={lightbox_03} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_03} alt="gallery"/>
-		                                            </a>
-		                                        </div>
-		                                        <div className="gallery-item">
-		                                            <a href={lightbox_04} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_04} alt="gallery"/>
-		                                            </a>
-		                                        </div>
-		                                        <div className="gallery-item">
-		                                            <a href={lightbox_05} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_05} alt="gallery"/>
-		                                            </a>
-		                                        </div>
-		                                        <div className="gallery-item">
-		                                            <a href={lightbox_06} data-rel="footerGallery:slideshow">
-		                                                <img src={gallery_06} alt="gallery"/>
-		                                            </a>
+		                                            </Link>
 		                                        </div>
 		                                    </div>
 		                                </div>

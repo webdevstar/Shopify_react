@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from "react-redux";
 import {translate} from 'react-i18next';
+import { Link } from 'react-router-dom'
 
 export class Menu extends Component {
 
@@ -8,14 +9,14 @@ export class Menu extends Component {
         const { t } = this.props;
         return (
         	<li className="">
-                <a className="a">{t(this.props.category.code)}</a>
+                <Link to={"/listing"} className="a">{t(this.props.category.code)}</Link>
                 {
                     (this.props.category.children.length > 0 ?
                         <ul className="sub-menu">
                             {
                                 this.props.category.children.map((children, ind) =>
                                     <li key={ind} style={{overflow:"hidden"}}>
-                                        <a className="a">{t(children.code : '')}</a>
+                                        <Link to={"/listing"} className="a">{t(children.code : '')}</Link>
                                     </li>
                                 )
                             }
