@@ -24,7 +24,7 @@ class App extends Component {
                 <Header/>
                 <Switch>
                     <Route path="/landing" component={LandingPage} />
-                    <Route path="/listing" component={ListingPage} />
+                    <Route path="/listing/:id" component={ListingPage} />
                     <Route path="/productdetails" component={ProductdetailsPage} />
                     <Route path="/contactus" component={ContactusPage} />
                     <Route path="/login" component={LoginPage} />

@@ -12,7 +12,7 @@ class SliderSection extends Component {
 
     render () {
         return (
-            <section>
+            <section id="slider-section">
 		        <div className="rev_slider_wrapper fullscreen-container">
 		            <div className="rev-slider fullscreenbanner" id="slide-1" data-version="5.0">
 		                <ul>

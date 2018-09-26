@@ -1,8 +1,15 @@
-(function ($) {
-    
-    "use strict";
-    // Use strict
-    $(window).on('load', function () {
+$(document).ready(function(){
+    var delayTimer;
+    var loaded = 0;
+    $("body").on('DOMSubtreeModified', '#landing', function() {
+        clearTimeout(delayTimer);
+        delayTimer = setTimeout(function(){
+            if($(".owl-carousel") && loaded == 0) load();
+            else loaded = 0;
+        },1000);
+    });
+    function load(){
+        loaded = 1;
         $('.owl-carousel').each(function () {
             var $carousel = $(this);
             $carousel.owlCarousel({
@@ -21,6 +28,5 @@
                 animateIn: $carousel.data("animatein"),
             });
         });
-    });
-
-})(jQuery);
+    }
+});

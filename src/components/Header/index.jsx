@@ -144,9 +144,9 @@ class Header extends Component {
                             <div className="header header-style-1">
                                 <div className="header-main">
                                     <div className="header__logo">
-                                        <a className="a">
+                                        <Link to={"/landing"} className="a">
                                             <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae"/>
-                                        </a>
+                                        </Link>
                                     </div>
                                     <nav className="header__navbar">
                                         <ul className="navbar-menu">

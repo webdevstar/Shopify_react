@@ -9,14 +9,14 @@ export class Menu extends Component {
         const { t } = this.props;
         return (
         	<li className="">
-                <Link to={"/listing"} className="a">{t(this.props.category.code)}</Link>
+                <Link to={"/listing/"+this.props.category.id} className="a">{t(this.props.category.code)}</Link>
                 {
                     (this.props.category.children.length > 0 ?
                         <ul className="sub-menu">
                             {
                                 this.props.category.children.map((children, ind) =>
                                     <li key={ind} style={{overflow:"hidden"}}>
-                                        <Link to={"/listing"} className="a">{t(children.code : '')}</Link>
+                                        <Link to={"/listing/"+children.id} className="a">{t(children.code : '')}</Link>
                                     </li>
                                 )
                             }

@@ -10,7 +10,7 @@ export class LandingPage extends Component {
 
     render() {
         return (
-            <div>
+            <div id="landing">
                 <Loader1/>
                 <SliderSection/>
                 <Saleoff/>
