@@ -20,7 +20,7 @@ export class ListingPage extends Component {
       shoplist: {products:[]},
       category: [],
       selected: null,
-      pricefilter: {lower:{},upper:{}}
+      priceFilter: {lower:8,upper:80}
     };
   }
   gridshowtype() {
@@ -51,13 +51,17 @@ export class ListingPage extends Component {
   isActive (value){
     return 'a '+((value===this.state.selected) ?'active':'default');
   }
-
-  pricefilter() {
+  priceFilter() {
     var lower = this.refs.price_lower.innerHTML;
     var upper = this.refs.price_upper.innerHTML;
-    console.log(lower);
-  }
 
+    const newFilter = Object.assign({}, this.state.priceFilter)
+    newFilter.lower = parseFloat(lower.replace("$",""));
+    newFilter.upper = parseFloat(upper.replace("$",""));
+    // const newFilter = this.state.category.slice(0)
+    this.setState({ priceFilter: newFilter })
+    console.log(newFilter);
+  }
   countCategory = (category_id) => {
     let count = 0;
     this.state.shoplist.products.forEach((product)=> {
@@ -144,7 +148,7 @@ export class ListingPage extends Component {
                     <div className="shop-list-body shop-grid">
                       {
                         this.state.shoplist.products.map((list, ind) =>
-                          <ShopList key={ind} list={list}/>
+                          <ShopList key={ind} list={list} priceFilter={this.state.priceFilter}/>
                         )
                       }
                     </div>
@@ -170,7 +174,7 @@ export class ListingPage extends Component {
                               <span id="filter-price-value-upper" ref="price_upper">$500</span>
                             </div>
                             <div className="filter-button">
-                              <a className="a" onClick={()=>this.pricefilter()}>Filter</a>
+                              <a className="a" onClick={()=>this.priceFilter()}>Filter</a>
                             </div>
                           </div>
                         </div>

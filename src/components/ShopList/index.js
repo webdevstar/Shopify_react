@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { cartTo } from '../../actions/cart_item'
 import { cartkey } from '../../actions/cartkey'
@@ -47,48 +48,56 @@ export class ShopList extends Component {
     render() {
         var pricestate = false
         if(this.props.list.originalPrice === this.props.list.finalPrice) pricestate = true
-        return (
-            <div className="shop-product">
-                <div className="product-image">
-                    <a className="a">
-                        <img className="shop-list-img" src={this.props.list.image.imageUrl} alt="Product"/>
-                    </a>
-                </div>
-                <div className="product-body">
-                    <a className="a name">{this.props.list.description.name}</a>
-                    <div className="price">
+        console.log(this.props.priceFilter)
+        if(this.props.priceFilter.upper >= this.props.list.price && this.props.priceFilter.lower <= this.props.list.price){
+            return (
+                <div className="shop-product">
+                    <div className="product-image">
+                        <Link to={"/productdetails"} className="a">
+                            <img className="shop-list-img" src={this.props.list.image.imageUrl} alt="Product"/>
+                        </Link>
+                    </div>
+                    <div className="product-body">
+                        <a className="a name">{this.props.list.description.name}</a>
+                        <div className="price">
+                            {
+                                (pricestate === true?<p className="price">{this.props.list.originalPrice}</p>:
+                                <div>
+                                    <p className="originalPrice">{this.props.list.originalPrice}</p>
+                                    <p className="finalPrice">{this.props.list.finalPrice}</p>
+                                </div>)
+                            }
+                        </div>
                         {
-                            (pricestate === true?<p className="price">{this.props.list.originalPrice}</p>:
-                            <div>
-                                <p className="originalPrice">{this.props.list.originalPrice}</p>
-                                <p className="finalPrice">{this.props.list.finalPrice}</p>
-                            </div>)
+                            (this.props.showtype === "layout_grid"?
+                            <div className="addcart">
+                                <div onClick={()=>this.handleOnclick()}>
+                                    <p>Add to cart</p>
+                                </div>
+                            </div>:
+                            "")
                         }
+                        <p className="product-color">
+                            <span className="color beige"></span>
+                            <span className="color gray"></span>
+                        </p>
+                        <p className="description">Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because
+                            it is pain, but because occasionally circumstances occur in which toil and pain can
+                            procure him some great pleasure.</p>
+                        <div className="product-button">
+                            <a className="a add-to-cart" onClick={()=>this.handleOnclick()}>Add to cart</a>
+                            <a className="a add-to-wishlist"> </a>
+                        </div>
+                        <div className="product-rating" data-star="4"></div>
                     </div>
-                    {
-                        (this.props.showtype === "layout_grid"?
-                        <div className="addcart">
-                            <div onClick={()=>this.handleOnclick()}>
-                                <p>Add to cart</p>
-                            </div>
-                        </div>:
-                        "")
-                    }
-                    <p className="product-color">
-                        <span className="color beige"></span>
-                        <span className="color gray"></span>
-                    </p>
-                    <p className="description">Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because
-                        it is pain, but because occasionally circumstances occur in which toil and pain can
-                        procure him some great pleasure.</p>
-                    <div className="product-button">
-                        <a className="a add-to-cart" onClick={()=>this.handleOnclick()}>Add to cart</a>
-                        <a className="a add-to-wishlist"> </a>
-                    </div>
-                    <div className="product-rating" data-star="4"></div>
                 </div>
-            </div>
-        )
+            )
+        }
+        else {
+            return (
+                <div></div>
+            )
+        }
     }
 }
 
