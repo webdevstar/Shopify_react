@@ -19,7 +19,8 @@ export class ListingPage extends Component {
       loaded:false,
       shoplist: {products:[]},
       category: [],
-      selected: null
+      selected: null,
+      pricefilter: {lower:{},upper:{}}
     };
   }
   gridshowtype() {
@@ -51,6 +52,12 @@ export class ListingPage extends Component {
     return 'a '+((value===this.state.selected) ?'active':'default');
   }
 
+  pricefilter() {
+    var lower = this.refs.price_lower.innerHTML;
+    var upper = this.refs.price_upper.innerHTML;
+    console.log(lower);
+  }
+
   countCategory = (category_id) => {
     let count = 0;
     this.state.shoplist.products.forEach((product)=> {
@@ -64,7 +71,6 @@ export class ListingPage extends Component {
   }
 
   renderItem = (category, ind) => {
-    console.log("#####!!!!"+ this.isActive(category.id));
     return(
       <li key={ind}>
         <a className={this.isActive(category.id)} onClick={()=>this.setFilter(category.id)}>{category.description.name}</a>
@@ -159,12 +165,12 @@ export class ListingPage extends Component {
                           <div className="filter-range">
                             <div className="filter-range-value">
                               Filter:
-                              <span id="filter-price-value-lower">$100</span>
+                              <span id="filter-price-value-lower" ref="price_lower">$100</span>
                               <span> - </span>
-                              <span id="filter-price-value-upper">$500</span>
+                              <span id="filter-price-value-upper" ref="price_upper">$500</span>
                             </div>
                             <div className="filter-button">
-                              <a className="a">Filter</a>
+                              <a className="a" onClick={()=>this.pricefilter()}>Filter</a>
                             </div>
                           </div>
                         </div>
