@@ -56,7 +56,6 @@ export class ListingPage extends Component {
     newFilter.upper = parseFloat(upper.replace("$",""));
     // const newFilter = this.state.category.slice(0)
     this.setState({ priceFilter: newFilter })
-    console.log(newFilter);
   }
 
   countCategory = (category_id) => {
@@ -64,7 +63,7 @@ export class ListingPage extends Component {
     this.state.shoplist.products.forEach((product)=> {
       if(product.categories){
         product.categories.forEach((productCategory)=> {
-          if(productCategory.id === category_id) count++
+          if(productCategory.id === category_id && product.price >= this.state.priceFilter.lower && product.price <= this.state.priceFilter.upper) count++
         })
       }
     })
@@ -72,7 +71,6 @@ export class ListingPage extends Component {
   }
 
   renderItem (children, ind){
-    console.log(children);
     return (
       <li key={ind}>
         <a className="a">{children.description.name}</a>
@@ -83,11 +81,10 @@ export class ListingPage extends Component {
 
   render() {
     if(this.state.loaded){
-      var categoryChildrens = {}
+      var categoryChildrens = []
       this.state.category.forEach((category) => {
         if(category.id === this.state.selected){
-          categoryChildrens = category
-          console.log(category)
+          categoryChildrens = category.children
         }
       })
       return (
@@ -163,17 +160,19 @@ export class ListingPage extends Component {
                       <div className="sidebar-item__body">
                         <ul className="sidebar-list">
                           {
-                            // this.state.category.map((category) => {
-                            //   if(category.id === this.state.selected){
-                            //     category.children.map((children, ind)=>{
-                            //       this.renderItem(children, ind)
-                            //     })
-                            //   }
-                            // })
-                            categoryChildrens.children.map((children, ind)=> {
-                              this.renderItem(children, ind)
-                            })
+                            categoryChildrens.map((children, ind) => this.renderItem(children, ind))
                           }
+                        </ul>
+                      </div>
+                    </div>
+                    <div className="page-sidebar-item">
+                      <div className="sidebar-item__heading">
+                        <h3 className="title">Collection</h3>
+                        <div className="title-border m-b-24"></div>
+                      </div>
+                      <div className="sidebar-item__body">
+                        <ul className="sidebar-list">
+                          <li>{(this.state.shoplist.totalCount? this.state.shoplist.products[0].manufacturer.description.name:'')}</li>
                         </ul>
                       </div>
                     </div>

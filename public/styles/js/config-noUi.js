@@ -3,11 +3,13 @@ $(document).ready(function(){
     var loaded = 0;
     $("body").on('DOMSubtreeModified', '#listingpage', function() {
         clearTimeout(delayTimer);
+        loaded = 0;
         delayTimer = setTimeout(function(){
-            if(loaded === 0) load();
-        },500);
+            if($("#filter-price") && loaded === 0) load();
+        },1000);
     });
     function load(){
+        console.log("asdfasdf");
         loaded = 1;
             var nonLinearSlider = document.getElementById('filter-price');
             if(nonLinearSlider){
