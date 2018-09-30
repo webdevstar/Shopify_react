@@ -58,13 +58,14 @@ export class ListingPage extends Component {
     }
 
     componentDidMount() {
-        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/1?lang=en')
+        const { id } = this.props.match.params
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'?lang=en')
             .then(result=>result.json())
             .then(productdetails=>{
                 this.setState({ productdetails: productdetails })
                 document.getElementById("description").innerHTML = productdetails.description.description;
             })
-        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/100/reviews')
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'/reviews')
             .then(result=>result.json())
             .then(reviews=>{
                 this.setState({ reviews: reviews })
@@ -74,7 +75,7 @@ export class ListingPage extends Component {
 
     productcolor(){
         if(this.state.productdetails.options){
-            this.state.productdetails.options.optionValues.map((color)=> {
+            this.state.productdetails.options[0].optionValues.map((color)=> {
                 return (
                     <div className="color">
                         <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
@@ -87,22 +88,11 @@ export class ListingPage extends Component {
     }
 
     render() {
-        // var imageurl = this.state.productdetails? this.state.productdetails.image.imageUrl:''
-        // $(document).ready(function(){
-        //     $(window).on('load', function () {
-        //         setTimeout(function(){
-        //             $('.main-pic').toArray().forEach((object)=>{
-        //                 // $(object).find('img').attr('src', "imageurl");
-        //                 console.log(object);
-        //             })
-        //         },1500);
-        //     });
-        // });
         var pricestate = false
         if(this.state.productdetails.originalPrice === this.state.productdetails.finalPrice) pricestate = true
         return (
             <div id="productdetails">
-            <Loader1/>
+                <Loader1/>
                 <section>
                     <div className="pageintro">
                         <div className="pageintro-bg">

@@ -53,7 +53,7 @@ export class ShopList extends Component {
             return (
                 <div className="shop-product">
                     <div className="product-image">
-                        <Link to={"/productdetails"} className="a">
+                        <Link to={"/productdetails/"+this.props.list.id} className="a">
                             <img className="shop-list-img" src={this.props.list.image.imageUrl} alt="Product"/>
                         </Link>
                     </div>
