@@ -39,6 +39,7 @@ class Header extends Component {
             testpage: false,
             autocomplete: {values:[]},
             searchval: '',
+            menuSelected: null,
         };
     }
 
@@ -134,6 +135,14 @@ class Header extends Component {
         this.setState({autocomplete:{values:[]}})
     }
 
+    addActive(id) {
+        this.setState({menuSelected  : id})
+    }
+
+    removeActive() {
+        this.setState({menuSelected  : null})
+    }
+
     render () {
         const carts = this.props.cart_items;
         return (
@@ -143,7 +152,7 @@ class Header extends Component {
                         <div className="header-wrapper-desktop d-none d-lg-block">
                             <div className="header header-style-1">
                                 <div className="header-main">
-                                    <div className="header__logo">
+                                    <div className="header__logo" onClick={()=>this.removeActive()}>
                                         <Link to={"/landing"} className="a">
                                             <img src={this.state.merchant ? this.state.merchant.store.logo.path : ''} className="logo_02" alt="Lyrae"/>
                                         </Link>
@@ -152,7 +161,7 @@ class Header extends Component {
                                         <ul className="navbar-menu">
                                             {
                                                 this.state.category.map((category, ind) =>
-                                                    <Menu key={ind} category={category}/>
+                                                    <Menu key={ind} category={category} clickFnction={(id)=>this.addActive(category.id)} selected={this.state.menuSelected}/>
                                                 )
                                             }
                                             <li>

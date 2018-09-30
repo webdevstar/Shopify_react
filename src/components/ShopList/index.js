@@ -48,7 +48,6 @@ export class ShopList extends Component {
     render() {
         var pricestate = false
         if(this.props.list.originalPrice === this.props.list.finalPrice) pricestate = true
-        console.log(this.props.priceFilter)
         if(this.props.priceFilter.upper >= this.props.list.price && this.props.priceFilter.lower <= this.props.list.price){
             return (
                 <div className="shop-product">

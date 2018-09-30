@@ -75,9 +75,9 @@ export class ListingPage extends Component {
 
     productcolor(){
         if(this.state.productdetails.options){
-            this.state.productdetails.options[0].optionValues.map((color)=> {
+            this.state.productdetails.options[0].optionValues.map((color, ind)=> {
                 return (
-                    <div className="color">
+                    <div className="color" key={ind}>
                         <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
                         <span>{color.name}</span>
                         <span>{color.price? color.price:''}</span>

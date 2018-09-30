@@ -8,8 +8,6 @@ import ShopList from '../../components/ShopList';
 import './listingpage.css'
 
 import page03 from '../../images/bg-page_03.jpg';
-import Grid from '../../images/icon/layout_grid.png';
-import List from '../../images/icon/layout_list.png';
 
 export class ListingPage extends Component {
 
@@ -23,12 +21,7 @@ export class ListingPage extends Component {
       priceFilter: {lower:8,upper:80}
     };
   }
-  gridshowtype() {
-    this.props.showtype(this.refs.grid.id)
-  }
-  listshowtype() {
-    this.props.showtype(this.refs.list.id)
-  }
+
   componentDidMount() {
     const { id } = this.props.match.params
     this.setState({selected  : parseInt(id)})
@@ -40,6 +33,7 @@ export class ListingPage extends Component {
       .then(shoplist=>this.setState({ shoplist: shoplist }))
     this.setState({loaded: true})
   }
+
   setFilter (filter) {
     this.setState({selected  : filter})
     var category = "";
@@ -48,9 +42,11 @@ export class ListingPage extends Component {
       .then(result=>result.json())
       .then(shoplist=>this.setState({ shoplist: shoplist }))
   }
+
   isActive (value){
     return 'a '+((value===this.state.selected) ?'active':'default');
   }
+
   priceFilter() {
     var lower = this.refs.price_lower.innerHTML;
     var upper = this.refs.price_upper.innerHTML;
@@ -62,6 +58,7 @@ export class ListingPage extends Component {
     this.setState({ priceFilter: newFilter })
     console.log(newFilter);
   }
+
   countCategory = (category_id) => {
     let count = 0;
     this.state.shoplist.products.forEach((product)=> {
@@ -74,32 +71,25 @@ export class ListingPage extends Component {
     return count;
   }
 
-  renderItem = (category, ind) => {
-    return(
+  renderItem (children, ind){
+    console.log(children);
+    return (
       <li key={ind}>
-        <a className={this.isActive(category.id)} onClick={()=>this.setFilter(category.id)}>{category.description.name}</a>
-        <span className="number">{this.countCategory(category.id)}</span>
-        {
-          (category.children.length > 0 ?
-            <ul className="children-list childrencartegory">
-              {
-                category.children.map((children, ind) =>
-                  <li key={ind}>
-                    <a className={this.isActive(children.id)} onClick={()=>this.setFilter(children.id)}>{children.description.name}</a>
-                    <span className="number">{this.countCategory(children.id)}</span>
-                  </li>
-                )
-              }
-            </ul>
-            : ''
-          )
-        }
+        <a className="a">{children.description.name}</a>
+        <span className="number">{this.countCategory(children.id)}</span>
       </li>
     )
   }
 
   render() {
     if(this.state.loaded){
+      var categoryChildrens = {}
+      this.state.category.forEach((category) => {
+        if(category.id === this.state.selected){
+          categoryChildrens = category
+          console.log(category)
+        }
+      })
       return (
         <div id="listingpage">
           <Loader1/>
@@ -129,21 +119,6 @@ export class ListingPage extends Component {
                 <div className="col-md-9">
                   <div className="shop-list">
                     <div className="shop-list-heading">
-                      <div className="number-product">
-                        Showing
-                        <span>8</span>-
-                        <span>20</span> of
-                        <span>64</span> results
-                      </div>
-                      <div className="shop-view-layout">
-                        <span>Show</span>
-                        <span id="layout_grid" ref="grid" onClick={()=>this.gridshowtype()}>
-                          <img src={Grid} alt="Grid"/>
-                        </span>
-                        <span id="layout_list" ref="list" onClick={()=>this.listshowtype()}>
-                          <img src={List} alt="List"/>
-                        </span>
-                      </div>
                     </div>
                     <div className="shop-list-body shop-grid">
                       {
@@ -187,12 +162,17 @@ export class ListingPage extends Component {
                       </div>
                       <div className="sidebar-item__body">
                         <ul className="sidebar-list">
-                          <li>
-                            <a className={this.isActive(null)} onClick={()=>this.setFilter(null)}>All</a>
-                            <span className="number">{this.state.shoplist.products.length}</span>
-                          </li>
                           {
-                            this.state.category.map((category, ind) => this.renderItem(category, ind))
+                            // this.state.category.map((category) => {
+                            //   if(category.id === this.state.selected){
+                            //     category.children.map((children, ind)=>{
+                            //       this.renderItem(children, ind)
+                            //     })
+                            //   }
+                            // })
+                            categoryChildrens.children.map((children, ind)=> {
+                              this.renderItem(children, ind)
+                            })
                           }
                         </ul>
                       </div>
