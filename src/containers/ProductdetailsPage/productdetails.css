@@ -4,6 +4,10 @@
 .color {
 	display: flex;
 }
+.color input {
+	margin-top: 5px;
+	margin-right: 5px;
+}
 #slide100-01 img {
     width: 461px;
 }

@@ -38,10 +38,6 @@ export class ListingPage extends Component {
             var quantity = this.refs.quantity.value;
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
                 method: 'post',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
                 body: JSON.stringify({
                     product: this.state.productdetails.id,
                     quantity: quantity
@@ -64,21 +60,32 @@ export class ListingPage extends Component {
             .then(result=>result.json())
             .then(reviews=>{
                 this.setState({ reviews: reviews })
-                document.getElementById("review_discription").innerHTML = reviews[0].description+"<br/>"+reviews[0].date;
+                if(reviews.length > 0){
+                    document.getElementById("review_discription").innerHTML = reviews[0].description+"<br/>"+reviews[0].date;
+                }
             })
+    }
+
+    colorSelect() {
+        console.log("asdfasdf");
     }
 
     productcolor(){
         if(this.state.productdetails.options){
-            this.state.productdetails.options[0].optionValues.map((color, ind)=> {
-                return (
-                    <div className="color" key={ind}>
-                        <input type={this.state.productdetails.options.type} checked={color.defaultValue}/>
-                        <span>{color.name}</span>
-                        <span>{color.price? color.price:''}</span>
-                    </div>
-                )
-            })
+            var optionValues = this.state.productdetails.options[0].optionValues
+            return(
+                <div>
+                    {
+                        optionValues.map((color, ind)=> 
+                            <div className="color" key={ind}>
+                                <input type={this.state.productdetails.options[0].type} name="color" onChange={()=>this.colorSelect()} defaultChecked={color.defaultValue}/>
+                                <span>{color.name}</span>
+                                <span>{color.price? color.price:''}</span>
+                            </div>
+                        )
+                    }
+                </div>
+            )
         }
     }
 
@@ -136,11 +143,11 @@ export class ListingPage extends Component {
                                                     </div>)
                                                 }
                                             </div>
-                                            <p className="product-color">
+                                            <div className="product-color">
                                                 {
                                                     this.productcolor()
                                                 }
-                                            </p>
+                                            </div>
                                             <p id="description" className="description"></p>
                                             <div className="product-button">
                                                 <div className="quantity">
