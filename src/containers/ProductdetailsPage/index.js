@@ -7,8 +7,6 @@ import { cartkey } from '../../actions/cartkey'
 import './productdetails.css'
 
 import page03 from '../../images/bg-page_03.jpg';
-import prorightblack from '../../images/icon/pro-right-black.png';
-import proleftblack from '../../images/icon/pro-left-black.png';
 
 export class ListingPage extends Component {
 
@@ -37,10 +35,7 @@ export class ListingPage extends Component {
                 .then(cart=>{ this.props.addcartkey(cart.code); this.props.cartTo(cart)})
         }
         else {
-            var quantity = 1;
-            this.props.cart_items.products.forEach((product) => {
-                if(product.id === this.state.productdetails.id) quantity = product.quantity+1
-            })
+            var quantity = this.refs.quantity.value;
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
                 method: 'post',
                 headers: {
@@ -124,58 +119,8 @@ export class ListingPage extends Component {
                                                 <div className="main-frame">
                                                     <div className="wrap-main-pic">
                                                         <div className="main-pic">
-                                                            <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
+                                                            <img id="productDetailsImg" src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="wrap-thumb-100 d-flex justify-content-between p-t-10">
-                                                <div className="wrap-arrow-slide-100 s-full ab-t-l trans-04">
-                                                    <span className="my-arrow back prev-slide-100">
-                                                        <img src={proleftblack} alt="Prev"/>
-                                                    </span>
-                                                    <span className="my-arrow next next-slide-100">
-                                                        <img src={prorightblack} alt="Next"/>
-                                                    </span>
-                                                </div>
-                                                <div className="thum-100">
-                                                    <div className="sub-frame sub-1">
-                                                        <div className="wrap-main-pic">
-                                                            <div className="main-pic">
-                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
-                                                            </div>
-                                                        </div>
-                                                        <div className="btn-sub-frame"></div>
-                                                    </div>
-                                                </div>
-                                                <div className="thum-100">
-                                                    <div className="sub-frame sub-1">
-                                                        <div className="wrap-main-pic">
-                                                            <div className="main-pic">
-                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
-                                                            </div>
-                                                        </div>
-                                                        <div className="btn-sub-frame"></div>
-                                                    </div>
-                                                </div>
-                                                <div className="thum-100">
-                                                    <div className="sub-frame sub-1">
-                                                        <div className="wrap-main-pic">
-                                                            <div className="main-pic">
-                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
-                                                            </div>
-                                                        </div>
-                                                        <div className="btn-sub-frame"></div>
-                                                    </div>
-                                                </div>
-                                                <div className="thum-100">
-                                                    <div className="sub-frame sub-1">
-                                                        <div className="wrap-main-pic">
-                                                            <div className="main-pic">
-                                                                <img src={(this.state.productdetails? this.state.productdetails.image.imageUrl:'')} alt="prodetail01"/>
-                                                            </div>
-                                                        </div>
-                                                        <div className="btn-sub-frame"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -202,7 +147,7 @@ export class ListingPage extends Component {
                                                     <span className="sub">
                                                         <i className="fa fa-angle-down"></i>
                                                     </span>
-                                                    <input type="number" defaultValue="2"/>
+                                                    <input type="number" ref="quantity" defaultValue="2"/>
                                                     <span className="add">
                                                         <i className="fa fa-angle-up"></i>
                                                     </span>

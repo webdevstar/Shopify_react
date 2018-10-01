@@ -14,3 +14,6 @@
 .sidebar-list li .number {
   float: right;
 }
+.infinite-scroll-component {
+	overflow: inherit !important;
+}

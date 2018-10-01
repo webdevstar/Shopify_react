@@ -1,17 +1,15 @@
 $(document).ready(function(){
     var delayTimer;
     var loaded = 0;
-    $("body").on('DOMSubtreeModified', "#shoppingcart", function() {
-        console.log("asdfasdfsd");
+    $("body").on('DOMSubtreeModified', "#productdetails", function() {
         clearTimeout(delayTimer);
+        loaded = 0;
         delayTimer = setTimeout(function(){
-            // if(loaded === 0) quantity();
-            console.log("asfssdf");
-        },500);
+            if(loaded === 0) quantity();
+        },1000);
     });
     function quantity(){
         loaded = 1;
-        console.log("asdf");
         (function ($) {
             $('.quantity').each(function () {
                 var index = $(this).children('input').val() != '' ? $(this).children('input').val() : 0;

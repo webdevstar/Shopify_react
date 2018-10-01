@@ -46,9 +46,7 @@ export class Loader1 extends React.Component {
 
 	render() {
 		setTimeout(() => {
-			this.setState({
-				showingAlert: false
-			});
+			this.setState({showingAlert: false});
 	    }, 3000);
 		return (
 			<div className={`loading ${this.state.showingAlert ? '' : 'alert-hidden'}`}>

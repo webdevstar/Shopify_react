@@ -4,3 +4,10 @@
 .color {
 	display: flex;
 }
+#slide100-01 img {
+    width: 461px;
+}
+.main-frame, .sub-frame {
+     position: relative; 
+     overflow: inherit; 
+}

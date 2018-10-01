@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import {Loader1} from '../../components/Loader/index.jsx';
 import { changeshowlist } from '../../actions/changeshowlist'
@@ -18,7 +19,7 @@ export class ListingPage extends Component {
       shoplist: {products:[]},
       category: [],
       selected: null,
-      priceFilter: {lower:8,upper:80}
+      priceFilter: {lower:0,upper:500}
     };
   }
 
@@ -28,19 +29,10 @@ export class ListingPage extends Component {
     fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
       .then(result=>result.json())
       .then(category=>this.setState({category}))
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+id+'&start=0&count=12')
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+id+'&start=0&count=1')
       .then(result=>result.json())
       .then(shoplist=>this.setState({ shoplist: shoplist }))
     this.setState({loaded: true})
-  }
-
-  setFilter (filter) {
-    this.setState({selected  : filter})
-    var category = "";
-    (filter === ""? category = "" : category = filter)
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+category+'&start=0&count=12')
-      .then(result=>result.json())
-      .then(shoplist=>this.setState({ shoplist: shoplist }))
   }
 
   isActive (value){
@@ -78,6 +70,17 @@ export class ListingPage extends Component {
       </li>
     )
   }
+  loadMore(){
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+this.state.selected+'&start='+this.state.shoplist.products.length+'&count=1')
+      .then(result=>result.json())
+      .then(shoplist=>{
+        const tracks = this.state.shoplist
+        shoplist.products.map((track)=>{
+          tracks.products.push(track)
+        })
+        this.setState({shoplist: tracks})
+      })
+  }
 
   render() {
     if(this.state.loaded){
@@ -90,97 +93,103 @@ export class ListingPage extends Component {
       return (
         <div id="listingpage">
           <Loader1/>
-          <section>
-            <div className="pageintro">
-              <div className="pageintro-bg">
-                <img src={page03} alt="About Us"/>
+            <section>
+              <div className="pageintro">
+                <div className="pageintro-bg">
+                  <img src={page03} alt="About Us"/>
+                </div>
+                <div className="pageintro-body">
+                  <h1 className="pageintro-title">Shop</h1>
+                  <nav className="pageintro-breadcumb">
+                    <ul>
+                      <li>
+                        <Link to={"/productdetails"}>Home</Link>
+                      </li>
+                      <li>
+                        <a className="a">Shop</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
               </div>
-              <div className="pageintro-body">
-                <h1 className="pageintro-title">Shop</h1>
-                <nav className="pageintro-breadcumb">
-                  <ul>
-                    <li>
-                      <Link to={"/productdetails"}>Home</Link>
-                    </li>
-                    <li>
-                      <a className="a">Shop</a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </section>
-          <section>
-            <div className="container p-t-100 p-b-70">
-              <div className="row">
-                <div className="col-md-9">
-                  <div className="shop-list">
-                    <div className="shop-list-heading">
-                    </div>
-                    <div className="shop-list-body shop-grid">
-                      {
-                        this.state.shoplist.products.map((list, ind) =>
-                          <ShopList key={ind} list={list} priceFilter={this.state.priceFilter}/>
-                        )
-                      }
+            </section>
+            <section>
+              <div className="container p-t-100 p-b-70">
+                <div className="row">
+                  <div className="col-md-9">
+                    <div className="shop-list">
+                      <div className="shop-list-heading">
+                      </div>
+                      <InfiniteScroll
+                        dataLength={this.state.shoplist.products.length}
+                        next={()=>this.loadMore()}
+                        hasMore={true}
+                      >
+                        <div className="shop-list-body shop-grid">
+                          {
+                            this.state.shoplist.products.map((list, ind) =>
+                              <ShopList key={ind} list={list} priceFilter={this.state.priceFilter}/>
+                            )
+                          }
+                        </div>
+                      </InfiniteScroll>
                     </div>
                   </div>
-                </div>
 
-                <div className="col-md-3">
-                  <div className="page-sidebar">
+                  <div className="col-md-3">
+                    <div className="page-sidebar">
 
-                    <div className="page-sidebar-item">
-                      <div className="sidebar-item__heading">
-                        <h3 className="title">filter by price</h3>
-                        <div className="title-border m-b-30"></div>
-                      </div>
-                      <div className="sidebar-item__body m-b-8">
-                        <div className="sidebar-filter-price">
-                          <div id="filter-price"></div>
-                          <div className="filter-range">
-                            <div className="filter-range-value">
-                              Filter:
-                              <span id="filter-price-value-lower" ref="price_lower">$100</span>
-                              <span> - </span>
-                              <span id="filter-price-value-upper" ref="price_upper">$500</span>
-                            </div>
-                            <div className="filter-button">
-                              <a className="a" onClick={()=>this.priceFilter()}>Filter</a>
+                      <div className="page-sidebar-item">
+                        <div className="sidebar-item__heading">
+                          <h3 className="title">filter by price</h3>
+                          <div className="title-border m-b-30"></div>
+                        </div>
+                        <div className="sidebar-item__body m-b-8">
+                          <div className="sidebar-filter-price">
+                            <div id="filter-price"></div>
+                            <div className="filter-range">
+                              <div className="filter-range-value">
+                                Filter:
+                                <span id="filter-price-value-lower" ref="price_lower">$100</span>
+                                <span> - </span>
+                                <span id="filter-price-value-upper" ref="price_upper">$500</span>
+                              </div>
+                              <div className="filter-button">
+                                <a className="a" onClick={()=>this.priceFilter()}>Filter</a>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="page-sidebar-item">
-                      <div className="sidebar-item__heading">
-                        <h3 className="title">categories</h3>
-                        <div className="title-border m-b-24"></div>
+                      <div className="page-sidebar-item">
+                        <div className="sidebar-item__heading">
+                          <h3 className="title">categories</h3>
+                          <div className="title-border m-b-24"></div>
+                        </div>
+                        <div className="sidebar-item__body">
+                          <ul className="sidebar-list">
+                            {
+                              categoryChildrens.map((children, ind) => this.renderItem(children, ind))
+                            }
+                          </ul>
+                        </div>
                       </div>
-                      <div className="sidebar-item__body">
-                        <ul className="sidebar-list">
-                          {
-                            categoryChildrens.map((children, ind) => this.renderItem(children, ind))
-                          }
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="page-sidebar-item">
-                      <div className="sidebar-item__heading">
-                        <h3 className="title">Collection</h3>
-                        <div className="title-border m-b-24"></div>
-                      </div>
-                      <div className="sidebar-item__body">
-                        <ul className="sidebar-list">
-                          <li>{(this.state.shoplist.totalCount? this.state.shoplist.products[0].manufacturer.description.name:'')}</li>
-                        </ul>
+                      <div className="page-sidebar-item">
+                        <div className="sidebar-item__heading">
+                          <h3 className="title">Collection</h3>
+                          <div className="title-border m-b-24"></div>
+                        </div>
+                        <div className="sidebar-item__body">
+                          <ul className="sidebar-list">
+                            <li>{(this.state.shoplist.totalCount? this.state.shoplist.products[0].manufacturer.description.name:'')}</li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
         </div>
       )
     }
