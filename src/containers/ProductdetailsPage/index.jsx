@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import _ from "lodash";
 
 import {Loader1} from '../../components/Loader/index.jsx';
+import Product from '../../components/Product';
 import { cartTo } from '../../actions/cart_item'
 import { cartkey } from '../../actions/cartkey'
 import './productdetails.css'
@@ -14,7 +16,10 @@ export class ListingPage extends Component {
         super(props);
         this.state = {
             productdetails: false,
-            reviews: false
+            related: [],
+            reviews: false,
+            id: false,
+            optionId: 0
         };
     }
 
@@ -27,6 +32,11 @@ export class ListingPage extends Component {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
+                    attributes: [
+                        {
+                            id: this.state.optionId
+                        }
+                    ],
                     product: this.state.productdetails.id,
                     quantity: 1
                 })
@@ -36,9 +46,20 @@ export class ListingPage extends Component {
         }
         else {
             var quantity = this.refs.quantity.value;
+            // this.props.cart_items.products.forEach((product) => {
+            //     if(product.id === this.state.id) quantity = product.quantity+this.refs.quantity.value
+            // })
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
-                method: 'post',
+                method: 'put',
+                headers: {
+                    'content-Type': 'application/json',
+                },
                 body: JSON.stringify({
+                    attributes: [
+                        {
+                            id: this.state.optionId
+                        }
+                    ],
                     product: this.state.productdetails.id,
                     quantity: quantity
                 })
@@ -50,6 +71,7 @@ export class ListingPage extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params
+        this.setState({id  : parseInt(id)})
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'?lang=en')
             .then(result=>result.json())
             .then(productdetails=>{
@@ -64,10 +86,37 @@ export class ListingPage extends Component {
                     document.getElementById("review_discription").innerHTML = reviews[0].description+"<br/>"+reviews[0].date;
                 }
             })
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'/related')
+            .then(result=>{
+                console.log(result)
+                if(result) result.json()
+            })
+            .then(related=>this.setState({ related: related }))
     }
 
-    colorSelect() {
-        console.log("asdfasdf");
+    colorSelect(id) {
+        const ids = [id];
+        this.setState({optionId: id});
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+this.state.id+'/variant?lang=en', {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    options: ids
+                }
+            )
+        })
+            .then(result=>result.json())
+            .then(result=>{
+                var newArray = this.state.productdetails
+                for (var key in result) {
+                    newArray[key] = result[key]
+                }
+                this.setState({productdetails: newArray})
+            })
+
     }
 
     productcolor(){
@@ -78,7 +127,7 @@ export class ListingPage extends Component {
                     {
                         optionValues.map((color, ind)=> 
                             <div className="color" key={ind}>
-                                <input type={this.state.productdetails.options[0].type} name="color" onChange={()=>this.colorSelect()} defaultChecked={color.defaultValue}/>
+                                <input type={this.state.productdetails.options[0].type} name="color" onChange={(id)=>this.colorSelect(color.id)} defaultChecked={color.defaultValue}/>
                                 <span>{color.name}</span>
                                 <span>{color.price? color.price:''}</span>
                             </div>
@@ -229,11 +278,13 @@ export class ListingPage extends Component {
                                                     <tbody>
                                                         <tr>
                                                             <th>Weight</th>
-                                                            <td>3,1 kg</td>
+                                                            <td>{(this.state.productdetails? this.state.productdetails.productWeight:0)} pounds</td>
                                                         </tr>
                                                         <tr>
                                                             <th>Dimensions</th>
-                                                            <td>60 x 60 x 60 cm</td>
+                                                            <td><span>{(this.state.productdetails? this.state.productdetails.productLength:0)} inches </span> 
+                                                                <span>{(this.state.productdetails? this.state.productdetails.productWidth:0)} inches </span>
+                                                                <span>{(this.state.productdetails? this.state.productdetails.productHeight:0)} inches</span></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -278,6 +329,21 @@ export class ListingPage extends Component {
                                                         </div>
                                                     </form>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="port-title justify-content-center text-center">
+                                        <h2 className="title">related products</h2>
+                                        <div className="title-border mx-auto m-b-70"></div>
+                                    </div>
+                                    <div className="related-products">
+                                        <div className="owl-carousel row" data-responsive='{"0":{"items":"1"},"576":{"items":"1"},"768":{"items":"2"}, "992":{"items":"3"} }'>
+                                            <div className="col-md-12">
+                                                {
+                                                    this.state.related.map((product) =>
+                                                        <Product key={product.id} product={product}/>
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                     </div>

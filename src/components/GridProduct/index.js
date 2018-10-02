@@ -55,12 +55,12 @@ export class GridProduct extends Component {
   //   	if(this.props.products && this.props.cartkey && !this.props.apiroad){
 	 //    	this.props.products.products.forEach((product) => {
 		// 		if(product.canBePurchased && product.id !== this.state.cartid){
+		// 			console.log(product)
 		// 			this.props.api();
 		// 			fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
-		// 			    method: 'post',
+		// 			    method: 'put',
 		// 			    headers: {
-		// 			        'Accept': 'application/json',
-		// 			        'Content-Type': 'application/json',
+		// 			        'content-Type': 'application/json',
 		// 			    },
 		// 			    body: JSON.stringify({
 		// 			        product: product.id,

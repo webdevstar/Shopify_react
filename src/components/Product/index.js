@@ -29,7 +29,7 @@ export class Product extends Component {
 	    		if(product.id === this.props.product.id) quantity = product.quantity+1
 	    	})
 	    	fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
-			    method: 'post',
+			    method: 'put',
 			    headers: {
 			        'Accept': 'application/json',
 			        'Content-Type': 'application/json',
