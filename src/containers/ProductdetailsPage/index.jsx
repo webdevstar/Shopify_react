@@ -87,10 +87,7 @@ export class ListingPage extends Component {
                 }
             })
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'/related')
-            .then(result=>{
-                console.log(result)
-                if(result) result.json()
-            })
+            .then(result=>result.json())
             .then(related=>this.setState({ related: related }))
     }
 
@@ -139,6 +136,7 @@ export class ListingPage extends Component {
     }
 
     render() {
+        console.log(this.state.related)
         var pricestate = false
         if(this.state.productdetails.originalPrice === this.state.productdetails.finalPrice) pricestate = true
         return (
@@ -337,7 +335,7 @@ export class ListingPage extends Component {
                                         <div className="title-border mx-auto m-b-70"></div>
                                     </div>
                                     <div className="related-products">
-                                        <div className="owl-carousel row" data-responsive='{"0":{"items":"1"},"576":{"items":"1"},"768":{"items":"2"}, "992":{"items":"3"} }'>
+                                        <div className="owl-carousel row" data-layout="fitRows">
                                             <div className="col-md-12">
                                                 {
                                                     this.state.related.map((product) =>

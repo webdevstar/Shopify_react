@@ -12,6 +12,15 @@
     width: 461px;
 }
 .main-frame, .sub-frame {
-     position: relative; 
-     overflow: inherit; 
+    position: relative; 
+    overflow: inherit; 
+}
+.owl-stage {
+	width: 100% !important;
+}
+.owl-item {
+	width: 100% !important;
+}
+.grid-item {
+	display: inline-block;
 }
