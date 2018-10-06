@@ -12,7 +12,8 @@ class Loader extends React.Component {
 	}
 
 	componentDidMount() {
-        window.addEventListener('load', this.handleLoad);
+		window.addEventListener('load', this.handleLoad);
+		
     }
 
     handleLoad(){
@@ -42,12 +43,19 @@ export class Loader1 extends React.Component {
 		this.state = {
 			showingAlert: true
 		};
+		
 	}
 
-	render() {
+	componentDidMount() {
 		setTimeout(() => {
-			this.setState({showingAlert: false});
+			this.setState({
+				showingAlert: false
+			});
 	    }, 3000);
+	}
+	
+	render() {
+		
 		return (
 			<div className={`loading ${this.state.showingAlert ? '' : 'alert-hidden'}`}>
 		        <div className="spinner">
