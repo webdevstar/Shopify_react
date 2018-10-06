@@ -89,10 +89,13 @@ export class ListingPage extends Component {
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'/related')
             .then(result=>result.json())
             .then(related=>this.setState({ related: related }))
+            .catch((error) => {
+                console.log(error)
+              })
     }
-
     colorSelect(id) {
         const ids = [id];
+        //console.log(ids.length)
         this.setState({optionId: id});
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+this.state.id+'/variant?lang=en', {
             method: 'post',
@@ -105,7 +108,7 @@ export class ListingPage extends Component {
                 }
             )
         })
-            .then(result=>result.json())
+            .then(result=>result.text())
             .then(result=>{
                 var newArray = this.state.productdetails
                 for (var key in result) {
@@ -113,7 +116,9 @@ export class ListingPage extends Component {
                 }
                 this.setState({productdetails: newArray})
             })
-
+            .catch((error) => {
+                console.log(error)
+              })
     }
 
     productcolor(){
@@ -186,7 +191,7 @@ export class ListingPage extends Component {
                                                     (pricestate === true?<p className="price">{this.state.productdetails.originalPrice}</p>:
                                                     <div>
                                                         <p className="originalPrice">{this.state.productdetails.originalPrice}</p>
-                                                        <p className="finalPrice">{this.state.productdetails.finalPrice}</p>
+                                                        
                                                     </div>)
                                                 }
                                             </div>
@@ -322,7 +327,7 @@ export class ListingPage extends Component {
                                                                 <input type="email" placeholder="Your Email"/>
                                                             </div>
                                                             <div className="col-md-12 m-t-40">
-                                                                <button>Submit</button>
+                                                                <button onClick={()=>this.handleOnclick()} >Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
