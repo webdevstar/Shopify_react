@@ -29,7 +29,7 @@ export class ListingPage extends Component {
     fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/category?filter=FEATURED')
       .then(result=>result.json())
       .then(category=>this.setState({category}))
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+id+'&start=0&count=1')
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+id+'&start=0&count=3')
       .then(result=>result.json())
       .then(shoplist=>this.setState({ shoplist: shoplist }))
     this.setState({loaded: true})
@@ -71,7 +71,7 @@ export class ListingPage extends Component {
     )
   }
   loadMore(){
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+this.state.selected+'&start='+this.state.shoplist.products.length+'&count=1')
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+this.state.selected+'&start='+this.state.shoplist.products.length+'&count=3')
       .then(result=>result.json())
       .then(shoplist=>{
         const tracks = this.state.shoplist
