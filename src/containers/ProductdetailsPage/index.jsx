@@ -97,18 +97,23 @@ export class ListingPage extends Component {
         const ids = [id];
         //console.log(ids.length)
         this.setState({optionId: id});
-        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+this.state.id+'/variant?lang=en', {
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+this.state.id+'/variant', {
             method: 'post',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'Accept':	'application/json'
             },
             body: JSON.stringify(
                 {
-                    options: ids
+                    "options":[
+                      {
+                        "value":id
+                      }
+                    ]
                 }
             )
         })
-            .then(result=>result.text())
+            .then(result=>result.json())
             .then(result=>{
                 var newArray = this.state.productdetails
                 for (var key in result) {
