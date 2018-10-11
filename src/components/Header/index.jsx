@@ -11,6 +11,8 @@ import MobileMenu from '../MobileMenu';
 import { search } from '../../actions/search'
 import { cartTo } from '../../actions/cart_item'
 import { cartkey } from '../../actions/cartkey'
+import { logout } from '../../actions/auth'
+
 
 import './Header.css';
 
@@ -28,7 +30,6 @@ export function matchStocks(state, value) {
     state.toLowerCase().indexOf(value.toLowerCase()) !== -1
   );
 }
-
 class Header extends Component {
 
     constructor(props) {
@@ -40,7 +41,29 @@ class Header extends Component {
             autocomplete: {values:[]},
             searchval: '',
             menuSelected: null,
+            user_first_name:"",
+            user_last_name:""
         };
+    }
+
+
+    logout() {
+        this.props.logout()
+        
+    }
+
+    setLoginState() {
+            fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/auth/customers/profile',{
+                method: 'get',
+                headers: {
+                    'Accept': 'application/json'
+                },
+            })
+            .then(result=>result.json())
+            .then(result=>{
+               // alert(result)
+                //this.setState({user_first_name:result.billing.firstName})
+            })
     }
 
     handleKeyPress (event) {
@@ -145,6 +168,7 @@ class Header extends Component {
 
     render () {
         const carts = this.props.cart_items;
+       // this.props.loginstate? this.setLoginState():null
         return (
             <div>
                 <header>
@@ -235,17 +259,31 @@ class Header extends Component {
                                             </li>
                                              <li className="header-shop-cart">
                                                 <div className="bar-button" data-toggle="modal">
-                                                    MyAccount
+                                                    {
+                                                        this.props.loginstate? "Hi-Welcome!!!": "MyAccount"
+                                                    }
                                                 </div>
                                                 <div className="shop-cart user">
-                                                    <ul className="shop-cart__list">
-                                                        <li className="item">
-                                                            <Link className="login" to={"/login"}>Register</Link>
-                                                        </li>
-                                                        <li className="item">
-                                                            <Link className="login" to={"/login"}>Signin</Link>
-                                                        </li>
-                                                    </ul>
+                                                    {
+                                                        this.props.loginstate? 
+                                                        <ul className="shop-cart__list">
+                                                            <li className="item">
+                                                                <Link className="login" to={"/landing"}>My Profile</Link>
+                                                            </li>
+                                                            <li className="item">
+                                                                <span className="login" onClick={()=>this.logout()}>Logout</span>
+                                                            </li>
+                                                        </ul>
+                                                        : 
+                                                        <ul className="shop-cart__list">
+                                                            <li className="item">
+                                                                <Link className="login" to={"/login?#"}>Register</Link>
+                                                            </li>
+                                                            <li className="item">
+                                                                <Link className="login" to={"/login?#"}>Signin</Link>
+                                                            </li>
+                                                        </ul>
+                                                    }
                                                 </div>
                                             </li>
                                         </ul>
@@ -338,7 +376,9 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        cart_items : state.cart.cart_items
+        cart_items : state.cart.cart_items,
+        loginstate: state.auth.loginstate,
+        user_id: state.auth.user_id
     };
 }
 
@@ -346,7 +386,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         search : (e) => dispatch(search(e)),
         addcartkey : (e) => dispatch(cartkey(e)),
-        cartTo : (e) => dispatch(cartTo(e))
+        cartTo : (e) => dispatch(cartTo(e)),
+        logout: (e) => dispatch(logout(e))
     }
 }
 
