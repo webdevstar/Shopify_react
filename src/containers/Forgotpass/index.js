@@ -5,7 +5,26 @@ import {Loader1} from '../../components/Loader/index.jsx';
 import bgpage01 from '../../images/bg-page_01.jpg';
 
 class Forgotpass extends Component {
-
+    resetPassword() {
+        if(this.refs.email.value !== ''){
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/vi/customer/password/reset', {
+            method: 'post',
+            headers: {
+                'content-type': 'application/json',
+                'Accept':	'application/json'
+            },
+            body: JSON.stringify({
+                email: this.refs.email.value
+            })
+        })
+            .then(result => {
+                alert("result_status:"+result.status);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+        }
+    }
     render() {
         return (
             <div>
@@ -36,15 +55,15 @@ class Forgotpass extends Component {
                             via email.</p>
                         <div className="form-account py-0">
                             <form>
-                                <div className="form-group au-form m-b-20">
-                                    <div className="form-resetpass">
+                                <div className="form-group au-form m-b-20 require">
+                                    <div className="form-resetpass require">
                                         <label className="m-b-15">Username or email</label>
-                                        <input type="text"/>
+                                        <input ref="email" type="text" id="email" required data-error="Email is required."/>
                                     </div>
 
                                 </div>
                                 <div className="form-group au-form m-b-10">
-                                    <button className="btn btn-black text-uppercase btn-small">Reset password</button>
+                                    <button className="btn btn-black text-uppercase btn-small" onClick={()=>this.resetPassword()} type="button">Reset password</button>
                                 </div>
                             </form>
                         </div>
