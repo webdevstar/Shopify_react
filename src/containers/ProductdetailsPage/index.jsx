@@ -19,12 +19,40 @@ export class ListingPage extends Component {
             related: [],
             reviews: false,
             id: false,
-            optionId: 0
+            optionId: 1,
+            rating:0
         };
     }
-
+    reviewSubmit (event) {
+        if(this.props.loginstate && this.refs.message.value !== '' && this.refs.name.value !== '' && this.refs.email.value !='')
+        {
+            var date = new Date().toDateString();
+            fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/auth/products/'+this.state.productdetails.id+'/reviews', {
+                method: 'post',
+                headers: {
+                    'content-type': 'application/json',
+                    'Accept':	'application/json'
+                },
+                body: JSON.stringify({
+                    customerId: this.props.user_id, 
+                    date: date,
+                    description:this.refs.message.value,
+                    language:"en",
+                    productId: this.state.productdetails.id, 
+                    rating:this.state.rating
+                })
+            })
+            .then(result=>result.json())
+            .then(result=>console.log(result))
+            .catch((error) => {
+                console.log(error)
+              })
+        }
+        else alert("Please signin for writing a new review");
+    }
     handleOnclick (event) {
         if(!this.props.cartkey){
+            var quantity = this.refs.quantity.value;
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart', {
                 method: 'post',
                 headers: {
@@ -38,7 +66,7 @@ export class ListingPage extends Component {
                         }
                     ],
                     product: this.state.productdetails.id,
-                    quantity: 1
+                    quantity: quantity
                 })
             })
                 .then(result=>result.json())
@@ -65,7 +93,22 @@ export class ListingPage extends Component {
                 })
             })
                 .then(result=>result.json())
-                .then(cart=>this.props.cartTo(cart))
+                .then(cart=>{var temp_products = []
+                    quantity = 0
+                    cart.products.forEach((product) =>{
+                        var find_flag = false;
+                        temp_products.forEach((temp_product) =>{
+                            if(product.id === temp_product.id)find_flag = true
+                        })
+                        if(!find_flag)
+                        {
+                            temp_products.push(product)
+                            quantity += product.quantity
+                        }
+                    })
+                    cart.products = temp_products
+                    cart.quantity = quantity
+                    this.props.cartTo(cart)})
         }
     }
 
@@ -84,6 +127,23 @@ export class ListingPage extends Component {
                 this.setState({ reviews: reviews })
                 if(reviews.length > 0){
                     document.getElementById("review_discription").innerHTML = reviews[0].description+"<br/>"+reviews[0].date;
+                    var rating_value = reviews[0].rating;
+                    this.setState({rating:rating_value});
+                    if(rating_value>=5)
+                    {
+                        document.getElementById("star-1").defaultChecked = true;
+                    }
+                    else if(rating_value > 0)
+                    {
+                        document.getElementById("star-"+parseInt(6-rating_value)).defaultChecked = true;
+                    }
+                }
+                if(this.props.loginstate)
+                {
+                    for(var i=1;i<6;i++)
+                    {
+                        document.getElementById("star-"+i).disabled = false;
+                    }
                 }
             })
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+id+'/related')
@@ -95,7 +155,6 @@ export class ListingPage extends Component {
     }
     colorSelect(id) {
         const ids = [id];
-        //console.log(ids.length)
         this.setState({optionId: id});
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products/'+this.state.id+'/variant', {
             method: 'post',
@@ -116,8 +175,10 @@ export class ListingPage extends Component {
             .then(result=>result.json())
             .then(result=>{
                 var newArray = this.state.productdetails
+                var str = ""
                 for (var key in result) {
                     newArray[key] = result[key]
+                    str+=key+":"+newArray[key]
                 }
                 this.setState({productdetails: newArray})
             })
@@ -196,7 +257,6 @@ export class ListingPage extends Component {
                                                     (pricestate === true?<p className="price">{this.state.productdetails.originalPrice}</p>:
                                                     <div>
                                                         <p className="originalPrice">{this.state.productdetails.originalPrice}</p>
-                                                        
                                                     </div>)
                                                 }
                                             </div>
@@ -234,7 +294,6 @@ export class ListingPage extends Component {
                                                             <a className="a" key={ind}>{categorie.description.name}</a>
                                                         )
                                                     :'')
-                                                    
                                                 }
                                             </div>
                                             <div className="product-share">
@@ -305,16 +364,16 @@ export class ListingPage extends Component {
                                                     <strong>Your Rating </strong>
                                                     <div className="au-rating">
                                                         <form>
-                                                            <input id="star-1" type="radio" name="star" />
-                                                            <label htmlFor="star-1"></label>
-                                                            <input id="star-2" type="radio" name="star" />
-                                                            <label htmlFor="star-2"></label>
-                                                            <input id="star-3" type="radio" name="star" />
-                                                            <label htmlFor="star-3"></label>
-                                                            <input id="star-4" type="radio" name="star" />
-                                                            <label htmlFor="star-4"></label>
-                                                            <input id="star-5" type="radio" name="star" />
-                                                            <label htmlFor="star-5"></label>
+                                                            <input id="star-1" type="radio" name="star"  disabled={true} />
+                                                            <label htmlFor="star-1" onClick={() => {this.setState({rating:5})}}></label>
+                                                            <input id="star-2" type="radio" name="star"  disabled={true} />
+                                                            <label htmlFor="star-2" onClick={() => {this.setState({rating:4})}}></label>
+                                                            <input id="star-3" type="radio" name="star" disabled={true} />
+                                                            <label htmlFor="star-3" onClick={() => {this.setState({rating:3})}}></label>
+                                                            <input id="star-4" type="radio" name="star" disabled={true} />
+                                                            <label htmlFor="star-4" onClick={() => {this.setState({rating:2})}}></label>
+                                                            <input id="star-5" type="radio" name="star" disabled={true} />
+                                                            <label htmlFor="star-5" onClick={() => {this.setState({rating:1})}}></label>
                                                         </form>
                                                     </div>
 
@@ -323,16 +382,16 @@ export class ListingPage extends Component {
                                                     <form>
                                                         <div className="row">
                                                             <div className="col-md-12">
-                                                                <textarea cols="30" rows="7" placeholder="Your Message"></textarea>
+                                                                <textarea cols="30" rows="7" placeholder="Your Message" ref="message" required data-error="Message is required."></textarea>
                                                             </div>
                                                             <div className="col-md-6">
-                                                                <input type="text" placeholder="Your Name"/>
+                                                                <input type="text" placeholder="Your Name" ref="name" required data-error="Name is required."/>
                                                             </div>
                                                             <div className="col-md-6">
-                                                                <input type="email" placeholder="Your Email"/>
+                                                                <input type="email" placeholder="Your Email" ref="email" required data-error="Email is required."/>
                                                             </div>
                                                             <div className="col-md-12 m-t-40">
-                                                                <button onClick={()=>this.handleOnclick()} >Submit</button>
+                                                                <button onClick={()=>this.reviewSubmit()} type="button" className="btn btn-black text-uppercase btn-small">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>
@@ -369,7 +428,9 @@ const keyStateToProps = (state) => {
     return {
         cartkey : state.cartkey.cartkey,
         cart_items : state.cart.cart_items,
-        showtype : state.show.showtype
+        showtype : state.show.showtype,
+        loginstate : state.auth.loginstate,
+        user_id : state.auth.user_id
     }
 }
 
