@@ -26,8 +26,11 @@ export class ShopList extends Component {
         }
         else {
             var quantity = 1;
+            var state=false;
             this.props.cart_items.products.forEach((product) => {
-                if(product.id === this.props.list.id) quantity = product.quantity+1
+                if(product.id === this.props.list.id) {
+                    quantity = product.quantity+1
+                }
             })
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey, {
                 method: 'put',
@@ -41,8 +44,26 @@ export class ShopList extends Component {
                 })
             })
                 .then(result=>result.json())
-                .then(cart=>this.props.cartTo(cart))
+                .then(cart=>{
+                        var temp_products = []
+                        quantity = 0
+                        cart.products.forEach((product) =>{
+                            var find_flag = false;
+                            temp_products.forEach((temp_product) =>{
+                                if(product.id === temp_product.id)find_flag = true
+                            })
+                            if(!find_flag)
+                            {
+                                temp_products.push(product)
+                                quantity += product.quantity
+                            }
+                        })
+                        cart.products = temp_products
+                        cart.quantity = quantity
+                        this.props.cartTo(cart)
+                })
         }
+       
     }
 
     render() {
