@@ -47,19 +47,23 @@ export class ShopList extends Component {
                 .then(cart=>{
                         var temp_products = []
                         quantity = 0
+                        var price = 0
                         cart.products.forEach((product) =>{
                             var find_flag = false;
                             temp_products.forEach((temp_product) =>{
                                 if(product.id === temp_product.id)find_flag = true
                             })
-                            if(!find_flag)
+                            if(!find_flag && product.quantity!==0)
                             {
                                 temp_products.push(product)
                                 quantity += product.quantity
+                                price += product.quantity * product.price
                             }
                         })
                         cart.products = temp_products
                         cart.quantity = quantity
+                        cart.subtotal = cart.total = price;
+                        cart.displaySubTotal = cart.displayTotal = "US$"+cart.subtotal;
                         this.props.cartTo(cart)
                 })
         }
