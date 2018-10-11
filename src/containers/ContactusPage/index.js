@@ -19,16 +19,27 @@ class ContactusPage extends Component {
     };
 
     sendusnow() {
+        if(this.refs.name.value!==''&&this.refs.email.value!==''&&this.refs.address.value!==''&&this.refs.msg.value!==''){
         fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/contact', {
             method: 'post',
+            headers: {
+                'content-type': 'application/json',
+                'Accept':	'application/json'
+            },
             body: JSON.stringify({
                 name: this.refs.name.value, 
                 email: this.refs.email.value, 
                 subject: this.refs.address.value, 
-                message: this.refs.msg.value
+                comment: this.refs.msg.value
             })
         })
-            .then(result=>result.json())
+            .then(result=>{
+                if(result.status !== 200)alert("Send Failed!!!")
+            })
+            .catch((error) => {
+                console.log(error)
+              })
+            }
     }
 
     render() {
@@ -141,7 +152,8 @@ class ContactusPage extends Component {
                                         </div>
                                         <div className="col-md-12">
                                             <div className="form-group au-form">
-                                                <button type="submit" id="contactBtn" className="mx-auto" onClick={()=>this.sendusnow()}>Send us now</button>
+                                            <button type="button" id="contactBtn" className="btn btn-black text-uppercase btn-small mx-auto" onClick={()=>this.sendusnow()}>Send us now</button>
+                                            
                                             </div>
                                         </div>
                                     </div>
