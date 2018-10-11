@@ -40,7 +40,23 @@ export class Product extends Component {
 			    })
 			})
 				.then(result=>result.json())
-	            .then(cart=>this.props.cartTo(cart))
+	            .then(cart=>{
+					var temp_products = []
+					quantity = 0
+					cart.products.forEach((product) =>{
+						var find_flag = false;
+						temp_products.forEach((temp_product) =>{
+							if(product.id === temp_product.id)find_flag = true
+						})
+						if(!find_flag)
+						{
+							temp_products.push(product)
+							quantity += product.quantity
+						}
+					})
+					cart.products = temp_products
+					cart.quantity = quantity
+					this.props.cartTo(cart)})
 	    }
     }
 
