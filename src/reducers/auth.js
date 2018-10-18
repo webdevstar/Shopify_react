@@ -1,6 +1,7 @@
 let initialState = {
   loginstate: false,
-  user_id: -1
+  user_id: -1,
+  user_token: "",
 };
 
 const auth = (state = initialState, action) => {
@@ -15,8 +16,14 @@ const auth = (state = initialState, action) => {
 		return{
 		...state,
 			loginstate: false,
-			user_id:-1
-		};
+      user_id:-1,
+      user_token:""
+    };
+    case 'token':
+      return{
+        ...state,
+        user_token:action.payload
+    }
     default:
       return state
   }
