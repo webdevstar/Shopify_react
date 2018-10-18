@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import bgpage01 from '../../images/bg-page_01.jpg';
 import { Loader1 } from '../../components/Loader/index.jsx';
 import { login } from '../../actions/auth'
+import { token } from '../../actions/auth'
 
 class LoginPage extends Component {
 
@@ -65,7 +66,7 @@ class LoginPage extends Component {
                 if(flag){
                 this.setState({login_error:false})
                 this.props.login(result.id);
-                
+                this.props.token(result.token);
                 this.props.history.push('/')
                 }
                 else this.setState({login_error:true})
@@ -229,13 +230,15 @@ class LoginPage extends Component {
 const keyStateToProps = (state) => {
     return {
         loginstate : state.auth.loginstate,
-        user_id : state.auth.user_id
+        user_id : state.auth.user_id,
+        user_token : state.auth.user_token
     }
 }
 
 const keyDispatchToProps = (dispatch) => {
     return {
-        login : (e) => dispatch(login(e))
+        login : (e) => dispatch(login(e)),
+        token : (e) => dispatch(token(e))
     }
 }
 export default connect(keyStateToProps, keyDispatchToProps) (LoginPage);
