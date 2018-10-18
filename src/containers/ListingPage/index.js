@@ -22,7 +22,14 @@ export class ListingPage extends Component {
       priceFilter: {lower:0,upper:500}
     };
   }
-
+ componentWillReceiveProps(nextProps) {
+  if (parseInt(nextProps.id, 10) !== parseInt(this.props.id, 10)) {
+    this.setState({selected  : parseInt(nextProps.match.params.id)})
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+nextProps.match.params.id+'&start=0&count=3')
+      .then(result=>result.json())
+      .then(shoplist=>this.setState({ shoplist: shoplist }))
+  }
+ }
   componentDidMount() {
     const { id } = this.props.match.params
     this.setState({selected  : parseInt(id)})
@@ -71,7 +78,7 @@ export class ListingPage extends Component {
     )
   }
   loadMore(){
-    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+this.state.selected+'&start='+this.state.shoplist.products.length+'&count=3')
+    fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/products?lang=en&category='+this.props.match.params.id+'&start='+this.state.shoplist.products.length+'&count=3')
       .then(result=>result.json())
       .then(shoplist=>{
         const tracks = this.state.shoplist
