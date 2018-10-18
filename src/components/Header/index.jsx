@@ -49,21 +49,24 @@ class Header extends Component {
 
     logout() {
         this.props.logout()
-        
     }
 
     setLoginState() {
+        if(this.props.user_token!==""){
             fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/auth/customers/profile',{
                 method: 'get',
                 headers: {
-                    'Accept': 'application/json'
+                    'Accept': 'application/json',
+                    'Authorization': 'Bearer ' + this.props.user_token
                 },
             })
             .then(result=>result.json())
             .then(result=>{
-               // alert(result)
-                //this.setState({user_first_name:result.billing.firstName})
+                //alert(result.billing.firstName)
+                this.setState({user_first_name:result.billing.firstName})
+                this.setState({user_last_name:result.billing.lastName})
             })
+        }
     }
 
     handleKeyPress (event) {
@@ -168,7 +171,7 @@ class Header extends Component {
 
     render () {
         const carts = this.props.cart_items;
-       // this.props.loginstate? this.setLoginState():null
+        if(this.state.user_first_name==="" && this.props.loginstate)this.setLoginState()
         return (
             <div>
                 <header>
@@ -260,7 +263,7 @@ class Header extends Component {
                                              <li className="header-shop-cart">
                                                 <div className="bar-button" data-toggle="modal">
                                                     {
-                                                        this.props.loginstate? "Hi-Welcome!!!": "MyAccount"
+                                                        this.props.loginstate? "Welcome "+this.state.user_first_name + "-"+ this.state.user_last_name: "MyAccount"
                                                     }
                                                 </div>
                                                 <div className="shop-cart user">
@@ -378,7 +381,8 @@ const mapStateToProps = (state) => {
     return {
         cart_items : state.cart.cart_items,
         loginstate: state.auth.loginstate,
-        user_id: state.auth.user_id
+        user_id: state.auth.user_id,
+        user_token: state.auth.user_token
     };
 }
 
