@@ -19,7 +19,29 @@ export class LatestNews extends Component {
         		document.getElementById("contentbox1").innerHTML = contents[1].boxContent;
             })
     }
-
+	handleClick()
+	{
+		if(this.refs.email.value !== ''){
+			fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/newsletter', {
+				method: 'post',
+				headers: {
+					'content-type': 'application/json',
+					'Accept':	'application/json'
+				},
+				body: JSON.stringify({
+					email:this.refs.email.value,
+					firstName:this.refs.email.value
+				})
+			})
+				.then(result => {
+					if(result.status === 200){
+						return result.json()
+					}})
+				.catch((error) => {
+					console.log(error)
+				})
+			}
+	}
     render() {
     	return (
 	        <div>
@@ -84,8 +106,8 @@ export class LatestNews extends Component {
 			                    </div>
 			                    <div className="signup-form">
 			                        <form>
-			                            <input type="text" placeholder="Your email address"/>
-			                            <button type="submit">Submit</button>
+			                            <input type="text" placeholder="Your email address" ref="email" id="email"/>
+			                            <button type="button" onClick={()=>this.handleClick()}>Submit</button>
 			                        </form>
 			                    </div>
 
