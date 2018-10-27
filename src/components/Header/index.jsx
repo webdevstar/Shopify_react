@@ -3,6 +3,7 @@ import {translate} from 'react-i18next';
 import { connect } from 'react-redux';
 import Autocomplete from  'react-autocomplete';
 import { Link } from 'react-router-dom'
+import { Route , withRouter} from 'react-router-dom';
 
 import LanuageSelector from '../LanguageSelector'
 import Cartbox from '../Cartbox/index.jsx';
