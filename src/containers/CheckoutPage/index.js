@@ -1,11 +1,57 @@
 import React, { Component } from 'react';
 import './checkout.css'
+import { connect } from 'react-redux';
 import {Loader1} from '../../components/Loader/index.jsx';
 import bgpage01 from '../../images/bg-page_01.jpg';
 import paypal from '../../images/icon/paypal.png';
 
 class Checkout extends Component {
-
+    constructor(props) {
+        super(props);
+        this.state = {
+          subTotal:0
+        };
+    }
+    getShipping(){
+        if(this.refs.postalCode.value!==''){
+            fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/auth/cart/'+this.props.cartkey+'/shipping?postalCode='+this.refs.postalCode.value,{
+                method: 'get',
+                headers: {
+                    'Accept':	'*/*'
+                },
+            })
+                .then(result=>result.json())
+                .then(result=>{
+                   
+                })
+                .catch((error) => {
+                    console.log(error)
+            })
+        }
+    }
+    componentDidMount() {
+        var subTotal=0;
+        fetch('http://ec2-35-183-25-66.ca-central-1.compute.amazonaws.com:8080/api/v1/cart/'+this.props.cartkey+'/payment',{
+            method: 'get',
+            headers: {
+                'Accept':	'application/json'
+            },
+        })
+            .then(result=>result.json())
+            .then(result=>{
+                this.setState({subTotal:result.totals[0].value})
+                subTotal = result.totals[0].value;
+                var table_str = "<tbody><tr><th>ITEM</th><th>total</th></tr>";
+                this.props.cart_items.products.forEach((product) =>{
+                    table_str+="<tr><td>"+product.description.name+" * "+product.quantity+"</td><td>$"+product.subTotal+"</td></tr>"
+                })
+                table_str+="<tr className='sub-total'><td>Subtotal</td><td>$"+subTotal+"</td></tr><tr><td>SHPPING</td><td>$0.00</td></tr><tr className='total'><td>Total</td><td>$"+subTotal+"</td></tr></tbody>"
+                document.getElementById("cart_table").innerHTML = table_str;
+            })
+            .catch((error) => {
+                console.log(error)
+        })
+    }
     render() {
         return (
             <div>
@@ -84,7 +130,7 @@ class Checkout extends Component {
                                             <div className="col-sm-12">
                                                 <div className="form-group au-form require">
                                                     <label>Country</label>
-                                                    <select>
+                                                    <select name="country" id="r_country_name">
                                                         <option value="AF">Afghanistan</option>
                                                         <option value="AX">Åland Islands</option>
                                                         <option value="AL">Albania</option>
@@ -326,7 +372,7 @@ class Checkout extends Component {
                                                         <option value="UZ">Uzbekistan</option>
                                                         <option value="VU">Vanuatu</option>
                                                         <option value="VE">Venezuela, Bolivarian Republic of</option>
-                                                        <option value="VN" selected>VietNam</option>
+                                                        <option defaultValue="VN">VietNam</option>
                                                         <option value="VG">Virgin Islands, British</option>
                                                         <option value="VI">Virgin Islands, U.S.</option>
                                                         <option value="WF">Wallis and Futuna</option>
@@ -340,7 +386,7 @@ class Checkout extends Component {
                                             <div className="col-sm-12">
                                                 <div className="form-group au-form require">
                                                     <label>Postcode / Zip</label>
-                                                    <input type="text"/>
+                                                    <input type="text" id="postal_code" onBlur={() => this.getShipping()} ref="postalCode"/>
                                                 </div>
                                             </div>
                                             <div className="col-sm-6">
@@ -371,7 +417,7 @@ class Checkout extends Component {
                                     <form>
                                         <div className="form-group au-form">
                                             <label>Order notes</label>
-                                            <textarea cols="30" rows="9">Note about your order, eg. special notes fordelivery.</textarea>
+                                            <textarea cols="30" rows="9" defaultValue="Note about your order, eg. special notes fordelivery."/>
                                         </div>
                                     </form>
                                 </div>
@@ -379,30 +425,7 @@ class Checkout extends Component {
                             <div className="col-md-6">
                                 <div className="au-form-body">
                                     <h2 className="au-form-title form-title-border m-b-37">YOUR ORDER</h2>
-                                    <table className="checkout-bill">
-                                        <tbody>
-                                            <tr>
-                                                <th>ITEM</th>
-                                                <th>total</th>
-                                            </tr>
-                                            <tr>
-                                                <td>Crackle Plates</td>
-                                                <td>$44</td>
-                                            </tr>
-                                            <tr className="sub-total">
-                                                <td>Subtotal</td>
-                                                <td>$44</td>
-                                            </tr>
-                                            <tr>
-                                                <td>SHPPING</td>
-                                                <td>$0.00</td>
-                                            </tr>
-                                            <tr className="total">
-                                                <td>Total</td>
-                                                <td>$44</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                    <table className='checkout-bill' id="cart_table"/>
                                     <form>
                                         <div className="checkout-payment m-b-16">
                                             <label>Check payment</label>
@@ -427,5 +450,17 @@ class Checkout extends Component {
         );
     }
 }
+const keyStateToProps = (state) => {
+    return {
+        cartkey : state.cartkey.cartkey,
+        cart_items : state.cart.cart_items,
+    }
+}
 
-export default Checkout;
+const keyDispatchToProps = (dispatch) => {
+    return {
+       
+    }
+}
+
+export default connect(keyStateToProps, keyDispatchToProps) (Checkout);
